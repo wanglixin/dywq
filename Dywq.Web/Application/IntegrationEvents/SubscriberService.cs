@@ -1,0 +1,45 @@
+﻿using DotNetCore.CAP;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Dywq.Web.Application.IntegrationEvents
+{
+    public class SubscriberService : ISubscriberService, ICapSubscribe
+    {
+        IMediator _mediator;
+        ILogger<SubscriberService> _logger;
+      
+        public SubscriberService(IMediator mediator, ILogger<SubscriberService> logger)
+        {
+            _mediator = mediator;
+            _logger = logger;
+        }
+
+
+        [CapSubscribe("SiteCreated")]
+        public void SiteCreated(SiteCreatedIntegrationEvent @event)
+        {
+            //Do SomeThing
+            _logger.LogInformation($"1.关注接收到 SiteCreated 集成事件，参数Id={@event.Id}");
+
+            //_testRepository.Add(new Domain.Test("Test2"));  //测试失败
+            //var i = _testRepository.UnitOfWork.SaveChangesAsync().Result;
+
+        }
+
+
+        //[CapSubscribe("SiteCreated")]
+        //public void SiteCreated2(SiteCreatedIntegrationEvent @event)
+        //{
+        //    //Do SomeThing
+        //    _logger.LogInformation($"2.关注接收到 SiteCreated 集成事件，参数Id={@event.Id}");
+
+        //}
+
+
+    }
+}
