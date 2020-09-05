@@ -1,4 +1,5 @@
-﻿<!-- banner -->
+﻿@model Dywq.Web.Dto.User.UserDTO
+<!-- banner -->
 <section id="banner">
     <div class="container">
         <div class="row banner_content">
@@ -7,41 +8,67 @@
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="img/banner.png" alt="">
+                                <img src="/img/banner.png" alt="">
                             </div>
                             <div class="swiper-slide">
-                                <img src="img/banner.png" alt="">
+                                <img src="/img/banner.png" alt="">
                             </div>
                             <div class="swiper-slide">
-                                <img src="img/banner.png" alt="">
+                                <img src="/img/banner.png" alt="">
                             </div>
                             <div class="swiper-slide">
-                                <img src="img/banner.png" alt="">
+                                <img src="/img/banner.png" alt="">
                             </div>
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
             </div>
+            <!--登陆-->
             <div class="col-md-3 col-sm-3 col-xs-12 login_content">
-                <div class="login_box">
-                    <img src="img/loginbg.png" alt="" class="loginbg">
-                    <div id="login_text">会员登录</div>
-                    <form action="">
-                        <div class="input_sec">
-                            <input type="text" placeholder="请输入您的账号">
-                        </div>
-                        <div class="input_sec">
-                            <input type="text" placeholder="请输入您的密码">
-                        </div>
-                        <button type="submit" value="登录" class="submitbtn">登录</button>
+                @if (Model == null)
+                {
+                    <div class="login_box">
+                        <img src="img/loginbg.png" alt="" class="loginbg">
+                        <div id="login_text">会员登录</div>
+                        <form id="login_form">
+                            <div class="input_sec">
+                                <input type="text" name="UserName" placeholder="请输入您的账号">
+                            </div>
+                            <div class="input_sec">
+                                <input type="password" name="Password" placeholder="请输入您的密码">
+                            </div>
+                            <input type="button" value="登录" class="submitbtn" />
+                        </form>
                         <div class="tip_con">
                             <span class="nocount">没有账号？</span>
                             <a href="#" class="apply_ru">申请入驻</a>
                         </div>
-                    </form>
-                </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="login_box login">
+                        <div class="login_title">已登录</div>
+                        <div class="login_msg">
+                            <div class="login_avatar">
+                                <img src="@(string.IsNullOrWhiteSpace(Model.Logo)?"/img/user.png":Model.Logo)" />
+                            </div>
+                            <div class="login_text">
+                                HI，@Model.CompanyName，<br />欢迎登陆数字惠企平台
+                            </div>
+                        </div>
+                        <div class="login_btn">
+                            <input class="btn_logout"  type="button" value="退出"/>
+                        </div>
+
+
+                    </div>
+                }
+
             </div>
+            <!--登陆 end-->
         </div>
     </div>
 </section>
@@ -758,9 +785,33 @@
 <!-- ad3 -->
 <div class="container" id="ad3">
     <div class="ad_sec_con">
-        <img src="img/ad3.png" alt="" class="ad_sec">
-        <img src="img/ad3.png" alt="" class="ad_sec">
-        <img src="img/ad3.png" alt="" class="ad_sec">
-        <img src="img/ad3.png" alt="" class="ad_sec">
+        <img src="/img/ad3.png" alt="" class="ad_sec">
+        <img src="/img/ad3.png" alt="" class="ad_sec">
+        <img src="/img/ad3.png" alt="" class="ad_sec">
+        <img src="/img/ad3.png" alt="" class="ad_sec">
     </div>
 </div>
+
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            $(".submitbtn").req("#login_form", "/api/user/login", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                }
+                window.location.reload();
+            });
+
+            $(".btn_logout").req("#none", "/api/user/logout", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                }
+                window.location.reload();
+            });
+
+        });
+    </script>
+
+}

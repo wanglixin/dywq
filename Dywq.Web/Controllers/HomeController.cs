@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dywq.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Dywq.Web.Controllers
 {
-    public class HomeController : Controller
+    [AllowAnonymous]
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -21,8 +24,8 @@ namespace Dywq.Web.Controllers
 
         public IActionResult Index()
         {
-            _logger.LogInformation("牛逼");
-            return View();
+            var user = GetCurrentUser();
+            return View(user);
         }
 
         public IActionResult Privacy()

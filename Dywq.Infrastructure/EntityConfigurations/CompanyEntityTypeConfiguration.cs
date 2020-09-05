@@ -13,6 +13,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
         {
             base.Configure(builder);
             builder.ToTable("Company");
+            builder.Property(p => p.Logo).HasMaxLength(150);
         }
     }
 
@@ -41,7 +42,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.ToTable("CompanyFieldDefaultValue");
             builder.Property(p => p.CompanyFieldId);
             builder.Property(p => p.Value).HasMaxLength(50);
-            builder.Property(p => p.Text).HasMaxLength(50); 
+            builder.Property(p => p.Text).HasMaxLength(50);
             builder.Property(p => p.Sort);
 
         }
@@ -69,7 +70,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.FieldId);
             builder.Property(p => p.Value);
             builder.Property(p => p.Type);
-            builder.Property(p=>p.Alias);
+            builder.Property(p => p.Alias);
 
         }
     }

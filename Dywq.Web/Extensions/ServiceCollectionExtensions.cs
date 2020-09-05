@@ -1,6 +1,11 @@
 ﻿using DotNetCore.CAP.Messages;
+using Dywq.Domain.Abstractions;
+using Dywq.Domain.CompanyAggregate;
 using Dywq.Domain.SiteAggregate;
+using Dywq.Domain.UserAggregate;
 using Dywq.Infrastructure;
+using Dywq.Infrastructure.Core;
+using Dywq.Infrastructure.Core.Utilitiy;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Application.IntegrationEvents;
 using MediatR;
@@ -8,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,8 +52,14 @@ namespace Dywq.Web.Extensions
 
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<ISiteRepository, SiteRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBaseRepository<User>, BaseRepository<User>>();
+            services.AddScoped<IBaseRepository<Company>, BaseRepository<Company>>();
+            services.AddScoped<IBaseRepository<CompanyField>, BaseRepository<CompanyField>>();
+            services.AddScoped<IBaseRepository<CompanyFieldData>, BaseRepository<CompanyFieldData>>();
+            services.AddScoped<IBaseRepository<CompanyFieldDefaultValue>, BaseRepository<CompanyFieldDefaultValue>>();
+            services.AddScoped<IBaseRepository<CompanyFieldGroup>, BaseRepository<CompanyFieldGroup>>();
+            services.AddScoped<IBaseRepository<SiteInfo>, BaseRepository<SiteInfo>>();
+            services.AddScoped<IBaseRepository<CompanyUser>, BaseRepository<CompanyUser>>();
             return services;
         }
 
@@ -79,5 +91,17 @@ namespace Dywq.Web.Extensions
 
             return services;
         }
+
+        public static IServiceCollection AddMd5(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions<Md5Options>().Configure(options =>
+            {
+                configuration.Bind(options);
+            }).Services.AddSingleton(new Md5Options());
+
+            services.AddScoped<IMd5, MyMd5>();
+            return services;
+        }
+
     }
 }

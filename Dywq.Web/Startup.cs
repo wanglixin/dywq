@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Dywq.Infrastructure;
 using Dywq.Web.Extensions;
 using Dywq.Web.Filters;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +38,15 @@ namespace Dywq.Web
             {
                 jsonoptions.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             });
+            services.AddSession();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
+               {
+                   options.LoginPath = new PathString("/Home/Index");
+                   options.AccessDeniedPath = new PathString("/Home/Privacy");
+
+               });//用cookie的方式验证，顺便初始化登录地址
 
             //关闭参数自动校验,我们需要返回自定义的格式
             services.Configure<ApiBehaviorOptions>((o) =>
@@ -48,6 +58,7 @@ namespace Dywq.Web
             services.AddSqlServerDomainContext(Configuration.GetValue<string>("SqlServerSql"));
             services.AddRepositories();
             services.AddEventBus(Configuration);
+            services.AddMd5(Configuration.GetSection("Md5Options"));
 
 
         }
@@ -84,16 +95,26 @@ namespace Dywq.Web
             app.UseDeveloperExceptionPage();
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();//鉴权，检测有没有登录，登录的是谁，赋值给User
+            app.UseAuthorization();//就是授权，检测权限
 
             app.UseEndpoints(endpoints =>
             {
+                
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+               name: "areas",
+               pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                
+               endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+
+
             });
         }
     }
