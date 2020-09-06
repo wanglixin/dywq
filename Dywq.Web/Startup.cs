@@ -43,9 +43,6 @@ namespace Dywq.Web
             services.AddSession();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-
-        
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                {
