@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dywq.Infrastructure;
+using Dywq.Infrastructure.Core;
 using Dywq.Web.Extensions;
 using Dywq.Web.Filters;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -15,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace Dywq.Web
 {
@@ -40,13 +42,52 @@ namespace Dywq.Web
             });
             services.AddSession();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+
+        
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-               .AddCookie(options =>
+                .AddCookie(options =>
                {
                    options.LoginPath = new PathString("/Home/Index");
                    options.AccessDeniedPath = new PathString("/Home/Privacy");
+                   options.Events = new CookieAuthenticationEvents()
+                   {
+                       OnRedirectToAccessDenied = context =>
+                       {
+                           Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                                     "OnRedirectToAccessDenied", context.HttpContext.User.Identity.Name);
+                           context.Response.ContentType = "application/json";
+                           context.Response.StatusCode = StatusCodes.Status200OK;
+                           context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("没有权限")));
+                           return Task.CompletedTask;
+                       },
+                       OnRedirectToLogin = context =>
+                       {
+                           Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                                    "OnRedirectToLogin", context.HttpContext.User.Identity.Name);
+                           if ((context.Request.Headers.ContainsKey("x-requested-with") && context.Request.Headers["x-requested-with"] == "XMLHttpRequest")||
+                           (context.Request.Headers.ContainsKey("content-type") && context.Request.Headers["content-type"] == "application/json"))
+                           {
+                               context.Response.ContentType = "application/json";
+                               context.Response.StatusCode = StatusCodes.Status200OK;
+                               context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("没有权限")));
+                               return Task.CompletedTask;
+                           }
+                           context.Response.Redirect($"{context.RedirectUri}");
+                           context.Response.StatusCode = StatusCodes.Status302Found;
+                           return Task.CompletedTask;
+                       }
+                   };
 
                });//用cookie的方式验证，顺便初始化登录地址
+
+
+
+
+        
+
+
 
             //关闭参数自动校验,我们需要返回自定义的格式
             services.Configure<ApiBehaviorOptions>((o) =>
@@ -66,6 +107,8 @@ namespace Dywq.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+           
 
             using (var scope = app.ApplicationServices.CreateScope())
             {
@@ -103,14 +146,14 @@ namespace Dywq.Web
 
             app.UseEndpoints(endpoints =>
             {
-                
+
                 endpoints.MapControllerRoute(
                name: "areas",
                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                
-               endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                 name: "default",
+                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 

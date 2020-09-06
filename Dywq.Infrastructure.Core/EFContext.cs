@@ -43,14 +43,14 @@ namespace Dywq.Infrastructure.Core
             return Task.FromResult(_currentTransaction);
         }
 
-        public async Task CommitTransactionAsync(IDbContextTransaction transaction)
+        public async Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken= default)
         {
             if (transaction == null) throw new ArgumentNullException(nameof(transaction));
             if (transaction != _currentTransaction) throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
 
             try
             {
-                await SaveChangesAsync();
+                await SaveChangesAsync(cancellationToken);
                 transaction.Commit();
             }
             catch

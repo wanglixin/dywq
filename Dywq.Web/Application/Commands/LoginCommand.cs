@@ -47,7 +47,7 @@ namespace Dywq.Web.Application.Commands
         public GetUserCommandHandler(IBaseRepository<User> userRepository,
             IBaseRepository<CompanyUser> companyUserRepository,
             IBaseRepository<Company> companyRepository,
-             IBaseRepository<CompanyFieldData> companyFieldData,
+             IBaseRepository<CompanyFieldData> companyFieldDataRepository,
             ICapPublisher capPublisher,
             ILogger<GetUserCommandHandler> logger,
             IMd5 md5)
@@ -55,7 +55,7 @@ namespace Dywq.Web.Application.Commands
             _userRepository = userRepository;
             _companyUserRepository = companyUserRepository;
             _companyRepository = companyRepository;
-            _companyFieldDataRepository = companyFieldData;
+            _companyFieldDataRepository = companyFieldDataRepository;
             _capPublisher = capPublisher;
             _logger = logger;
             _md5 = md5;

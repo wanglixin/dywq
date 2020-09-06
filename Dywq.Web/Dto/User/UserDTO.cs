@@ -16,5 +16,17 @@ namespace Dywq.Web.Dto.User
         public string CompanyName { get; set; }
 
         public string Logo { get; set; }
+
+
+        public string Role
+        {
+            get
+            {
+                if (this.Type == 0) return Dywq.Web.Common.Role.User;
+                else if (this.Type == 1) return Dywq.Web.Common.Role.Admin;
+                else return Dywq.Web.Common.Role.User;
+            }
+        }
+
     }
 }

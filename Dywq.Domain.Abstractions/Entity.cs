@@ -7,6 +7,12 @@ namespace Dywq.Domain.Abstractions
 {
     public abstract class Entity : IEntity
     {
+
+        public Entity()
+        {
+            this.CreatedTime = DateTime.Now;
+        }
+
         public abstract object[] GetKeys();
         public override string ToString()
         {
@@ -45,6 +51,8 @@ namespace Dywq.Domain.Abstractions
         {
             _domainEvents?.Clear();
         }
+
+
         #endregion
     }
 

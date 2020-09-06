@@ -1,5 +1,6 @@
 ﻿using Dywq.Domain;
 using Dywq.Domain.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,6 +26,13 @@ namespace Dywq.Infrastructure.Core
         bool Any();
         Task<TEntity> GetAsync(Func<TEntity, bool> predicate);
         TEntity Get(Func<TEntity, bool> predicate);
+
+        DbSet<TEntity> Set();
+
+
+        Task<IEnumerable<TEntity>> BatchAddAsync(IEnumerable<TEntity> entities);
+
+
 
     }
 

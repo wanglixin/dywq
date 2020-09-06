@@ -26,7 +26,7 @@ namespace Dywq.Domain.CompanyAggregate
         public string Value { get; set; }
 
         /// <summary>
-        /// 字段类型：0：文本框数字  1：文本框字符串 2：下拉框
+        /// 字段类型：0文本框字符串 1文本框数字 2日期  3复选框 4单选框 
         /// </summary>
         public int Type { get; set; }
 

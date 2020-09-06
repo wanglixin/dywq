@@ -11,6 +11,7 @@ namespace Dywq.Domain.CompanyAggregate
     /// </summary>
     public class Company : Entity<int>, IAggregateRoot
     {
+       
         public string Logo { get; set; }
     }
 }

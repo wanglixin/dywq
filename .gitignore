@@ -179,6 +179,8 @@ DocProject/Help/*.hhc
 DocProject/Help/*.hhk
 DocProject/Help/*.hhp
 DocProject/Help/Html2
+
+
 DocProject/Help/html
 
 # Click-Once directory
@@ -366,3 +368,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+/Dywq.Web/appsettings.json
+/Dywq.Web/appsettings.Development.json
+
+

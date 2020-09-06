@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dywq.Infrastructure.Core
@@ -14,7 +15,7 @@ namespace Dywq.Infrastructure.Core
 
         Task<IDbContextTransaction> BeginTransactionAsync();
 
-        Task CommitTransactionAsync(IDbContextTransaction transaction);
+        Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken = default);
 
         void RollbackTransaction();
     }

@@ -13,6 +13,8 @@ namespace Dywq.Infrastructure.Core.Behaviors
 {
     public class TransactionBehavior<TDbContext, TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TDbContext : EFContext
     {
+
+
         ILogger _logger;
         TDbContext _dbContext;
         ICapPublisher _capBus;
@@ -27,6 +29,7 @@ namespace Dywq.Infrastructure.Core.Behaviors
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var response = default(TResponse);
+
             var typeName = request.GetGenericTypeName();
 
             try
@@ -48,10 +51,19 @@ namespace Dywq.Infrastructure.Core.Behaviors
 
                         response = await next();
 
+                        var result = response as Result;
+
+                        if (result != null && result.Code != 0)
+                        {
+                            _dbContext.RollbackTransaction();
+                            _logger.LogInformation("----- 结束事务 {TransactionId} {CommandName}", transaction.TransactionId, typeName);
+                            return;
+                        }
+
                         _logger.LogInformation("----- 提交事务 {TransactionId} {CommandName}", transaction.TransactionId, typeName);
 
 
-                        await _dbContext.CommitTransactionAsync(transaction);
+                        await _dbContext.CommitTransactionAsync(transaction, cancellationToken);
 
                         transactionId = transaction.TransactionId;
                     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dywq.Infrastructure.Core
 {
@@ -79,6 +80,22 @@ namespace Dywq.Infrastructure.Core
         public virtual TEntity Get(Func<TEntity, bool> predicate)
         {
             return DbContext.Set<TEntity>().Where(predicate).FirstOrDefault();
+        }
+
+        public virtual DbSet<TEntity> Set()
+        {
+            return DbContext.Set<TEntity>();
+        }
+
+        public async Task<IEnumerable<TEntity>> BatchAddAsync(IEnumerable<TEntity> entities)
+        {
+            var ret = new List<TEntity>();
+            foreach(var x in entities)
+            {
+                var _x = await AddAsync(x);
+                ret.Add(_x);
+            }
+            return ret;
         }
     }
 

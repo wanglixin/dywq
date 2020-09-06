@@ -49,7 +49,7 @@ namespace Dywq.Web.Controllers.Api
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name,user.UserName),
-                new Claim(ClaimTypes.Role,user.Type.ToString()),
+                new Claim(ClaimTypes.Role,user.Role),
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                 new Claim(CompanyFieldAlias.CompanyName, user.CompanyName),
                 new Claim("CompanyId", user.CompanyId.ToString())
