@@ -1,10 +1,10 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM registry.cn-hangzhou.aliyuncs.com/newbe36524/aspnet:3.1-buster-slim AS base
+FROM registry.cn-hangzhou.aliyuncs.com/newbe36524/aspnet:3.1-bionic AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM registry.cn-hangzhou.aliyuncs.com/newbe36524/sdk:3.1-buster AS build
+FROM registry.cn-hangzhou.aliyuncs.com/newbe36524/sdk:3.1-bionic AS build
 WORKDIR /src
 COPY ["Dywq.Web/Dywq.Web.csproj", "Dywq.Web/"]
 COPY ["Dywq.Infrastructure/Dywq.Infrastructure.csproj", "Dywq.Infrastructure/"]
