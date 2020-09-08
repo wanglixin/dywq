@@ -11,6 +11,7 @@ using Dywq.Web.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,15 +21,12 @@ namespace Dywq.Web.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
-        IMediator _mediator;
-        readonly ILogger<UserController> _logger;
 
-        public UserController(IMediator mediator, ILogger<UserController> logger)
+        public UserController(IMediator mediator, ILogger<UserController> logger, IWebHostEnvironment webhostEnvironment) : base(mediator, logger, webhostEnvironment)
         {
-            _mediator = mediator;
-            _logger = logger;
+
 
         }
 

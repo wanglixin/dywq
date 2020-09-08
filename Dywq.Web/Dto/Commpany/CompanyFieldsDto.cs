@@ -31,7 +31,17 @@ namespace Dywq.Web.Dto.Commpany
 
                 public string Alias { get; set; }
 
+
+                /// <summary>
+                /// 字段类型：0文本框字符串 1文本框数字 2日期  3复选框 4单选框 5 下拉框
+                /// </summary>
                 public int Type { get; set; }
+
+
+                /// <summary>
+                /// 是否必填 必上传
+                /// </summary>
+                public bool Required { get; set; }
 
                 public IList<CompanyFieldDefaultValueItem> CompanyFieldDefaultValues { get; set; }
 

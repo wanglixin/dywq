@@ -1,4 +1,6 @@
-﻿@model Dywq.Web.Dto.User.UserDTO
+﻿@{
+    var user = (Dywq.Web.Dto.User.UserDTO)ViewBag.CurrentUser;
+}
 <!-- banner -->
 <section id="banner">
     <div class="container">
@@ -26,7 +28,7 @@
             </div>
             <!--登陆-->
             <div class="col-md-3 col-sm-3 col-xs-12 login_content">
-                @if (Model == null)
+                @if (user == null)
                 {
                     <div class="login_box">
                         <img src="img/loginbg.png" alt="" class="loginbg">
@@ -53,14 +55,23 @@
                         <div class="login_title">已登录</div>
                         <div class="login_msg">
                             <div class="login_avatar">
-                                <img src="@(string.IsNullOrWhiteSpace(Model.Logo)?"/img/user.png":Model.Logo)" />
+                                <img src="@(string.IsNullOrWhiteSpace(user.Logo)?"/img/user.png":user.Logo)" />
                             </div>
                             <div class="login_text">
-                                HI，@Model.CompanyName，<br />欢迎登陆数字惠企平台
+                                HI，@{
+                                if (user.Type == 1)
+                                {
+                                @("管理员")
+                                }
+                                else
+                                {
+                                @(user.CompanyName)
+                                }
+                                }，<br />欢迎登陆数字惠企平台
                             </div>
                         </div>
                         <div class="login_btn">
-                            <input class="btn_logout"  type="button" value="退出"/>
+                            <input class="btn_logout" type="button" value="退出" />
                         </div>
 
 

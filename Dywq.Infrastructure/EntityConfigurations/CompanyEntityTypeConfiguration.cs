@@ -28,6 +28,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Sort);
             builder.Property(p => p.Type);
             builder.Property(p => p.Alias).HasMaxLength(50);
+            builder.Property(p => p.Required);
 
         }
     }

@@ -1,0 +1,103 @@
+﻿.field-group {
+    width: 100%;
+    min-height: 200px;
+    font-size: 16px;
+    background-color: white;
+    margin-bottom: 5px;
+}
+
+    .field-group legend {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+.field-items {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.field-item {
+    width: 50%;
+    min-height: 35px;
+    float: left;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+    .field-item span {
+        width: 30%;
+        text-align: left;
+        padding-left: 40px;
+        padding-right: 20px;
+        line-height: 40px;
+    }
+
+    .field-item input, .field-item select {
+        width: 50%;
+        border-radius: 5px;
+        border: 1px solid rgba(204, 204, 204, 1);
+        padding: 5px;
+    }
+
+    .field-item .cb {
+        width: 75%;
+        border-radius: 5px;
+        border: 1px solid rgba(204, 204, 204, 1);
+        min-height: 40px;
+        margin-left: -15%;
+        padding: 10px;
+    }
+
+.w-100 {
+    width: 100%;
+}
+
+.field-item input[type=checkbox], .field-item input[type=radio] {
+    width: initial;
+}
+
+.field-item .cb-item {
+    height: 30px;
+    padding: 10px;
+    float: left;
+    padding-top: 5px;
+}
+
+.cb-item label {
+    display: initial;
+}
+
+.btn-box {
+    width: 100%;
+    min-height: 100px;
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+    .btn-box .btn-save {
+        width: 150px;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(22,119,255,1);
+        color: white;
+    }
+
+
+.upload {
+}
+
+    .upload input[type=file] {
+        width: 40%;
+    }
+
+    .upload input[type=button] {
+        width: 9%;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(22,119,255,1);
+        color: white;
+        margin-left: 1%;
+    }

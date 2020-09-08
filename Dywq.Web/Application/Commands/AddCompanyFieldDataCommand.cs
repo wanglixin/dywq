@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Dywq.Web.Application.Commands
 {
     public class AddCompanyFieldDataCommand : IRequest<Result>
     {
+        [Required(ErrorMessage = "请上传logo")]
         public string Logo { get; set; }
         public IEnumerable<FieldDataItemDto> FieldDataItems { get; set; }
     }
@@ -51,15 +53,24 @@ namespace Dywq.Web.Application.Commands
 
             var ret = await companyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
             if (ret < 1) return Result.Failure("操作失败!");
-          
-            var items = request.FieldDataItems.Select(x => new CompanyFieldData
+
+            var items = new List<CompanyFieldData>();
+            foreach (var x in request.FieldDataItems)
             {
-                Alias = x.Alias,
-                CompanyId = company.Id,
-                FieldId = x.FieldId,
-                Type = x.Type,
-                Value = x.Value
-            });
+                if (x.Required && string.IsNullOrWhiteSpace(x.Value))
+                {
+                    return Result.Failure($"{x.Name} 不能为空");
+                }
+
+                items.Add(new CompanyFieldData
+                {
+                    Alias = x.Alias,
+                    CompanyId = company.Id,
+                    FieldId = x.FieldId,
+                    Type = x.Type,
+                    Value = x.Value
+                });
+            }
 
             await companyFieldDataRepository.BatchAddAsync(items);
 

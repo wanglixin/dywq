@@ -24,8 +24,7 @@ namespace Dywq.Web.Controllers
 
         public IActionResult Index()
         {
-            var user = GetCurrentUser();
-            return View(user);
+            return View();
         }
 
         public IActionResult Privacy()

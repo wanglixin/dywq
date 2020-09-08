@@ -73,6 +73,7 @@ namespace Dywq.Web.Application.Commands
                         GroupId = f.GroupId,
                         Alias = f.Alias,
                         Type = f.Type,
+                        Required = f.Required,
                         CompanyFieldDefaultValues = new List<CompanyFieldDefaultValueItem>()
                     };
 

@@ -34,5 +34,8 @@ namespace Dywq.Domain.CompanyAggregate
         /// 别名，方便查询
         /// </summary>
         public string Alias { get; set; }
+
+
+
     }
 }

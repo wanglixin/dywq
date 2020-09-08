@@ -1,15 +1,146 @@
-﻿
+﻿@{
+    var user = (Dywq.Web.Dto.User.UserDTO)ViewBag.CurrentUser;
+}
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>用户中心</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业动态</title>
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/index9.css" rel="stylesheet">
+    <script src="~/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-ext.js"></script>
+    <script src="~/js/bootstrap.js" type="text/javascript"></script>
+    @RenderSection("head")
+
+
 </head>
 <body>
-    
-    @RenderBody()
+    <header>
+        <img src="~/img/admin_log.png" alt="" class="admin_logo">
+        <div class="right_top">
+            <div class="user_defaultimg">
+                <img src="~/img/user_default/png" alt="">
+            </div>
+            <h4>
+                欢迎您，@{
+                    if (user.Type == 1)
+                    {
+                        @("管理员")
+                    }
+                    else
+                    {
+                        @(user.CompanyName)
+                    }
+                }
+            </h4>
+        </div>
+    </header>
+    <div class="content">
+        <div class="asidebar">
+            <ul id="main-nav" class="nav nav-tabs nav-stacked">
+                <li>
+                    <a href="javascript:;" class="nav-header">
+                        <img src="~/img/icon2.png" alt="" class="icon">
+                        <span>我的首页</span>
+                        <img src="~/img/arrow.png" alt="" class="arrow">
+                    </a>
+                    <ul id="systemSetting" class="nav nav-list">
+                        <li><a href=""><span>用户管理</span></a></li>
+                        <li><a href="#"><span>菜单管理</span></a></li>
+                        <li><a href="#"><span>角色管理</span></a></li>
+                        <li><a href="#"><span>修改密码</span></a></li>
+                        <li><a href="#"><span>日志查看</span></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="nav-header">
+                        <img src="~/img/icon2.png" alt="" class="icon">
+                        <span>企业信息</span>
+                        <img src="~/img/arrow.png" alt="" class="arrow">
+                    </a>
+                    <ul id="systemSetting" class="nav nav-list">
+                        <li class="active"><a href=""><span>企业动态</span></a></li>
+                        <li><a href="#"><span>企业融资</span></a></li>
+                        <li><a href="#"><span>企业对接</span></a></li>
+                        <li><a href="#"><span>产品信息</span></a></li>
+                        <li><a href="#"><span>采购信息</span></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="nav-header">
+                        <img src="img/icon2.png" alt="" class="icon">
+                        <span>其他信息</span>
+                        <img src="~/img/arrow.png" alt="" class="arrow">
+                    </a>
+                    <ul id="systemSetting" class="nav nav-list">
+                        <li><a href=""><span>企业动态</span></a></li>
+                        <li><a href="#"><span>企业融资</span></a></li>
+                        <li><a href="#"><span>企业对接</span></a></li>
+                        <li><a href="#"><span>产品信息</span></a></li>
+                        <li><a href="#"><span>采购信息</span></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="nav-header">
+                        <img src="~/img/icon2.png" alt="" class="icon">
+                        <span>官方信息</span>
+                        <img src="~/img/arrow.png" alt="" class="arrow">
+                    </a>
+                    <ul id="systemSetting" class="nav nav-list">
+                        <li><a href=""><span>企业动态</span></a></li>
+                        <li><a href="#"><span>企业融资</span></a></li>
+                        <li><a href="#"><span>企业对接</span></a></li>
+                        <li><a href="#"><span>产品信息</span></a></li>
+                        <li><a href="#"><span>采购信息</span></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="nav-header">
+                        <img src="~/img/icon2.png" alt="" class="icon">
+                        <span>用户管理</span>
+                        <img src="~/img/arrow.png" alt="" class="arrow">
+                    </a>
+                    <ul id="systemSetting" class="nav nav-list">
+                        <li><a href=""><span>企业动态</span></a></li>
+                        <li><a href="#"><span>企业融资</span></a></li>
+                        <li><a href="#"><span>企业对接</span></a></li>
+                        <li><a href="#"><span>产品信息</span></a></li>
+                        <li><a href="#"><span>采购信息</span></a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="nav-header">
+                        <img src="~/img/icon2.png" alt="" class="icon">
+                        <span>权限管理</span>
+                        <img src="~/img/arrow.png" alt="" class="arrow">
+                    </a>
+                    <ul id="systemSetting" class="nav nav-list">
+                        <li><a href=""><span>企业动态</span></a></li>
+                        <li><a href="#"><span>企业融资</span></a></li>
+                        <li><a href="#"><span>企业对接</span></a></li>
+                        <li><a href="#"><span>产品信息</span></a></li>
+                        <li><a href="#"><span>采购信息</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="content_right">
+            @RenderBody()
+        </div>
+    </div>
 
-    @RenderSection("js", false)
+
+
+    <script>
+        $(".nav-header").click(function () {
+            $(this).next().slideToggle();
+        })
+    </script>
+
+    @RenderSection("js", false);
+
 </body>
+
 </html>

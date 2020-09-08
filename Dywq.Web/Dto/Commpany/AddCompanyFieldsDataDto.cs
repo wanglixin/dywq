@@ -12,5 +12,9 @@ namespace Dywq.Web.Dto.Commpany
         public string Value { get; set; }
         public int Type { get; set; }
         public string Alias { get; set; }
+
+        public bool Required { get; set; }
+
+        public string Name { get; set; }
     }
 }

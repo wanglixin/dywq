@@ -7,6 +7,7 @@ using Dywq.Web.Application.Commands;
 using Dywq.Web.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -14,21 +15,16 @@ using Newtonsoft.Json;
 namespace Dywq.Web.Controllers.Api
 {
 
-    
+
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class CompanyController : ControllerBase
+    public class CompanyController : BaseApiController
     {
-        IMediator _mediator;
-        readonly ILogger<CompanyController> _logger;
-
-        public CompanyController(IMediator mediator, ILogger<CompanyController> logger)
+        public CompanyController(IMediator mediator, ILogger<CompanyController> logger, IWebHostEnvironment webhostEnvironment) : base(mediator, logger, webhostEnvironment)
         {
-            _mediator = mediator;
-            _logger = logger;
-
         }
 
+        [HttpPost]
         [Authorize(Roles = Common.Role.Admin)]
         public async Task<Result> AddCompany([FromBody]AddCompanyFieldDataCommand cmd)
         {
@@ -39,7 +35,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-        [Authorize(Roles =Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin)]
         public async Task<Result> Test()
         {
 

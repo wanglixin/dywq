@@ -77,7 +77,7 @@ namespace Dywq.Web.Application.Commands
             var commpanyUser = await _companyUserRepository.GetAsync(x => x.UserId == user.Id);
             if (commpanyUser == null)
             {
-                dto.CompanyName = "未绑定企业";
+                dto.CompanyName = "[未绑定企业]";
                 dto.CompanyId = 0;
 
             }

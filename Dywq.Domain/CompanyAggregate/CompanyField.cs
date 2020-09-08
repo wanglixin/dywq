@@ -27,7 +27,7 @@ namespace Dywq.Domain.CompanyAggregate
         public int Sort { get; set; }
 
         /// <summary>
-        /// 字段类型：0文本框字符串 1文本框数字 2日期  3复选框 4单选框 
+        /// 字段类型：0文本框字符串 1文本框数字 2日期  3复选框 4单选框 5 下拉框
         /// </summary>
         public int Type { get; set; }
 
@@ -35,7 +35,13 @@ namespace Dywq.Domain.CompanyAggregate
         /// 别名，方便查询
         /// </summary>
         public string Alias { get; set; }
- 
+
+
+        /// <summary>
+        /// 是否必填 必上传
+        /// </summary>
+        public bool Required { get; set; }
+
 
 
     }

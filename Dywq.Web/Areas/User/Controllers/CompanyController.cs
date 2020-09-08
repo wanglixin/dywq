@@ -11,33 +11,28 @@ using Microsoft.Extensions.Logging;
 
 namespace Dywq.Web.Areas.User.Controllers
 {
+
     [Authorize]
     [Area("User")]
-    public class HomeController : BaseController
+    public class CompanyController : BaseController
     {
-        IMediator _mediator;
-        readonly ILogger<HomeController> _logger;
 
-        public HomeController(IMediator mediator, ILogger<HomeController> logger)
+        IMediator _mediator;
+        readonly ILogger<CompanyController> _logger;
+
+        public CompanyController(IMediator mediator, ILogger<CompanyController> logger)
         {
             _mediator = mediator;
             _logger = logger;
 
         }
 
-        public IActionResult Index()
+        [Authorize( Roles = Common.Role.Admin)]
+        public async Task<IActionResult> Add(GetCompanyFieldsCommand cmd)
         {
-            return View();
+            var fields= await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return View(fields);
+
         }
-
-
-
-        public async Task<IActionResult> Test(GetCompanyFieldsCommand cmd)
-        {
-            var obj = await _mediator.Send(cmd, HttpContext.RequestAborted);
-
-            return Json(obj);
-        }
-
     }
 }
