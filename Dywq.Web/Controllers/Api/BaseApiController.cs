@@ -47,7 +47,7 @@ namespace Dywq.Web.Controllers.Api
             var ext = Path.GetExtension(file.FileName).ToLower();
             fileName = $"{fileName}{ext}";
             _logger.LogInformation(fileName);
-            var filePath = Path.Combine(webRootPath, @$"upload\{dir}\");
+            var filePath = Path.Combine(webRootPath, @$"upload/{dir}/");
             _logger.LogInformation(filePath);
             if (!Directory.Exists(filePath)) Directory.CreateDirectory(filePath);
 

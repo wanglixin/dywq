@@ -371,5 +371,6 @@ FodyWeavers.xsd
 
 /Dywq.Web/appsettings.json
 /Dywq.Web/appsettings.Development.json
+/Dywq.Web/wwwroot/upload/
 
 
