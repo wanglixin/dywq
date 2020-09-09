@@ -32,7 +32,14 @@ namespace Dywq.Infrastructure.Core
 
         Task<IEnumerable<TEntity>> BatchAddAsync(IEnumerable<TEntity> entities);
 
+        Task<int> CountAsync(Func<TEntity, bool> predicate);
+        Task<int> CountAsync();
 
+        // Task<bool> ExecuteAsync(string sql);
+
+        Task<IEnumerable<T>> SqlQueryAsync<T>(string sql, params object[] parameters) where T : class, new();
+
+        Task<int> SqlCountAsync(string sql, params object[] parameters);
 
     }
 

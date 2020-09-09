@@ -16,15 +16,6 @@ namespace Dywq.Infrastructure
         {
         }
 
-        //public DbSet<SiteInfo> SiteInfos { get; set; }
-        //public DbSet<Company> Companys { get; set; }
-        //public DbSet<CompanyField> CompanyFields { get; set; }
-        //public DbSet<CompanyFieldDefaultValue> CompanyFieldDefaultValues { get; set; }
-        //public DbSet<CompanyFieldGroup> CompanyFieldGroups { get; set; }
-        //public DbSet<CompanyUser> CompanyUsers { get; set; }
-        //public DbSet<User> Users { get; set; }
-        //public DbSet<CompanyFieldData> CompanyFieldDatas { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region 注册领域模型与数据库的映射关系

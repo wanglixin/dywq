@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dywq.Infrastructure.Core;
 using Dywq.Web.Filters;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -59,7 +60,7 @@ namespace Dywq.Web.Controllers.Api
             return Result<string>.Success(_fileName);
         }
 
-
+        [Authorize(Roles = Common.Role.Admin)]
         public async Task<Result<string>> UploadImg(IFormFile file)
         {
             var ext = Path.GetExtension(file.FileName).ToLower();

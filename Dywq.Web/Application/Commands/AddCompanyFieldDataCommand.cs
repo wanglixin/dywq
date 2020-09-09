@@ -45,14 +45,7 @@ namespace Dywq.Web.Application.Commands
 
         public async Task<Result> Handle(AddCompanyFieldDataCommand request, CancellationToken cancellationToken)
         {
-            var company = new Company()
-            {
-                Logo = request.Logo,
-            };
-            await companyRepository.AddAsync(company, cancellationToken);
-
-            var ret = await companyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-            if (ret < 1) return Result.Failure("操作失败!");
+            //check 
 
             var items = new List<CompanyFieldData>();
             foreach (var x in request.FieldDataItems)
@@ -65,12 +58,35 @@ namespace Dywq.Web.Application.Commands
                 items.Add(new CompanyFieldData
                 {
                     Alias = x.Alias,
-                    CompanyId = company.Id,
+                    // CompanyId = company.Id,
                     FieldId = x.FieldId,
                     Type = x.Type,
                     Value = x.Value
                 });
             }
+
+            var companyName = request.FieldDataItems.FirstOrDefault(x => x.Alias == Common.CompanyFieldAlias.CompanyName);
+            if (!string.IsNullOrWhiteSpace(companyName.Value))
+            {
+                //判断企业名称是否重复
+                var exist = await companyFieldDataRepository.AnyAsync(x => x.Alias == Common.CompanyFieldAlias.CompanyName && x.Value == companyName.Value);
+                if (exist) return Result.Failure("企业名称重复");
+
+            }
+
+            var company = new Company()
+            {
+                Logo = request.Logo,
+            };
+            await companyRepository.AddAsync(company, cancellationToken);
+
+            var ret = await companyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            if (ret < 1) return Result.Failure("操作失败!");
+
+            items.ForEach(x =>
+            {
+                x.CompanyId = company.Id;
+            });
 
             await companyFieldDataRepository.BatchAddAsync(items);
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,11 +7,15 @@ namespace Dywq.Infrastructure.Core
 {
     public class Result
     {
+
+        [JsonProperty("message")]
         /// <summary>
         /// 信息
         /// </summary>
         public string Message { get; set; }
 
+
+        [JsonProperty("code")]
         /// <summary>
         /// 状态码
         /// </summary>
@@ -82,6 +87,9 @@ namespace Dywq.Infrastructure.Core
     /// </summary>
     public class Result<T> : Result
     {
+
+
+        [JsonProperty("data")]
         /// <summary>
         /// 数据
         /// </summary>
@@ -132,5 +140,44 @@ namespace Dywq.Infrastructure.Core
             result.Data = obj;
             return result;
         }
+    }
+
+
+
+
+    public class PageResult<T> : Result<IEnumerable<T>>
+    {
+        [JsonProperty("data")]
+        public int Total { get; set; }
+
+        /// <summary>
+        /// 当前第几页
+        /// </summary>
+        public int PageIndex { get; set; }
+
+        /// <summary>
+        /// 一页数量
+        /// </summary>
+        public int PageSize { get; set; }
+
+
+        public string Pager { get; set; }
+
+
+        public static PageResult<T> Success(IEnumerable<T> obj, int total, int pageIndex, int pageSize, string linkUrl)
+        {
+            var result = new PageResult<T>()
+            {
+                Code = 0,
+                Data = obj,
+                Message = "success",
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Total = total,
+                Pager =Core.Pager.Create(pageSize, pageIndex, total, linkUrl, 8)
+            };
+            return result;
+        }
+
     }
 }

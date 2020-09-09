@@ -6,15 +6,15 @@ using System.Text;
 
 namespace Dywq.Infrastructure.Repositories
 {
-    public class SiteRepository : Repository<SiteInfo, int, DomainContext>, ISiteRepository
-    {
-        public SiteRepository(DomainContext context) : base(context)
-        {
-        }
-    }
+    //public class SiteRepository : Repository<SiteInfo, int, DomainContext>, ISiteRepository
+    //{
+    //    public SiteRepository(DomainContext context) : base(context)
+    //    {
+    //    }
+    //}
 
 
-    public interface ISiteRepository : IRepository<SiteInfo, int>
-    { }
+    //public interface ISiteRepository : IRepository<SiteInfo, int>
+    //{ }
 
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Dywq.Infrastructure.Core
 {
@@ -17,6 +18,7 @@ namespace Dywq.Infrastructure.Core
 
         public Repository(TDbContext context)
         {
+
             this.DbContext = context;
         }
         public virtual IUnitOfWork UnitOfWork => DbContext;
@@ -90,12 +92,39 @@ namespace Dywq.Infrastructure.Core
         public async Task<IEnumerable<TEntity>> BatchAddAsync(IEnumerable<TEntity> entities)
         {
             var ret = new List<TEntity>();
-            foreach(var x in entities)
+            foreach (var x in entities)
             {
                 var _x = await AddAsync(x);
                 ret.Add(_x);
             }
             return ret;
+        }
+
+        public Task<int> CountAsync(Func<TEntity, bool> predicate)
+        {
+            return DbContext.Set<TEntity>().CountAsync(x => predicate(x));
+        }
+
+        public Task<int> CountAsync()
+        {
+            return DbContext.Set<TEntity>().CountAsync();
+        }
+
+        //public async Task<IEnumerable<T>> GetListAsync<T>(string sql, params object[] parameters) where T : class, new()
+        //{
+        //    return await DbContext.Database.SqlQueryAsync<T>(sql, parameters);
+        //}
+
+
+
+        public async Task<IEnumerable<T>> SqlQueryAsync<T>(string sql, params object[] parameters) where T : class, new()
+        {
+            return await DbContext.Database.SqlQueryAsync<T>(sql, parameters);
+        }
+
+        public async Task<int> SqlCountAsync(string sql, params object[] parameters)
+        {
+            return await DbContext.Database.SqlCountAsync(sql, parameters);
         }
     }
 

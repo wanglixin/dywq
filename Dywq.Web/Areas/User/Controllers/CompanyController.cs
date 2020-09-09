@@ -34,5 +34,14 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(fields);
 
         }
+
+
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> List(GetCompanysCommand cmd)
+        {
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return View(result);
+        }
     }
 }

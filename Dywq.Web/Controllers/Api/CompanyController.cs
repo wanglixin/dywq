@@ -26,7 +26,7 @@ namespace Dywq.Web.Controllers.Api
 
         [HttpPost]
         [Authorize(Roles = Common.Role.Admin)]
-        public async Task<Result> AddCompany([FromBody]AddCompanyFieldDataCommand cmd)
+        public async Task<Result> Add([FromBody]AddCompanyFieldDataCommand cmd)
         {
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
@@ -35,13 +35,6 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
-        public async Task<Result> Test()
-        {
-
-            return Result.Success("测试"); ;
-
-        }
 
 
     }

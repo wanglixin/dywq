@@ -38,7 +38,7 @@ namespace Dywq.Web
                 mvcOptions.Filters.Add<ActionFilter>();
             }).AddJsonOptions(jsonoptions =>
             {
-                jsonoptions.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                jsonoptions.JsonSerializerOptions.Encoder =System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             });
             services.AddSession();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();

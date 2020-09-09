@@ -1,0 +1,24 @@
+﻿.paginabox span.disabled, .paginabox span.current, .paginabox a {
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+    min-width: 32px;
+    height: 32px;
+    text-align: center;
+    color: rgba(102, 102, 102, 1);
+    font-size: 14px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid rgba(221, 221, 221, 1);
+   
+}
+
+    .paginabox span.current {
+        background: rgba(22, 119, 255, 1);
+        color: #fff;
+    }
+
+.paginabox span.disabled{
+   border:none;
+   background-color:transparent;
+}

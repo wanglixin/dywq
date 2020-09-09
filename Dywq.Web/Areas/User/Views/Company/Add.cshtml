@@ -1,11 +1,26 @@
 ﻿@model Dywq.Web.Dto.Commpany.CompanyFieldsDto
 @section head{
     <link href="~/css/company_add.css" rel="stylesheet" />
-
+    <style>
+        .add_txt a {
+            color: white;
+        }
+        .tools{
+            margin-bottom:20px;
+        }
+    </style>
 }
 
 <h2>企业录入</h2>
-<div class="tools"></div>
+<div class="tools">
+    <div class="left_btns">
+        <div class="addbtn">
+            
+            <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+        </div>
+    </div>
+   
+</div>
 
 <form id="form_data">
 
@@ -212,7 +227,7 @@
                 console.log(JSON.stringify(data));
                 if (stop) return;
                 $.ajax({
-                    url: "/api/company/addCompany",
+                    url: "/api/company/add",
                     type: 'POST',
                     dataType: "json",
                     data: JSON.stringify({ FieldDataItems: data, Logo: $("[name='Logo']").val() }),

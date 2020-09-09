@@ -2,9 +2,13 @@
 using Dywq.Infrastructure.Core.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,7 +47,7 @@ namespace Dywq.Infrastructure.Core
             return Task.FromResult(_currentTransaction);
         }
 
-        public async Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken= default)
+        public async Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken = default)
         {
             if (transaction == null) throw new ArgumentNullException(nameof(transaction));
             if (transaction != _currentTransaction) throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
@@ -84,7 +88,25 @@ namespace Dywq.Infrastructure.Core
             }
         }
 
+        //public async Task<IEnumerable<T>> SqlQueryAsync<T>(string sql, params object[] parameters) where T : class, new()
+        //{
+        //    return await this.Database.SqlQueryAsync<T>(sql,parameters);
+        //}
+
 
         #endregion
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
 }

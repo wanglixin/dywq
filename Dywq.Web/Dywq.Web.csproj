@@ -37,4 +37,12 @@
     <Folder Include="Areas\User\Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\bootstrap.js" />
+    <None Include="wwwroot\js\jquery-ext.js" />
+    <None Include="wwwroot\js\jquery.min.js" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\swiper-4.3.5.min.js" />
+  </ItemGroup>
+
 </Project>

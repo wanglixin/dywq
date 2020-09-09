@@ -7,12 +7,12 @@ header{padding: 14px 0;}
 /* logincon */
 .login_con{display: flex;align-items: center;}
 .login_con .userimg,.login_con .applyimg{width: 16px;height: 16px;}
-.login_con .login_sec{width: 90px;height: 23px;background: #fff;color: #015CB8;font-size:12px;display: flex;justify-content: center;align-items: center;border-radius: 4px;}
-.login_con .tip{font-size: 12px;color: #fff;margin-right: 50px;letter-spacing: 2px;}
+.login_con .login_sec{width: 90px;height: 23px;background: rgba(34, 97, 188, 1);color: #fff;font-size:12px;display: flex;justify-content: center;align-items: center;border-radius: 4px;}
+.login_con .tip{font-size: 12px;color: rgba(102, 102, 102, 1);margin-right: 50px;letter-spacing: 2px;}
 .login_sec h4{font-size:12px;color: #015CB8;}
 .login_sec .login_txt{margin-top: 2px;}
 .login_con .apply{display: flex;margin-left: 30px;}
-.login_con .apply_txt{color: #fff;font-size: 12px;}
+.login_con .apply_txt{color: #015CB8;font-size: 12px;}
 
 /* logo */
 #logo{margin-top: 50px;padding: 0 10px;height: 66px;width: 100%;margin-bottom: 30px;}
