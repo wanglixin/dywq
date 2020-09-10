@@ -56,3 +56,12 @@
         font-size:17px;
         border-radius:4px;
     }
+
+.logout {
+    color: black;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin:20px;
+
+}

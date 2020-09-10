@@ -1,0 +1,10 @@
+﻿.login_con .tip, .login_con .apply_txt {
+    color: white;
+}
+
+.login_txt a {
+    color: white;
+    padding-left:10px;
+    text-decoration:none;
+}
+

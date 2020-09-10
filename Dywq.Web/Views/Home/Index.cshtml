@@ -59,20 +59,21 @@
                             </div>
                             <div class="login_text">
                                 HI，@{
-                                if (user.Type == 1)
-                                {
-                                @("管理员")
-                                }
-                                else
-                                {
-                                @(user.CompanyName)
-                                }
+                                    if (user.Type == 1)
+                                    {
+                                        @("管理员")
+                                    }
+                                    else
+                                    {
+                                        @(user.CompanyName)
+                                    }
                                 }，<br />欢迎登陆数字惠企平台
                             </div>
                         </div>
                         <div class="login_btn">
-                            <input class="btn_logout" type="button" value="退出" />
+                            <input class="btn_logout" onclick="javascript: window.location.href='/user/company/list'" type="button" value="进入个人中心" />
                         </div>
+                     
 
 
                     </div>

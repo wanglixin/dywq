@@ -64,10 +64,5 @@ namespace Dywq.Web.Controllers.Api
 
 
 
-        public async Task<Result> LogOut()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Result.Success();
-        }
     }
 }
