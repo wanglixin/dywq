@@ -15,14 +15,14 @@ using static Dywq.Web.Dto.Commpany.CompanyFieldsDto;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class AddCompanyFieldDataCommand : IRequest<Result>
+    public class AddCompanyCommand : IRequest<Result>
     {
         [Required(ErrorMessage = "请上传logo")]
         public string Logo { get; set; }
         public IEnumerable<FieldDataItemDto> FieldDataItems { get; set; }
     }
 
-    public class AddCompanyFieldDataCommandHandler : IRequestHandler<AddCompanyFieldDataCommand, Result>
+    public class AddCompanyFieldDataCommandHandler : IRequestHandler<AddCompanyCommand, Result>
     {
         readonly ICapPublisher _capPublisher;
         readonly ILogger<GetCompanyFieldsCommandHandler> _logger;
@@ -43,7 +43,7 @@ namespace Dywq.Web.Application.Commands
             companyRepository = _companyRepository;
         }
 
-        public async Task<Result> Handle(AddCompanyFieldDataCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
         {
             //check 
 

@@ -32,7 +32,6 @@ namespace Dywq.Web.Areas.User.Controllers
         {
             var fields= await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(fields);
-
         }
 
 
@@ -43,5 +42,15 @@ namespace Dywq.Web.Areas.User.Controllers
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);
         }
+
+
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> Edit(GetCompanyCommand cmd)
+        {
+            var fields = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return View(fields);
+        }
+
     }
 }

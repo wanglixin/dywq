@@ -43,6 +43,12 @@ namespace Dywq.Web.Dto.Commpany
                 /// </summary>
                 public bool Required { get; set; }
 
+                /// <summary>
+                /// 值
+                /// </summary>
+                public string Value { get; set; }
+
+
                 public IList<CompanyFieldDefaultValueItem> CompanyFieldDefaultValues { get; set; }
 
                 public class CompanyFieldDefaultValueItem
@@ -68,10 +74,15 @@ namespace Dywq.Web.Dto.Commpany
             }
         }
 
-
-
-
-
-
     }
+
+
+
+    public class CompanyEditDto
+    {
+        public CompanyFieldsDto Fields { get; set; }
+        public string Logo { get; set; }
+        public int CompanyId { get; set; }
+    }
+
 }

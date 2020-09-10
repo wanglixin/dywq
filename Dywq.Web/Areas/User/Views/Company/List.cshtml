@@ -4,8 +4,8 @@
     <link href="~/css/company_add.css" rel="stylesheet" />
     <link href="~/css/pager.css" rel="stylesheet" />
     <style>
-        .add_txt a{
-            color:white;
+        .add_txt a {
+            color: white;
         }
     </style>
 }
@@ -68,7 +68,7 @@
                         @(item.CreatedTime)
                     </td>
                     <td class="editbtn">
-                        <a href="">编辑</a> | <a href="">删除</a>
+                        <a href="/user/company/edit?companyId=@(item.CompanyId)">编辑</a> | <a href="javascript:del(@(item.CompanyId),this)">删除</a>
                     </td>
                 </tr>
             }
@@ -248,7 +248,7 @@
                 2020-07-12
             </td>
             <td class="editbtn">
-                <a href="">编辑</a> | <a href="">删除</a>
+                <a href="/">编辑</a> | <a href="">删除</a>
             </td>
         </tr>
     </table>
@@ -281,3 +281,32 @@
     </div>
 
 </div>
+
+
+@section js{
+    <script type="text/javascript">
+        var del = function (id, obj) {
+
+            if (!confirm("确定删除"))
+                return;
+            $.ajax({
+                url: '/api/company/delete',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ CompanyId: id }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("删除成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+
+        }
+    </script>
+
+}

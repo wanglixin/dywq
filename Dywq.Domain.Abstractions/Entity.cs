@@ -31,7 +31,7 @@ namespace Dywq.Domain.Abstractions
         /// <summary>
         /// 更新时间
         /// </summary>
-        public virtual DateTime? UpdatedTime { get; protected set; }
+        public virtual DateTime? UpdatedTime { get;  set; }
 
         [Timestamp]
         public virtual byte[] Version { get; protected set; }

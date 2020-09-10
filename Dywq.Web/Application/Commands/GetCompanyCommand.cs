@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,12 +17,14 @@ using static Dywq.Web.Dto.Commpany.CompanyFieldsDto.CompanyFieldGroupItem.Compan
 
 namespace Dywq.Web.Application.Commands
 {
-    public class GetCompanyFieldsCommand : IRequest<CompanyFieldsDto>
+    
+    public class GetCompanyCommand : IRequest<CompanyEditDto>
     {
-
+        [Range(1, int.MaxValue, ErrorMessage = "企业id错误")]
+        public int CompanyId { get; set; }
     }
 
-    public class GetCompanyFieldsCommandHandler : IRequestHandler<GetCompanyFieldsCommand, CompanyFieldsDto>
+    public class GetCompanyCommandHandler : IRequestHandler<GetCompanyCommand, CompanyEditDto>
     {
         readonly ICapPublisher _capPublisher;
         readonly ILogger<GetCompanyFieldsCommandHandler> _logger;
@@ -31,13 +34,16 @@ namespace Dywq.Web.Application.Commands
         readonly IBaseRepository<CompanyFieldData> _companyFieldDataRepository;
 
         IBaseRepository<CompanyFieldDefaultValue> _companyFieldDefaultValueRepository;
-        public GetCompanyFieldsCommandHandler(
-            ICapPublisher capPublisher,
+        IBaseRepository<Company> _companyRepository;
+
+        public GetCompanyCommandHandler(
+             ICapPublisher capPublisher,
             ILogger<GetCompanyFieldsCommandHandler> logger,
             IBaseRepository<CompanyFieldGroup> companyFieldGroupRepository,
             IBaseRepository<CompanyField> companyFieldRepository,
              IBaseRepository<CompanyFieldDefaultValue> companyFieldDefaultValueRepository,
-             IBaseRepository<CompanyFieldData> companyFieldDataRepository
+             IBaseRepository<CompanyFieldData> companyFieldDataRepository,
+             IBaseRepository<Company> companyRepository
             )
         {
             _capPublisher = capPublisher;
@@ -47,15 +53,26 @@ namespace Dywq.Web.Application.Commands
             _companyFieldRepository = companyFieldRepository;
             _companyFieldDefaultValueRepository = companyFieldDefaultValueRepository;
             _companyFieldDataRepository = companyFieldDataRepository;
+            _companyRepository = companyRepository;
         }
 
-        public async Task<CompanyFieldsDto> Handle(GetCompanyFieldsCommand request, CancellationToken cancellationToken)
+        public async Task<CompanyEditDto> Handle(GetCompanyCommand request, CancellationToken cancellationToken)
         {
-            var dto = new CompanyFieldsDto();
-            dto.Groups = new List<CompanyFieldGroupItem>();
+            var company = new CompanyEditDto();
+            var dto = new CompanyFieldsDto
+            {
+                Groups = new List<CompanyFieldGroupItem>()
+            };
+            var _company = await _companyRepository.Set().FindAsync(request.CompanyId);
+            company.CompanyId = _company.Id;
+            company.Logo = _company.Logo;
             var groups = await _companyFieldGroupRepository.Set().OrderBy(x => x.Sort).ToListAsync();
             var fields = await _companyFieldRepository.Set().OrderBy(x => x.Sort).ToListAsync();
             var fieldVlaues = await _companyFieldDefaultValueRepository.Set().OrderBy(x => x.Sort).ToListAsync();
+
+            var data = await _companyFieldDataRepository.Set().Where(x => x.CompanyId == request.CompanyId).ToListAsync();
+
+
             groups.ForEach(g =>
             {
                 var group = new CompanyFieldGroupItem
@@ -68,6 +85,7 @@ namespace Dywq.Web.Application.Commands
                 var _fields = fields.Where(f => f.GroupId == g.Id).ToList();
                 _fields.ForEach(f =>
                 {
+                    var _value = data.FirstOrDefault(x => x.FieldId == f.Id);
                     var fieldItem = new CompanyFieldItem
                     {
                         Id = f.Id,
@@ -77,8 +95,10 @@ namespace Dywq.Web.Application.Commands
                         Alias = f.Alias,
                         Type = f.Type,
                         Required = f.Required,
-                        CompanyFieldDefaultValues = new List<CompanyFieldDefaultValueItem>()
+                        CompanyFieldDefaultValues = new List<CompanyFieldDefaultValueItem>(),
+                        Value = _value?.Value
                     };
+
 
                     var _fieldVlaues = fieldVlaues.Where(v => v.CompanyFieldId == f.Id).ToList();
 
@@ -101,8 +121,9 @@ namespace Dywq.Web.Application.Commands
                 dto.Groups.Add(group);
             });
 
+            company.Fields = dto;
+            return company;
 
-            return dto;
 
         }
     }
