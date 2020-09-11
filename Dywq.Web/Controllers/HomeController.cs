@@ -16,11 +16,10 @@ namespace Dywq.Web.Controllers
     [AllowAnonymous]
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger) : base(null, logger)
         {
-            _logger = logger;
+
 
         }
 

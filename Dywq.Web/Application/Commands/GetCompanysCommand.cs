@@ -14,15 +14,18 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class GetCompanysCommand : IRequest<PageResult<CompanyDto>>
+    public class GetCompanysCommand : IRequest<PageResult<CompanyDTO>>
     {
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
 
         public string Key { get; set; }
+
+
+        public string LinkUrl { get; set; }
     }
 
-    public class GetCompanysCommandHandler : IRequestHandler<GetCompanysCommand, PageResult<CompanyDto>>
+    public class GetCompanysCommandHandler : IRequestHandler<GetCompanysCommand, PageResult<CompanyDTO>>
     {
 
         readonly ICapPublisher _capPublisher;
@@ -51,13 +54,14 @@ namespace Dywq.Web.Application.Commands
         }
 
 
-        public async Task<PageResult<CompanyDto>> Handle(GetCompanysCommand request, CancellationToken cancellationToken)
+        public async Task<PageResult<CompanyDTO>> Handle(GetCompanysCommand request, CancellationToken cancellationToken)
         {
 
             var condition = new List<string>();
             if (!string.IsNullOrWhiteSpace(request.Key))
             {
-                condition.Add($"(d.Alias='{Common.CompanyFieldAlias.CompanyName}' and d.Value like '%{request.Key}%')");
+                //condition.Add($"(d.Alias='{Common.CompanyFieldAlias.CompanyName}' and d.Value like '%{request.Key}%')");
+                condition.Add($"(c.Name like '%{request.Key}%')");
             }
 
             var where = condition.Count > 0 ? $" where {string.Join(" or ", condition)}" : "";
@@ -66,12 +70,12 @@ namespace Dywq.Web.Application.Commands
 select count(*) from(
 SELECT CompanyId FROM [CompanyFieldData] as d {where} group by CompanyId
 ) as t");
-            if (count < 1) return PageResult<CompanyDto>.Success(null, 0, request.PageIndex, request.PageSize,"");
+            if (count < 1) return PageResult<CompanyDTO>.Success(null, 0, request.PageIndex, request.PageSize,"");
 
             var start = (request.PageIndex - 1) * request.PageSize;
             var end = start + request.PageSize;
 
-            var data = await _companyRepository.SqlQueryAsync<CompanyDto>(@$"select t.*,c.Logo,c.CreatedTime from (
+            var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(@$"select t.*,c.Name,c.Logo,c.CreatedTime from (
 SELECT CompanyId,ROW_NUMBER() over(order by CompanyId desc) Rowid  FROM [CompanyFieldData] as d {where}  group by CompanyId
 ) as t left join Company as c on c.Id=t.CompanyId where t.Rowid>{start} and t.Rowid<={end}
 ;");
@@ -80,7 +84,6 @@ SELECT CompanyId,ROW_NUMBER() over(order by CompanyId desc) Rowid  FROM [Company
 
             var alias = new List<string>()
             {
-                 Common.CompanyFieldAlias.CompanyName,
                  Common.CompanyFieldAlias.Industry,
                  Common.CompanyFieldAlias.BusinessNature,
                  Common.CompanyFieldAlias.IsPartyBranch
@@ -126,7 +129,6 @@ SELECT CompanyId,ROW_NUMBER() over(order by CompanyId desc) Rowid  FROM [Company
                         var text = string.Join(",", showText);
                         switch (a)
                         {
-                            case Common.CompanyFieldAlias.CompanyName: item.Name = text; break;
                             case Common.CompanyFieldAlias.Industry: item.Industry = text; break;
                             case Common.CompanyFieldAlias.BusinessNature: item.BusinessNature = text; break;
                             case Common.CompanyFieldAlias.IsPartyBranch: item.IsPartyBranch = text; break;
@@ -139,7 +141,7 @@ SELECT CompanyId,ROW_NUMBER() over(order by CompanyId desc) Rowid  FROM [Company
             }
 
 
-            return PageResult<CompanyDto>.Success(data, count, request.PageIndex, request.PageSize, $"/user/company/list/?PageIndex=__id__&PageSize={request.PageSize}&key={request.Key}");
+            return PageResult<CompanyDTO>.Success(data, count, request.PageIndex, request.PageSize, request.LinkUrl);
         }
     }
 }

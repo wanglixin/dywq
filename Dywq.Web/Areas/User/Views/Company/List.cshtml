@@ -1,4 +1,4 @@
-﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyDto>
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyDTO>
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -38,6 +38,7 @@
 <!-- table -->
 <table id="table_con">
     <tr class="head">
+        <th>Id</th>
         <th>企业名称</th>
         <th>行业</th>
         <th>企业性质</th>
@@ -51,7 +52,9 @@
             foreach (var item in Model.Data)
             {
                 <tr>
-
+                    <td>
+                        @(item.CompanyId)
+                    </td>
                     <td>
                         @(item.Name)
                     </td>

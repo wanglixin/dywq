@@ -60,6 +60,7 @@ namespace Dywq.Web.Extensions
             services.AddScoped<IBaseRepository<CompanyFieldGroup>, BaseRepository<CompanyFieldGroup>>();
             services.AddScoped<IBaseRepository<SiteInfo>, BaseRepository<SiteInfo>>();
             services.AddScoped<IBaseRepository<CompanyUser>, BaseRepository<CompanyUser>>();
+            services.AddScoped<IBaseRepository<CompanyType>, BaseRepository<CompanyType>>();
             return services;
         }
 

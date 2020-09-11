@@ -22,7 +22,7 @@ using Dywq.Web.Common;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class GetUserCommand : IRequest<UserDTO>
+    public class LoginCommand : IRequest<LoginUserDTO>
     {
         [Required(ErrorMessage = "用户名不能为空")]
         public string UserName { get; set; }
@@ -31,7 +31,7 @@ namespace Dywq.Web.Application.Commands
         public string Password { get; set; }
     }
 
-    public class GetUserCommandHandler : IRequestHandler<GetUserCommand, UserDTO>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginUserDTO>
     {
         readonly IBaseRepository<User> _userRepository;
         readonly IBaseRepository<CompanyUser> _companyUserRepository;
@@ -40,16 +40,16 @@ namespace Dywq.Web.Application.Commands
         readonly IBaseRepository<CompanyFieldData> _companyFieldDataRepository;
 
         readonly ICapPublisher _capPublisher;
-        readonly ILogger<GetUserCommandHandler> _logger;
+        readonly ILogger<LoginCommandHandler> _logger;
         readonly IMd5 _md5;
 
 
-        public GetUserCommandHandler(IBaseRepository<User> userRepository,
+        public LoginCommandHandler(IBaseRepository<User> userRepository,
             IBaseRepository<CompanyUser> companyUserRepository,
             IBaseRepository<Company> companyRepository,
              IBaseRepository<CompanyFieldData> companyFieldDataRepository,
             ICapPublisher capPublisher,
-            ILogger<GetUserCommandHandler> logger,
+            ILogger<LoginCommandHandler> logger,
             IMd5 md5)
         {
             _userRepository = userRepository;
@@ -61,7 +61,7 @@ namespace Dywq.Web.Application.Commands
             _md5 = md5;
         }
 
-        public async Task<UserDTO> Handle(GetUserCommand request, CancellationToken cancellationToken)
+        public async Task<LoginUserDTO> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var pwd = _md5.Md5(request.Password);
             _logger.LogInformation(pwd);
@@ -69,7 +69,7 @@ namespace Dywq.Web.Application.Commands
              && x.Password == pwd);
             if (user == null) return null;
 
-            var dto = new UserDTO();
+            var dto = new LoginUserDTO();
             dto.UserName = user.UserName;
             dto.Id = user.Id;
             dto.Type = user.Type;
@@ -86,12 +86,13 @@ namespace Dywq.Web.Application.Commands
                 var commpany = await _companyRepository.GetAsync(x => x.Id == commpanyUser.CompanyId);
                 dto.CompanyId = commpany.Id;
                 dto.Logo = commpany.Logo;
+                dto.CompanyName = commpany.Name;
 
                 //获取企业名称
 
-                var companyFieldData = await _companyFieldDataRepository.GetAsync(x => x.Alias == CompanyFieldAlias.CompanyName);
+                //var companyFieldData = await _companyFieldDataRepository.GetAsync(x => x.Alias == CompanyFieldAlias.CompanyName);
 
-                dto.CompanyName = companyFieldData?.Value;
+                //dto.CompanyName = companyFieldData?.Value;
             }
 
             return dto;

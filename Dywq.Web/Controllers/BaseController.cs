@@ -6,16 +6,32 @@ using System.Threading.Tasks;
 using Dywq.Web.Common;
 using Dywq.Web.Dto.User;
 using Dywq.Web.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace Dywq.Web.Controllers
 {
 
     public class BaseController : Controller
     {
-        protected UserDTO CurrentUser { get; set; }
+
+
+        protected IMediator _mediator;
+        protected ILogger<BaseController> _logger;
+
+        public BaseController(IMediator mediator, ILogger<BaseController> logger)
+        {
+            _mediator = mediator;
+            _logger = logger;
+
+            
+
+        }
+
+        protected LoginUserDTO CurrentUser { get; set; }
 
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -24,14 +40,14 @@ namespace Dywq.Web.Controllers
             ViewBag.CurrentUser = CurrentUser;
 
         }
-        public UserDTO GetCurrentUser()
+        public LoginUserDTO GetCurrentUser()
         {
 
             if (!HttpContext.User.Identity.IsAuthenticated)
                 return null;
 
             var claimsIdentity = (ClaimsIdentity)HttpContext.User.Identity;
-            var model = new UserDTO();
+            var model = new LoginUserDTO();
             model.UserName = claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
             int.TryParse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value, out int type);

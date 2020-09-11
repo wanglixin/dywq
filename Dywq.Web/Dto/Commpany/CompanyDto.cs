@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Dto.Commpany
 {
-    public class CompanyDto
+    public class CompanyDTO
     {
         public string Logo { get; set; }
         public int CompanyId { get; set; }

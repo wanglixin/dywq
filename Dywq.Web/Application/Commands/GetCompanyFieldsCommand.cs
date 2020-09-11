@@ -10,18 +10,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static Dywq.Web.Dto.Commpany.CompanyFieldsDto;
-using static Dywq.Web.Dto.Commpany.CompanyFieldsDto.CompanyFieldGroupItem;
-using static Dywq.Web.Dto.Commpany.CompanyFieldsDto.CompanyFieldGroupItem.CompanyFieldItem;
+using static Dywq.Web.Dto.Commpany.CompanyFieldsDTO;
+using static Dywq.Web.Dto.Commpany.CompanyFieldsDTO.CompanyFieldGroupItem;
+using static Dywq.Web.Dto.Commpany.CompanyFieldsDTO.CompanyFieldGroupItem.CompanyFieldItem;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class GetCompanyFieldsCommand : IRequest<CompanyFieldsDto>
+    public class GetCompanyFieldsCommand : IRequest<CompanyFieldsDTO>
     {
 
     }
 
-    public class GetCompanyFieldsCommandHandler : IRequestHandler<GetCompanyFieldsCommand, CompanyFieldsDto>
+    public class GetCompanyFieldsCommandHandler : IRequestHandler<GetCompanyFieldsCommand, CompanyFieldsDTO>
     {
         readonly ICapPublisher _capPublisher;
         readonly ILogger<GetCompanyFieldsCommandHandler> _logger;
@@ -49,9 +49,9 @@ namespace Dywq.Web.Application.Commands
             _companyFieldDataRepository = companyFieldDataRepository;
         }
 
-        public async Task<CompanyFieldsDto> Handle(GetCompanyFieldsCommand request, CancellationToken cancellationToken)
+        public async Task<CompanyFieldsDTO> Handle(GetCompanyFieldsCommand request, CancellationToken cancellationToken)
         {
-            var dto = new CompanyFieldsDto();
+            var dto = new CompanyFieldsDTO();
             dto.Groups = new List<CompanyFieldGroupItem>();
             var groups = await _companyFieldGroupRepository.Set().OrderBy(x => x.Sort).ToListAsync();
             var fields = await _companyFieldRepository.Set().OrderBy(x => x.Sort).ToListAsync();

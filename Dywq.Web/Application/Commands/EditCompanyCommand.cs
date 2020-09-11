@@ -22,6 +22,10 @@ namespace Dywq.Web.Application.Commands
 
         [Required(ErrorMessage = "请上传logo")]
         public string Logo { get; set; }
+
+        [Required(ErrorMessage = "请填写企业名称")]
+        public string Name { get; set; }
+
         public IEnumerable<FieldDataItemDto> FieldDataItems { get; set; }
     }
 
@@ -69,16 +73,21 @@ namespace Dywq.Web.Application.Commands
                 });
             }
 
-            var companyName = request.FieldDataItems.FirstOrDefault(x => x.Alias == Common.CompanyFieldAlias.CompanyName);
-            if (!string.IsNullOrWhiteSpace(companyName.Value))
-            {
-                //判断企业名称是否重复
-                var exist = await _companyFieldDataRepository.AnyAsync(x => x.Alias == Common.CompanyFieldAlias.CompanyName && x.Value == companyName.Value && x.CompanyId != request.CompanyId);
-                if (exist) return Result.Failure("企业名称重复");
-            }
+            //var companyName = request.FieldDataItems.FirstOrDefault(x => x.Alias == Common.CompanyFieldAlias.CompanyName);
+            //if (!string.IsNullOrWhiteSpace(companyName.Value))
+            //{
+            //    //判断企业名称是否重复
+            //    var exist = await _companyFieldDataRepository.AnyAsync(x => x.Alias == Common.CompanyFieldAlias.CompanyName && x.Value == companyName.Value && x.CompanyId != request.CompanyId);
+            //    if (exist) return Result.Failure("企业名称重复");
+            //}
+
+            if (await _companyRepository.AnyAsync(x => x.Name == request.Name&& x.Id != request.CompanyId)) return Result.Failure("企业名称重复");
+
 
             var company = await _companyRepository.Set().FindAsync(request.CompanyId);
             company.Logo = request.Logo;
+            company.Name = request.Name;
+
             await _companyRepository.UpdateAsync(company, cancellationToken);
 
             var ret = await _companyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

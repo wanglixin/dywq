@@ -11,9 +11,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static Dywq.Web.Dto.Commpany.CompanyFieldsDto;
-using static Dywq.Web.Dto.Commpany.CompanyFieldsDto.CompanyFieldGroupItem;
-using static Dywq.Web.Dto.Commpany.CompanyFieldsDto.CompanyFieldGroupItem.CompanyFieldItem;
+using static Dywq.Web.Dto.Commpany.CompanyFieldsDTO;
+using static Dywq.Web.Dto.Commpany.CompanyFieldsDTO.CompanyFieldGroupItem;
+using static Dywq.Web.Dto.Commpany.CompanyFieldsDTO.CompanyFieldGroupItem.CompanyFieldItem;
 
 namespace Dywq.Web.Application.Commands
 {
@@ -59,13 +59,15 @@ namespace Dywq.Web.Application.Commands
         public async Task<CompanyEditDto> Handle(GetCompanyCommand request, CancellationToken cancellationToken)
         {
             var company = new CompanyEditDto();
-            var dto = new CompanyFieldsDto
+            var dto = new CompanyFieldsDTO
             {
                 Groups = new List<CompanyFieldGroupItem>()
             };
             var _company = await _companyRepository.Set().FindAsync(request.CompanyId);
             company.CompanyId = _company.Id;
             company.Logo = _company.Logo;
+            company.Name = _company.Name;
+
             var groups = await _companyFieldGroupRepository.Set().OrderBy(x => x.Sort).ToListAsync();
             var fields = await _companyFieldRepository.Set().OrderBy(x => x.Sort).ToListAsync();
             var fieldVlaues = await _companyFieldDefaultValueRepository.Set().OrderBy(x => x.Sort).ToListAsync();

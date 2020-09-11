@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Dto.Commpany
 {
-    public class CompanyFieldsDto
+    public class CompanyFieldsDTO
     {
         public IList<CompanyFieldGroupItem> Groups { get; set; }
 
@@ -80,9 +80,11 @@ namespace Dywq.Web.Dto.Commpany
 
     public class CompanyEditDto
     {
-        public CompanyFieldsDto Fields { get; set; }
+        public CompanyFieldsDTO Fields { get; set; }
         public string Logo { get; set; }
         public int CompanyId { get; set; }
+
+        public string Name { get; set; }
     }
 
 }

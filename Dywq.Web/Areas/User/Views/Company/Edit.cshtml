@@ -28,6 +28,7 @@
 
     @{
         var logo = false;
+        var companyName = false;
         foreach (var group in Model.Fields.Groups)
         {
             <div class="field-group">
@@ -35,6 +36,15 @@
                     <legend>@group.Name</legend>
 
                     @{
+                        if (!companyName)
+                        {
+                            companyName = true;
+                            <div class="field-item">
+                                <span>企业名称</span>
+                                <input type="text" class="nofield" name="Name" value="@(Model.Name)" placeholder="必填 企业名称" />
+                            </div>
+                        }
+
                         if (!logo)
                         {
                             logo = true;
@@ -71,14 +81,14 @@
                                 }
                                 else if (field.Type == 3)
                                 {
-                                   
+
                                     <div class="cb">
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
                                             <div class="cb-item">
-                                                <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(v.Id)" type="radio" value="@(v.Value)" @(v.Value==field.Value ? "checked=\"checked\" " : "") /> <label for="rd_@(v.Id)">@(v.Text)</label>
+                                                <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(v.Id)" type="radio" value="@(v.Value)" @(v.Value == field.Value ? "checked=\"checked\" " : "") /> <label for="rd_@(v.Id)">@(v.Text)</label>
                                             </div>
-                                           
+
                                         }
                                     </div>
                                 }
@@ -87,7 +97,7 @@
                                     <div class="cb">
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
-                                            <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" @(field.Value.Contains(v.Value) ? "checked=\"checked\" " : "")  /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
+                                            <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" @(field.Value.Contains(v.Value) ? "checked=\"checked\" " : "") /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
                                         }
                                     </div>
                                 }
@@ -96,7 +106,7 @@
                                     <select data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-type="@(field.Type)" name="@(field.Id)" data-title="@(field.Name)">
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
-                                            <option @(v.Value==field.Value ? "selected=\"selected\" " : "") value="@(v.Value)">
+                                            <option @(v.Value == field.Value ? "selected=\"selected\" " : "") value="@(v.Value)">
                                                 @(v.Text)
                                             </option>
                                         }
@@ -125,12 +135,25 @@
     <script type="text/javascript">
         $(function () {
             $(".btn-save").on("click", function () {
+
+                //other check
+
+                if ($("[name='Name']").val().length < 1) {
+                    alert("企业名称不能为空");
+                    return;
+                }
+
+                if ($("[name='Logo']").val().length < 1) {
+                    alert("请上传企业logo");
+                    return;
+                }
+
                 var target = $(this);
                 var status = target.attr("data-status");
                 if (status == 1) return;
                 var data = $("#form_data").serialize();
                 //console.log(data);
-                inputs = $("#form_data").find('input');
+               inputs = $("#form_data").find('input[class!=nofield]');
                 selects = $("#form_data").find('select');
                 choices = $("#form_data").find('.choice');
                 var data = [];
@@ -229,7 +252,7 @@
                     url: "/api/company/edit",
                     type: 'POST',
                     dataType: "json",
-                    data: JSON.stringify({ FieldDataItems: data, Logo: $("[name='Logo']").val(),CompanyId:@Model.CompanyId }),
+                    data: JSON.stringify({ FieldDataItems: data, Logo: $("[name='Logo']").val(),Name: $("[name='Name']").val() ,CompanyId:@Model.CompanyId }),
                     headers: { 'Content-Type': 'application/json' },
                     beforeSend: function () {
                         target.attr("data-status", 1).val("请求中...");

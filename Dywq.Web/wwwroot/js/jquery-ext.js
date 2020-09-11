@@ -2,7 +2,7 @@
 $.fn.serializeObject = function () {
     var serializeObj = {};
     var array = this.serializeArray();
-    // var str = this.serialize();
+    //console.log(array);
     $(array).each(function () {
         if (serializeObj[this.name]) {
             if ($.isArray(serializeObj[this.name])) {

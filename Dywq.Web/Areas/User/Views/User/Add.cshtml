@@ -1,0 +1,98 @@
+﻿
+@section head{
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .tools {
+            margin-bottom: 20px;
+        }
+    </style>
+}
+
+
+
+    <h2>新增用户</h2>
+    <div class="tools">
+        <div class="left_btns">
+            <div class="addbtn">
+
+                <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+            </div>
+        </div>
+
+    </div>
+
+    <form id="form_data">
+
+
+        <div class="field-group">
+            <fieldset>
+                <legend>填写信息</legend>
+
+              
+                <div class="field-item " data-choice="15" data-type="0" data-alias="MainBusiness" data-required="true" data-title="用户名">
+                    <span>用户名</span>
+
+                    <input type="text" name="UserName"  placeholder=" 必填">
+
+
+                </div>
+                <div class="field-item " data-choice="16" data-type="0" data-alias="MainProducts" data-required="false" data-title="密码">
+                    <span>密码</span>
+
+                    <input type="password" name="Password"  placeholder=" 必填">
+
+
+                </div>
+               
+                <div class="field-item w-100 choice" data-choice="5" data-type="3" data-alias="BusinessNature" data-required="false" data-title="企业性质">
+                    <span>类型</span>
+
+                    <div class="cb">
+                        <div class="cb-item">
+                            <input name="Type" id="rd_4" type="radio" value="0" checked="checked"> <label for="rd_4">企业用户</label>
+                        </div>
+                        <div class="cb-item">
+                            <input name="Type" id="rd_6" type="radio" value="1"> <label for="rd_6">管理员</label>
+                        </div>
+                      
+                     
+                    </div>
+
+
+                </div>
+                
+
+            </fieldset>
+        </div>
+      
+    </form>
+
+<div class="btn-box">
+    <input type="button" class="btn-save" value="保存" />
+</div>
+
+@section js{
+    <script type="text/javascript">
+        $(function () {
+             $(".btn-save").req("#form_data", "/api/user/add", function (res) {
+                 if (res.code != 0) {
+                     alert(res.message);
+                     return;
+                 } else {
+                     alert("添加成功");
+                 }
+               
+            });
+        });
+
+
+
+
+
+    </script>
+
+}

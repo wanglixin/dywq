@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class DelCompanyCommand : IRequest<Result>
+    public class DeleteCompanyCommand : IRequest<Result>
     {
         [Range(1, int.MaxValue, ErrorMessage = "企业id错误")]
         public int CompanyId { get; set; }
     }
 
-    public class DelCompanyCommandHandler : IRequestHandler<DelCompanyCommand, Result>
+    public class DelCompanyCommandHandler : IRequestHandler<DeleteCompanyCommand, Result>
     {
         readonly ICapPublisher _capPublisher;
         readonly ILogger<DelCompanyCommandHandler> _logger;
@@ -42,7 +42,7 @@ namespace Dywq.Web.Application.Commands
             _companyRepository = companyRepository;
         }
 
-        public async Task<Result> Handle(DelCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteCompanyCommand request, CancellationToken cancellationToken)
         {
             var _company = await _companyRepository.Set().FindAsync(request.CompanyId);
             if (_company != null)

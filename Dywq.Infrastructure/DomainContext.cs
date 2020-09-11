@@ -27,6 +27,7 @@ namespace Dywq.Infrastructure
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyUserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyFieldDataEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CompanyTypeEntityTypeConfiguration());
             
             #endregion
             base.OnModelCreating(modelBuilder);

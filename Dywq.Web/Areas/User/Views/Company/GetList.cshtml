@@ -1,0 +1,85 @@
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyDTO>
+@section head{
+    <link href="~/css/index10.css" rel="stylesheet" />
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+    </style>
+}
+
+
+<h2>企业名录</h2>
+<div class="tools">
+    <div class="left_btns">
+        
+    </div>
+
+    <div class="right_btn">
+        <form action="/user/company/list">
+            <div class="work_input">
+
+                <div class="input-group search_con">
+                    <input type="text" class="form-control" value="@(Context.Request.Query["key"])" name="key" placeholder="请输入企业名称">
+                </div>
+                <button class="btn btn-primary " type="submit">搜索</button>
+
+                @*<button class="btn btn-primary higer_search" type="button"><a href="./index11.html" style="color: #fff;">高级搜索</a></button>*@
+            </div>
+        </form>
+    </div>
+</div>
+<!-- table -->
+<table id="table_con">
+    <tr class="head">
+        <th>Id</th>
+        <th>企业名称</th>
+        <th>行业</th>
+        <th>企业性质</th>
+        <th>党建情况</th>
+        <th>发布时间</th>
+        <th>操作</th>
+    </tr>
+    @{
+        if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>
+                        @(item.CompanyId)
+                    </td>
+                    <td>
+                        @(item.Name)
+                    </td>
+                    <td>
+                        @(item.Industry)
+                    </td>
+                    <td>
+                        @(item.BusinessNature)
+                    </td>
+                    <td>
+                        @(item.IsPartyBranch)
+                    </td>
+                    <td>
+                        @(item.CreatedTime)
+                    </td>
+                    <td class="editbtn">
+                       <a href="javascript:select(@(item.CompanyId),this)">选择</a>
+                    </td>
+                </tr>
+            }
+        }
+
+    }
+
+
+</table>
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>
+
+
+

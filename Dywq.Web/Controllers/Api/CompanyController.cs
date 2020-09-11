@@ -46,7 +46,7 @@ namespace Dywq.Web.Controllers.Api
 
         [HttpPost]
         [Authorize(Roles = Common.Role.Admin)]
-        public async Task<Result> Delete([FromBody]DelCompanyCommand cmd)
+        public async Task<Result> Delete([FromBody]DeleteCompanyCommand cmd)
         {
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);

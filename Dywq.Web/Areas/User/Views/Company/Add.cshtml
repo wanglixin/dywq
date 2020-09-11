@@ -1,12 +1,13 @@
-﻿@model Dywq.Web.Dto.Commpany.CompanyFieldsDto
+﻿@model Dywq.Web.Dto.Commpany.CompanyFieldsDTO
 @section head{
     <link href="~/css/company_add.css" rel="stylesheet" />
     <style>
         .add_txt a {
             color: white;
         }
-        .tools{
-            margin-bottom:20px;
+
+        .tools {
+            margin-bottom: 20px;
         }
     </style>
 }
@@ -15,11 +16,11 @@
 <div class="tools">
     <div class="left_btns">
         <div class="addbtn">
-            
+
             <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
         </div>
     </div>
-   
+
 </div>
 
 <form id="form_data">
@@ -27,6 +28,7 @@
 
     @{
         var logo = false;
+        var companyName = false;
         foreach (var group in Model.Groups)
         {
             <div class="field-group">
@@ -34,6 +36,15 @@
                     <legend>@group.Name</legend>
 
                     @{
+                        if (!companyName)
+                        {
+                            companyName = true;
+                            <div class="field-item">
+                                <span>企业名称</span>
+                                <input type="text" class="nofield" name="Name" placeholder="必填 企业名称" />
+                            </div>
+                        }
+
                         if (!logo)
                         {
                             logo = true;
@@ -44,6 +55,8 @@
                                 <input type="button" id="btnLogoUpload" data-file="#logoFile" data-name="Logo" value="上传" />
                             </div>
                         }
+
+
                     }
                     @{
 
@@ -126,12 +139,25 @@
     <script type="text/javascript">
         $(function () {
             $(".btn-save").on("click", function () {
+
+                //other check
+
+                if ($("[name='Name']").val().length < 1) {
+                    alert("企业名称不能为空");
+                    return;
+                }
+
+                if ($("[name='Logo']").val().length < 1) {
+                    alert("请上传企业logo");
+                    return;
+                }
+
                 var target = $(this);
                 var status = target.attr("data-status");
                 if (status == 1) return;
                 var data = $("#form_data").serialize();
                 //console.log(data);
-                inputs = $("#form_data").find('input');
+                inputs = $("#form_data").find('input[class!=nofield]');
                 selects = $("#form_data").find('select');
                 choices = $("#form_data").find('.choice');
                 var data = [];
@@ -230,7 +256,7 @@
                     url: "/api/company/add",
                     type: 'POST',
                     dataType: "json",
-                    data: JSON.stringify({ FieldDataItems: data, Logo: $("[name='Logo']").val() }),
+                    data: JSON.stringify({ FieldDataItems: data, Logo: $("[name='Logo']").val(), Name: $("[name='Name']").val() }),
                     headers: { 'Content-Type': 'application/json' },
                     beforeSend: function () {
                         target.attr("data-status", 1).val("请求中...");

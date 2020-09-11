@@ -15,13 +15,9 @@ namespace Dywq.Web.Areas.User.Controllers
     [Area("User")]
     public class HomeController : BaseController
     {
-        IMediator _mediator;
-        readonly ILogger<HomeController> _logger;
-
-        public HomeController(IMediator mediator, ILogger<HomeController> logger)
+   
+        public HomeController(IMediator mediator, ILogger<HomeController> logger) : base(mediator, logger)
         {
-            _mediator = mediator;
-            _logger = logger;
 
         }
 

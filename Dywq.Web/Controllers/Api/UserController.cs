@@ -11,6 +11,7 @@ using Dywq.Web.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ namespace Dywq.Web.Controllers.Api
         /// <param name="cmd"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<Result> Login([FromBody]GetUserCommand cmd)
+        public async Task<Result> Login([FromBody]LoginCommand cmd)
         {
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
 
@@ -62,7 +63,40 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
+           /// <summary>
+        /// 请求登陆
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<Result> Add([FromBody]UserAddCommand cmd)
+        {
+            _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
 
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<Result> Delete([FromBody]DeleteUserCommand cmd)
+        {
+            _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<Result> AddCompanyUser([FromBody]AddCompanyUserCommand cmd)
+        {
+            _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+
+        }
 
     }
 }

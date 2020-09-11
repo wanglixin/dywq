@@ -1,0 +1,191 @@
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.User.UserDTO>
+@section head{
+    <link href="~/css/index10.css" rel="stylesheet" />
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .popbox .list {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+}
+
+
+<h2>用户列表</h2>
+<div class="tools">
+    <div class="left_btns">
+        <div class="addbtn">
+            <div class="add_left">+</div>
+            <span class="add_txt"><a href="/user/user/add">新增</a></span>
+        </div>
+        @*<button class="btn-push higer_search" onclick="push();">批量推送</button>*@
+    </div>
+
+    <div class="right_btn">
+        <form action="/user/user/list">
+            <div class="work_input">
+
+                <div class="input-group search_con">
+                    <input type="text" class="form-control" value="@(Context.Request.Query["key"])" name="key" placeholder="请输入用户名">
+                </div>
+                <button class="btn btn-primary " type="submit">搜索</button>
+
+                @*<button class="btn btn-primary higer_search" type="button"><a href="./index11.html" style="color: #fff;">高级搜索</a></button>*@
+            </div>
+        </form>
+    </div>
+</div>
+<!-- table -->
+<table id="table_con">
+    <tr class="head">
+        <th>Id</th>
+        <th>用户名</th>
+        <th>类型</th>
+        <th>企业</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    @{
+        if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+                <tr>
+
+                    <td>
+                        @(item.Id)
+                    </td>
+                    <td>
+                        @(item.UserName)
+                    </td>
+                    <td>
+                        @(item.Type == 0 ? "用户" : "管理员")
+                    </td>
+                    <td>
+                        @(item.Type == 0 ? item.CompanyName : "--")
+                    </td>
+                    <td>
+                        @(item.CreatedTime)
+                    </td>
+                    <td class="editbtn">
+                        @{
+                            if (item.Type == 0)
+                            {
+                                <a href="javascript:push(@(item.Id),@(item.CompanyId))">@(item.CompanyId==0?"绑定企业":"换绑企业")</a> @Html.Raw("|")
+                            }
+                        }
+                        <a href="/
+                           user/user/edit?id=@(item.Id)">编辑</a> | <a href="javascript:del(@(item.Id),this)">删除</a>
+                    </td>
+                </tr>
+            }
+        }
+
+    }
+
+
+</table>
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>
+
+
+<!-- pop -->
+<div class="popbox">
+    <div class="list">
+
+    </div>
+
+    <!-- 底部推送 -->
+    <div class="push_btns">
+        <button class="push_btn_per btn push_btn_cancel">取消</button>
+        @*<button class="push_btn_per btn push_btn_confirm">推送</button>*@
+    </div>
+
+</div>
+
+
+@section js{
+    <script type="text/javascript">
+        var config = {
+            UserId: 0,
+            CompanyId: 0
+        };
+
+        var del = function (id, obj) {
+
+            if (!confirm("确定删除"))
+                return;
+            $.ajax({
+                url: '/api/user/delete',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ Id: id }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("删除成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+
+        }
+
+        function push(userid, companyId) {
+            config.UserId = userid;
+            config.CompanyId = companyId;
+            $(".popbox").fadeIn();
+            getlist(1);
+        }
+        $(".push_btn_cancel").click(function () {
+            $(".popbox").fadeOut();
+        });
+
+
+
+        function getlist(page) {
+            $.get("/user/company/getlist?pageSize=5&pageIndex=" + page, function (r) {
+                // console.log(r);
+                $(".popbox .list").html(r);
+            })
+        }
+
+        /**
+         * 选择
+         * @@param companyId
+         */
+        function select(companyId) {
+            console.log(config);
+            //alert(companyId);
+
+            if (!confirm("确定选择"))
+                return;
+            $.ajax({
+                url: '/api/user/addCompanyUser',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ CompanyId: companyId, UserId: config.UserId }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                         alert(r.message);
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+        }
+
+    </script>
+
+}
