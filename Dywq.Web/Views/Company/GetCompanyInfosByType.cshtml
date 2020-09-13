@@ -1,0 +1,26 @@
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyInfoDTO>
+<section class="companyul">
+    <div class="line"></div>
+
+    @{
+        if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+                <div class="companylist"><a href="/company/detail/@(item.CompanyId)">@(item.CompanyName)</a></div>
+            }
+        }
+
+        else
+        {
+            <div class="companylist">暂无内容.</div>
+
+        }
+
+    }
+
+</section>
+<!-- 分页 -->
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>

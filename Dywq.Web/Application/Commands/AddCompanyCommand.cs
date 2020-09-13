@@ -26,16 +26,16 @@ namespace Dywq.Web.Application.Commands
         public IEnumerable<FieldDataItemDto> FieldDataItems { get; set; }
     }
 
-    public class AddCompanyFieldDataCommandHandler : IRequestHandler<AddCompanyCommand, Result>
+    public class AddCompanyCommandHandler : IRequestHandler<AddCompanyCommand, Result>
     {
         readonly ICapPublisher _capPublisher;
-        readonly ILogger<GetCompanyFieldsCommandHandler> _logger;
+        readonly ILogger<AddCompanyCommandHandler> _logger;
         readonly IBaseRepository<CompanyFieldData> _companyFieldDataRepository;
         readonly IBaseRepository<Company> _companyRepository;
 
-        public AddCompanyFieldDataCommandHandler(
+        public AddCompanyCommandHandler(
             ICapPublisher capPublisher,
-            ILogger<GetCompanyFieldsCommandHandler> logger,
+            ILogger<AddCompanyCommandHandler> logger,
             IBaseRepository<CompanyFieldData> companyFieldDataRepository,
             IBaseRepository<Company> companyRepository
             )
@@ -85,7 +85,8 @@ namespace Dywq.Web.Application.Commands
             var company = new Company()
             {
                 Logo = request.Logo,
-                Name = request.Name
+                Name = request.Name,
+                Status = 0
             };
             await _companyRepository.AddAsync(company, cancellationToken);
 

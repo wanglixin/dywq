@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Dywq.Infrastructure.Core;
+using Dywq.Web.Common;
+using Dywq.Web.Dto.User;
 using Dywq.Web.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +25,7 @@ namespace Dywq.Web.Controllers.Api
         protected readonly ILogger<BaseApiController> _logger;
         protected readonly IWebHostEnvironment _webhostEnvironment;
 
-
+       
 
         public BaseApiController(IMediator mediator, ILogger<BaseApiController> logger, IWebHostEnvironment webhostEnvironment)
         {
@@ -60,7 +63,7 @@ namespace Dywq.Web.Controllers.Api
             return Result<string>.Success(_fileName);
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize]
         public async Task<Result<string>> UploadImg(IFormFile file)
         {
             var ext = Path.GetExtension(file.FileName).ToLower();
@@ -75,6 +78,31 @@ namespace Dywq.Web.Controllers.Api
             if (!list.Contains(ext)) return Result<string>.Failure("图片格式不正确");
 
             return await Upload(file, "logo");
+
+        }
+
+        public LoginUserDTO GetCurrentUser()
+        {
+
+            if (!HttpContext.User.Identity.IsAuthenticated)
+                return null;
+
+            var claimsIdentity = (ClaimsIdentity)HttpContext.User.Identity;
+            var model = new LoginUserDTO();
+            model.UserName = claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+
+            int.TryParse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value, out int type);
+            model.Type = type;
+
+            int.TryParse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int id);
+            model.Id = id;
+
+            int.TryParse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == "CompanyId")?.Value, out int companyId);
+            model.CompanyId = companyId;
+
+            model.CompanyName = claimsIdentity.Claims.FirstOrDefault(x => x.Type == CompanyFieldAlias.CompanyName)?.Value;
+
+            return model;
 
         }
     }

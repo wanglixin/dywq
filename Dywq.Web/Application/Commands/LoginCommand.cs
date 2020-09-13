@@ -86,7 +86,7 @@ namespace Dywq.Web.Application.Commands
                 var commpany = await _companyRepository.GetAsync(x => x.Id == commpanyUser.CompanyId);
                 dto.CompanyId = commpany.Id;
                 dto.Logo = commpany.Logo;
-                dto.CompanyName = commpany.Name;
+                dto.CompanyName = commpany.Name ?? "[未填写企业名称]";
 
                 //获取企业名称
 

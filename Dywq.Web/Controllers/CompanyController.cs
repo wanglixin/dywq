@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Dywq.Web.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -34,7 +35,21 @@ namespace Dywq.Web.Controllers
         }
 
 
+        public async Task<IActionResult> Detail(int id)
+        {
+            var result = await _mediator.Send(new GetCompanyInfoCommand() { CompanyId = id }, HttpContext.RequestAborted);
 
+            return View(result);
+        }
+
+
+
+
+        public async Task<IActionResult> GetCompanyInfosByType(int type, int pageIndex = 1, int pageSize = 10, string linkUrl = "")
+        {
+            var result = await _mediator.Send(new GetCompanyInfosByTypeCommand() { TypeId = type, LinkUrl = linkUrl, PageIndex = pageIndex, PageSize = pageSize }, HttpContext.RequestAborted);
+            return PartialView(result);
+        }
 
     }
 }

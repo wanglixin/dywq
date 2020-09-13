@@ -19,6 +19,7 @@
     <script src="/js/jquery-ext.js" type="text/javascript"></script>
     <script src="/js/bootstrap.js" type="text/javascript"></script>
     <script src="/js/swiper-4.3.5.min.js" type="text/javascript" charset="utf-8"></script>
+    @RenderSection("head", false)
 </head>
 <body>
 
@@ -93,7 +94,7 @@
         <div class="container">
             <div class="wrap">
                 <ul class="list">
-                    <li class="active"><a href="./index.html">首页</a></li>
+                    <li class="active"><a href="/">首页</a></li>
                     <li><a href="./index2.html">企业党建</a></li>
                     <li><a href="./index3.html">惠企政策</a></li>
                     <li><a href="./index4.html">企业融资</a></li>
@@ -199,13 +200,13 @@
         })
 
         // nav
-        $(".company").hide().eq(0).show();
-        $(".subject_ul li").click(function () {
-            let index = $(this).index();
-            $(".subject_ul li").removeClass("active_coned");
-            $(this).addClass("active_coned");
-            $(".company").hide().eq(index).show();
-        })
+        //$(".company").hide().eq(0).show();
+        //$(".subject_ul li").click(function () {
+        //    let index = $(this).index();
+        //    $(".subject_ul li").removeClass("active_coned");
+        //    $(this).addClass("active_coned");
+        //    $(".company").hide().eq(index).show();
+        //})
         $(".active_con_rights_sec").hide().eq(0).show();
         $(".choose_tip_li").click(function () {
             let index = $(this).index();

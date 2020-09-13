@@ -54,6 +54,30 @@ namespace Dywq.Web.Controllers.Api
 
         }
 
+        [HttpPost]
+        [Authorize(Roles = Common.Role.User)]
+        public async Task<Result> AddCompanyInfo(AddCompanyInfoCommand cmd)
+        {
+            var user = this.GetCurrentUser();
+            cmd.CompanyId = user.CompanyId;
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<Result> CheckCompanyInfo(CheckCompanyInfoCommand cmd)
+        {
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<Result> EditCompanyInfo(EditCompanyInfoCommand cmd)
+        {
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
 
 
 

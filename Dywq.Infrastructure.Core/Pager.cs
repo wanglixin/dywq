@@ -59,7 +59,7 @@ namespace Dywq.Infrastructure.Core
             {
                 num3 = num - 1;
             }
-            builder.Append("<span>共" + totalCount + "记录</span>");
+            builder.Append("<span class='count'>共" + totalCount + "条记录</span>");
             builder.Append(str2 + str4);
             if (pageIndex >= centSize)
             {

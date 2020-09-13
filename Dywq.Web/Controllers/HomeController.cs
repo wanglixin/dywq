@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Dywq.Web.Application.Commands;
+using MediatR;
 
 namespace Dywq.Web.Controllers
 {
@@ -17,14 +19,35 @@ namespace Dywq.Web.Controllers
     public class HomeController : BaseController
     {
 
-        public HomeController(ILogger<HomeController> logger) : base(null, logger)
+        public HomeController(IMediator mediator, ILogger<HomeController> logger) : base(mediator, logger)
         {
 
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //类型
+            var types = await _mediator.Send(new GetCompanyTypesCommand(), HttpContext.RequestAborted);
+            ViewBag.types = types;
+            var type = types.FirstOrDefault()?.Id ?? 0;
+            var companyInfos = await _mediator.Send(new GetCompanyInfosByTypeCommand()
+            {
+                PageIndex = 1,
+                PageSize = 10,
+                TypeId = type,
+                LinkUrl = "javascript:getCompanyInfos(" + type + ",__id__,10)"
+
+            }, HttpContext.RequestAborted);
+
+
+            var banners = await _mediator.Send(new GetCompanyBannersCommand(), HttpContext.RequestAborted);
+            ViewBag.banners = banners;
+
+
+
+            ViewBag.companyInfos = companyInfos;
+
             return View();
         }
 

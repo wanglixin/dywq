@@ -58,5 +58,49 @@ namespace Dywq.Web.Areas.User.Controllers
             return PartialView(result);
         }
 
+        [Authorize(Roles = Common.Role.User)]
+        public async Task<IActionResult> AddCompanyInfo(GetCompanyInfoCommand cmd)
+        {
+            var user = this.CurrentUser;
+            cmd.CompanyId = user.CompanyId;
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            var types = await _mediator.Send(new GetCompanyTypesCommand(), HttpContext.RequestAborted);
+            ViewBag.types = types;
+
+            return View(result);
+        }
+
+
+        /// <summary>
+        /// 管理员编辑信息
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> EditCompanyInfo(GetCompanyInfoCommand cmd)
+        {
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            var types = await _mediator.Send(new GetCompanyTypesCommand(), HttpContext.RequestAborted);
+            ViewBag.types = types;
+
+            return View(result);
+        }
+
+
+        /// <summary>
+        /// 获取企业动态审核列表 审核
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> CompanyInfoList(GetCompanyInfosCommand cmd)
+        {
+            cmd.LinkUrl = $"/user/company/companyinfolist/?PageIndex=__id__&PageSize={cmd.PageSize}&key={cmd.Key}";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return View(result);
+        }
+
+
+
     }
 }

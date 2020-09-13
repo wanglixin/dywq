@@ -40,6 +40,15 @@
         padding: 5px;
     }
 
+    .field-item textarea{
+        width: 50%;
+        border-radius: 5px;
+        border: 1px solid rgba(204, 204, 204, 1);
+        padding: 5px;
+        min-height: 100px;
+    }
+
+
     .field-item .cb {
         width: 75%;
         border-radius: 5px;
@@ -101,3 +110,17 @@
         color: white;
         margin-left: 1%;
     }
+
+.field-item img {
+    width: 570px;
+    height: 150px;
+}
+
+
+.field-item .tips {
+    width: 50%;
+    padding: 5px;
+    min-height: 10px;
+    margin-top:4px;
+    color:red;
+}

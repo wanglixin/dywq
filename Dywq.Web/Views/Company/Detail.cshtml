@@ -1,0 +1,67 @@
+﻿@model Dywq.Web.Dto.Commpany.CompanyInfoDTO
+@section head{
+    <link href="~/css/index8.css" rel="stylesheet" />
+
+}
+
+<div id="main_content">
+    <div class="container">
+        <div class="main_title">
+            <span class="home">首页</span>/<span class="activething">企业动态</span>
+        </div>
+        <div class="main_con">
+            <h3>@(Model.CompanyName)</h3>
+            <div class="comp_img">
+                <img src="@(Model.IntroduceImage)" alt="">
+            </div>
+        </div>
+
+        <!-- ul -->
+        <ul class="con_ul">
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>企业概况</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.Introduce)</p>
+            </li>
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>主营业务</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.MainBusiness)</p>
+            </li>
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>拟对外合作内容</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.CooperationContent)</p>
+            </li>
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>联系方式</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.Contact)</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+

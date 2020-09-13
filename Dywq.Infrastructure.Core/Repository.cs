@@ -35,6 +35,7 @@ namespace Dywq.Infrastructure.Core
 
         public virtual TEntity Update(TEntity entity)
         {
+            entity.UpdatedTime = DateTime.Now;
             return DbContext.Update(entity).Entity;
         }
 

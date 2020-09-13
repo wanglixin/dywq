@@ -1,6 +1,50 @@
 ﻿@{
-    var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
+    var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
+    var types = ViewBag.types as IEnumerable<Dywq.Web.Dto.Commpany.CompanyTypeDTO>;
+    var banners = ViewBag.banners as IEnumerable<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
+
+    var companyInfos = ViewBag.companyInfos as Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
 }
+
+@section head{
+    <link href="~/css/pager.css" rel="stylesheet" />
+    <style type="text/css">
+        .companyul {
+            height: 200px;
+        }
+
+        .paginabox {
+            margin-top: 0;
+            height:42px;
+        }
+
+            .paginabox .count {
+                display: none;
+            }
+
+        .company {
+            padding-bottom: 17px;
+        }
+
+        .company  a{
+            color:black;
+             text-decoration:none;
+        }
+
+        .bannner_con{
+            width:880.5px;
+            height:393.3px;
+        }
+
+        .swiper-slide img{
+            height:393.3px;
+        }
+
+    </style>
+
+
+}
+
 <!-- banner -->
 <section id="banner">
     <div class="container">
@@ -9,9 +53,17 @@
                 <div class="bannner_con">
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="/img/banner.png" alt="">
-                            </div>
+                            @{
+                                foreach (var item in banners)
+                                {
+                                    <div class="swiper-slide">
+                                        <img src="@(item.IntroduceImage)" alt="">
+                                    </div>
+                                }
+
+                            }
+
+
                             <div class="swiper-slide">
                                 <img src="/img/banner.png" alt="">
                             </div>
@@ -73,7 +125,7 @@
                         <div class="login_btn">
                             <input class="btn_logout" onclick="javascript: window.location.href='/user/company/list'" type="button" value="进入个人中心" />
                         </div>
-                     
+
 
 
                     </div>
@@ -91,198 +143,74 @@
         <div class="commonflex">
             <div class="col-md-9 col-sm-12 col-xs-12" style="margin-right: 26px;">
                 <div class="active_con_left">
-                    <ul class="subject_ul">
-                        <li class="active_coned">化工化学类</li>
-                        <li>电子信息类</li>
-                        <li>外贸进出口类</li>
-                        <li>装备制造类</li>
-                        <li>医疗生产类</li>
-                        <li>现代服务类</li>
-                        <li>仓储物流类</li>
+                    <ul class="subject_ul companyType">
+                        @{
+                            var first = false;
+                            foreach (var type in types)
+                            {
+                                <li data-type="@(type.Id)" class="@(!first?"active_coned":"")">@(type.Name)</li>
+                                first = true;
+                            }
+
+                        }
+                        @*<li class="active_coned">化工化学类</li>
+                            <li>电子信息类</li>
+                            <li>外贸进出口类</li>
+                            <li>装备制造类</li>
+                            <li>医疗生产类</li>
+                            <li>现代服务类</li>
+                            <li>仓储物流类</li>*@
                     </ul>
                     <div class="company_box">
                         <div class="company">
                             <div class="company_title">企业动态<span>Enterprise trends</span></div>
-                            <section class="companyul">
 
-                                <div class="line"></div>
+                            <div class="company_cnt">
+                                <section class="companyul">
+                                    <div class="line"></div>
 
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                            </section>
-                            <!-- 分页 -->
-                            <section class="paginabox">
-                                <a href="#" class="prev_btn">上一页</a>
-                                <a href="#" class="page_btn choose">1</a>
-                                <a href="#" class="page_btn">2</a>
-                                <a href="#" class="page_btn">3</a>
-                                <a href="#" class="next_btn">下一页</a>
-                            </section>
+                                    @{
+                                        if (companyInfos.Data != null)
+                                        {
+                                            foreach (var item in companyInfos.Data)
+                                            {
+                                                <div class="companylist"><a href="/company/detail/@(item.CompanyId)">@(item.CompanyName)</a></div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="companylist">暂无内容.</div>
+
+                                        }
+
+                                    }
+
+                                    <!--div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></!--div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div-->
+                                </section>
+                                <!-- 分页 -->
+                                <section class="paginabox">
+                                    @Html.Raw(companyInfos.Pager)
+                                    <!--a href="#" class="prev_btn">上一页</!--a>
+        <a href="#" class="page_btn choose">1</a>
+        <a href="#" class="page_btn">2</a>
+        <a href="#" class="page_btn">3</a>
+        <a href="#" class="next_btn">下一页</a-->
+                                </section>
+
+                            </div>
+
+                          
                         </div>
-                        <div class="company">
-                            <div class="company_title">企业动态2<span>Enterprise trends</span></div>
-                            <section class="companyul">
 
-                                <div class="line"></div>
-
-                                <div class="companylist">2 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                            </section>
-                            <!-- 分页 -->
-                            <section class="paginabox">
-                                <a href="#" class="prev_btn">上一页</a>
-                                <a href="#" class="page_btn choose">1</a>
-                                <a href="#" class="page_btn">2</a>
-                                <a href="#" class="page_btn">3</a>
-                                <a href="#" class="next_btn">下一页</a>
-                            </section>
-                        </div>
-                        <div class="company">
-                            <div class="company_title">企业动态3<span>Enterprise trends</span></div>
-                            <section class="companyul">
-
-                                <div class="line"></div>
-
-                                <div class="companylist">3. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                            </section>
-                            <!-- 分页 -->
-                            <section class="paginabox">
-                                <a href="#" class="prev_btn">上一页</a>
-                                <a href="#" class="page_btn choose">1</a>
-                                <a href="#" class="page_btn">2</a>
-                                <a href="#" class="page_btn">3</a>
-                                <a href="#" class="next_btn">下一页</a>
-                            </section>
-                        </div>
-                        <div class="company">
-                            <div class="company_title">企业动态4<span>Enterprise trends</span></div>
-                            <section class="companyul">
-
-                                <div class="line"></div>
-
-                                <div class="companylist">4. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                            </section>
-                            <!-- 分页 -->
-                            <section class="paginabox">
-                                <a href="#" class="prev_btn">上一页</a>
-                                <a href="#" class="page_btn choose">1</a>
-                                <a href="#" class="page_btn">2</a>
-                                <a href="#" class="page_btn">3</a>
-                                <a href="#" class="next_btn">下一页</a>
-                            </section>
-                        </div>
-                        <div class="company">
-                            <div class="company_title">企业动态5<span>Enterprise trends</span></div>
-                            <section class="companyul">
-
-                                <div class="line"></div>
-
-                                <div class="companylist">5. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                            </section>
-                            <!-- 分页 -->
-                            <section class="paginabox">
-                                <a href="#" class="prev_btn">上一页</a>
-                                <a href="#" class="page_btn choose">1</a>
-                                <a href="#" class="page_btn">2</a>
-                                <a href="#" class="page_btn">3</a>
-                                <a href="#" class="next_btn">下一页</a>
-                            </section>
-                        </div>
-                        <div class="company">
-                            <div class="company_title">企业动态6<span>Enterprise trends</span></div>
-                            <section class="companyul">
-
-                                <div class="line"></div>
-
-                                <div class="companylist">6. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                            </section>
-                            <!-- 分页 -->
-                            <section class="paginabox">
-                                <a href="#" class="prev_btn">上一页</a>
-                                <a href="#" class="page_btn choose">1</a>
-                                <a href="#" class="page_btn">2</a>
-                                <a href="#" class="page_btn">3</a>
-                                <a href="#" class="next_btn">下一页</a>
-                            </section>
-                        </div>
-                        <div class="company">
-                            <div class="company_title">企业动态7<span>Enterprise trends</span></div>
-                            <section class="companyul">
-
-                                <div class="line"></div>
-
-                                <div class="companylist">7. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                                <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-                            </section>
-                            <!-- 分页 -->
-                            <section class="paginabox">
-                                <a href="#" class="prev_btn">上一页</a>
-                                <a href="#" class="page_btn choose">1</a>
-                                <a href="#" class="page_btn">2</a>
-                                <a href="#" class="page_btn">3</a>
-                                <a href="#" class="next_btn">下一页</a>
-                            </section>
-                        </div>
                     </div>
 
                 </div>
@@ -296,14 +224,16 @@
                     <div class="active_con_rights_sec">
                         <section>
                             <div class="policy_li active_policy">
-                                <div style="display: flex;align-items: center;">
+                                <div style="        display: flex;
+        align-items: center;
+">
                                     <span></span>
                                     <p>惠州农业中心开展新业务…</p>
                                 </div>
                                 <div class="date">2020-07-09</div>
                             </div>
                             <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
+                                <div style="display: flex; align-items: center;">
                                     <span></span>
                                     <p>惠州农业中心开展新业务…</p>
                                 </div>
@@ -823,7 +753,46 @@
                 window.location.reload();
             });
 
+
+
+
+            $(".companyType li").on("click", function () {
+                let target = $(this);
+                if (target.hasClass("active_coned")) return;
+                let index = target.index();
+                $(".subject_ul li").removeClass("active_coned");
+                target.addClass("active_coned");
+                var type = target.attr("data-type");
+                //$(".company").hide().eq(index).show();
+
+                getCompanyInfos(type, 1, 10);
+
+
+                //alert(type);
+
+
+
+            });
+
+           
+
+
+
+
+
+
+
         });
+
+         var getCompanyInfos = function (type,pageIndex,pageSize) {
+
+                $.get("/company/GetCompanyInfosByType?type=" + type + "&pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&linkUrl=javascript:getCompanyInfos(" + type + ",__id__," + pageSize + ")", function (r) {
+                    console.log(r);
+                    $(".company_cnt").html(r);
+
+
+                });
+            }
     </script>
 
 }
