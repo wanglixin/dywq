@@ -73,11 +73,11 @@ namespace Dywq.Web.Application.Commands
             int[] order = { 1, 2, -1, 0 };
 
             var data = await companySet
-                .OrderBy(x => (x.Status + 3) % 4)
-                //.OrderByDescending(x => x.Status == 1)
-                //.ThenByDescending(x => x.Status == 2)
-                //.ThenByDescending(x => x.Status == -1)
-                //.ThenByDescending(x => x.Status == 0)
+                //.OrderBy(x => (x.Status + 3) % 4)
+                .OrderByDescending(x => x.Status == 1)
+                .ThenByDescending(x => x.Status == 2)
+                .ThenByDescending(x => x.Status == -1)
+                .ThenByDescending(x => x.Status == 0)
                 .ThenBy(x => x.Sort)
                 .ThenByDescending(x => x.Id)
                 .Skip(start)
