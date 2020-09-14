@@ -45,7 +45,7 @@ namespace Dywq.Web.Extensions
         {
             return services.AddDomainContext(builder =>
             {
-                builder.UseSqlServer(connectionString);
+                builder.UseSqlServer(connectionString, p => p.UseRowNumberForPaging());
             });
         }
 
