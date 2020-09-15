@@ -16,5 +16,10 @@ namespace Dywq.Web.Dto.User
         public string CompanyName { get; set; }
 
         public int CompanyId { get; set; }
+
+
+        public string RealName { get; set; }
+        public string IDCard { get; set; }
+        public string Mobile { get; set; }
     }
 }

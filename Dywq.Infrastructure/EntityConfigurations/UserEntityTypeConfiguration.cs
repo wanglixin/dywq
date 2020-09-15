@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Dywq.Infrastructure.EntityConfigurations
 {
-    class UserEntityTypeConfiguration: BaseEntityTypeConfiguration<User, int>
+    class UserEntityTypeConfiguration : BaseEntityTypeConfiguration<User, int>
     {
         public override void Configure(EntityTypeBuilder<User> builder)
         {
@@ -16,6 +16,10 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.UserName).HasMaxLength(50);
             builder.Property(p => p.Password).HasMaxLength(150);
             builder.Property(p => p.Type);
+
+            builder.Property(p => p.RealName).HasMaxLength(50);
+            builder.Property(p => p.IDCard).HasMaxLength(50);
+            builder.Property(p => p.Mobile).HasMaxLength(20);
 
         }
     }

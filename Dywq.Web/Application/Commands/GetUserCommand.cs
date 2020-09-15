@@ -52,7 +52,10 @@ namespace Dywq.Web.Application.Commands
                 Id = user.Id,
                 CreatedTime = user.CreatedTime,
                 UserName = user.UserName,
-                Type = user.Type
+                Type = user.Type,
+                RealName = user.RealName,
+                Mobile = user.Mobile,
+                IDCard = user.IDCard
             };
 
 

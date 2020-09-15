@@ -4,6 +4,7 @@ using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Core.Utilitiy;
 using Dywq.Infrastructure.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,16 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class UserAddCommand : IRequest<Result>
+    public class EditUserCommand : IRequest<Result>
     {
+        [Range(1, int.MaxValue, ErrorMessage = "用户id错误")]
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "用户名不能为空")]
         public string UserName { get; set; }
 
-        [RegularExpression("[0|1]", ErrorMessage = "类型不正确")]
-        public string Type { get; set; }
+        //[RegularExpression("[0|1]", ErrorMessage = "类型不正确")]
+        //public string Type { get; set; }
 
         [Required(ErrorMessage = "密码不能为空")]
         public string Password { get; set; }
@@ -33,15 +37,16 @@ namespace Dywq.Web.Application.Commands
 
     }
 
-    public class UserAddCommandCommandHandler : IRequestHandler<UserAddCommand, Result>
+
+    public class EditUserCommandHandler : IRequestHandler<EditUserCommand, Result>
     {
         readonly ICapPublisher _capPublisher;
-        readonly ILogger<UserAddCommandCommandHandler> _logger;
+        readonly ILogger<EditUserCommandHandler> _logger;
         readonly IBaseRepository<User> _userRepository;
         readonly IMd5 _md5;
-        public UserAddCommandCommandHandler(
+        public EditUserCommandHandler(
             ICapPublisher capPublisher,
-            ILogger<UserAddCommandCommandHandler> logger,
+            ILogger<EditUserCommandHandler> logger,
             IBaseRepository<User> userRepository,
             IMd5 md5)
         {
@@ -51,9 +56,13 @@ namespace Dywq.Web.Application.Commands
             _userRepository = userRepository;
         }
 
-        public async Task<Result> Handle(UserAddCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(EditUserCommand request, CancellationToken cancellationToken)
         {
-            var type = Convert.ToInt32(request.Type);
+            var id = Convert.ToInt32(request.Id);
+            var user = await _userRepository.Set().FirstOrDefaultAsync(x => x.Id == id);
+            if (user == null) return Result.Failure("用户不存在");
+
+            var type = user.Type;
             if (type == 0 && (
                 string.IsNullOrWhiteSpace(request.RealName)
                 || string.IsNullOrWhiteSpace(request.IDCard)
@@ -61,19 +70,17 @@ namespace Dywq.Web.Application.Commands
             {
                 return Result.Failure("姓名、身份证号码、手机号码不能为空！");
             }
+      
 
-            if (await _userRepository.AnyAsync(x => x.UserName == request.UserName))
+            if (await _userRepository.AnyAsync(x => x.Id != id && x.UserName == request.UserName))
             {
                 return Result.Failure("用户名已存在");
             }
             var pwd = _md5.Md5(request.Password);
-            var user = new User()
-            {
-                Password = pwd,
-                UserName = request.UserName,
-                Type = type
-            };
 
+            user.UserName = request.UserName;
+            user.Password = pwd;
+            
             if (type == 0)
             {
                 user.RealName = request.RealName;
@@ -81,7 +88,7 @@ namespace Dywq.Web.Application.Commands
                 user.Mobile = request.Mobile;
             }
 
-            await _userRepository.AddAsync(user, cancellationToken);
+            await _userRepository.UpdateAsync(user, cancellationToken);
 
             return Result.Success();
 

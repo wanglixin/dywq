@@ -32,23 +32,7 @@
             <fieldset>
                 <legend>填写信息</legend>
 
-              
-                <div class="field-item " data-choice="15" data-type="0" data-alias="MainBusiness" data-required="true" data-title="用户名">
-                    <span>用户名</span>
-
-                    <input type="text" name="UserName"  placeholder=" 必填">
-
-
-                </div>
-                <div class="field-item " data-choice="16" data-type="0" data-alias="MainProducts" data-required="false" data-title="密码">
-                    <span>密码</span>
-
-                    <input type="password" name="Password"  placeholder=" 必填">
-
-
-                </div>
-               
-                <div class="field-item w-100 choice" data-choice="5" data-type="3" data-alias="BusinessNature" data-required="false" data-title="企业性质">
+                <div class="field-item w-100 choice">
                     <span>类型</span>
 
                     <div class="cb">
@@ -58,13 +42,48 @@
                         <div class="cb-item">
                             <input name="Type" id="rd_6" type="radio" value="1"> <label for="rd_6">管理员</label>
                         </div>
-                      
-                     
+
+
                     </div>
 
 
                 </div>
-                
+                <div class="field-item ">
+                    <span>用户名</span>
+
+                    <input type="text" name="UserName" placeholder=" 必填">
+
+
+                </div>
+                <div class="field-item ">
+                    <span>密码</span>
+
+                    <input type="password" name="Password" placeholder=" 必填">
+
+                </div>
+
+                <div class="field-item user">
+                    <span>真实姓名</span>
+
+                    <input type="text" name="RealName" placeholder=" 必填">
+
+                </div>
+                <div class="field-item user">
+                    <span>手机号码</span>
+
+                    <input type="text" name="Mobile" placeholder=" 必填">
+
+                </div>
+
+                <div class="field-item user">
+                    <span>身份证号码</span>
+
+                    <input type="text" name="IDCard" placeholder=" 必填">
+
+                </div>
+
+
+
 
             </fieldset>
         </div>
@@ -78,6 +97,18 @@
 @section js{
     <script type="text/javascript">
         $(function () {
+
+            $("input[name='Type']").on("change", function () {
+                var target = $(this);
+                var _val = target.val();
+                console.log(_val);
+                if (_val == 1) {
+                    $(".user").hide();
+                } else {
+                     $(".user").show();
+                }
+            });
+
              $(".btn-save").req("#form_data", "/api/user/add", function (res) {
                  if (res.code != 0) {
                      alert(res.message);

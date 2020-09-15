@@ -32,33 +32,60 @@
         <fieldset>
             <legend>填写信息</legend>
 
-            <input  type="hidden" value="@(Model?.Id)" name="Id"/>
-            <div class="field-item " data-choice="15" data-type="0" data-alias="MainBusiness" data-required="true" data-title="用户名">
+            <input type="hidden" value="@(Model?.Id)" name="Id" />
+
+            <div class="field-item w-100 choice">
+                <span>类型</span>
+
+                <div class="cb">
+                    <div class="cb-item">
+                        <input disabled="disabled"  id="rd_4" type="radio" value="0" @(Model?.Type == 0 ? "checked=\"checked\"" : "")> <label for="rd_4">企业用户</label>
+                    </div>
+                    <div class="cb-item">
+                        <input  disabled="disabled" id="rd_6" type="radio" value="1" @(Model?.Type == 1 ? "checked=\"checked\"" : "")> <label for="rd_6">管理员</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="field-item ">
                 <span>用户名</span>
                 <input type="text" name="UserName" placeholder=" 必填" value="@(Model?.UserName)">
             </div>
-            <div class="field-item " data-choice="16" data-type="0"  data-required="false" data-title="密码">
+            <div class="field-item ">
                 <span>密码</span>
                 <input type="password" name="Password" placeholder=" 必填">
 
             </div>
 
-            <div class="field-item w-100 choice" data-choice="5" data-type="3" data-alias="BusinessNature" data-required="false" data-title="企业性质">
-                <span>类型</span>
 
-                <div class="cb">
-                    <div class="cb-item">
-                        <input name="Type" id="rd_4" type="radio" value="0" @( Model?.Type == 0 ? "checked=\"checked\"" : "")> <label for="rd_4">企业用户</label>
+            @{
+                if (Model?.Type == 0)
+                {
+                    <div class="field-item user">
+                        <span>真实姓名</span>
+
+                        <input type="text" name="RealName" value="@(Model?.RealName)" placeholder=" 必填">
+
                     </div>
-                    <div class="cb-item">
-                        <input name="Type" id="rd_6" type="radio" value="1" @(Model?.Type == 1 ? "checked=\"checked\"" : "")> <label for="rd_6">管理员</label>
+                    <div class="field-item user">
+                        <span>手机号码</span>
+
+                        <input type="text" name="Mobile" value="@(Model?.Mobile)" placeholder=" 必填">
+
                     </div>
 
+                    <div class="field-item user">
+                        <span>身份证号码</span>
 
-                </div>
+                        <input type="text" name="IDCard" value="@(Model?.IDCard)" placeholder=" 必填">
+
+                    </div>
+                }
+            }
 
 
-            </div>
+
 
 
         </fieldset>
@@ -73,6 +100,7 @@
 @section js{
     <script type="text/javascript">
         $(function () {
+           
             $(".btn-save").req("#form_data", "/api/user/edit", function (res) {
                 if (res.code != 0) {
                     alert(res.message);

@@ -1,4 +1,5 @@
 ﻿using DotNetCore.CAP.Messages;
+using Dywq.Domain.ArticleAggregate;
 using Dywq.Domain.CompanyAggregate;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Domain.UserAggregate;
@@ -57,6 +58,7 @@ namespace Dywq.Web.Extensions
             services.AddScoped<IBaseRepository<SiteInfo>, BaseRepository<SiteInfo>>();
             services.AddScoped<IBaseRepository<CompanyUser>, BaseRepository<CompanyUser>>();
             services.AddScoped<IBaseRepository<CompanyType>, BaseRepository<CompanyType>>();
+            services.AddScoped<IBaseRepository<PartyBuildingArticle>, BaseRepository<PartyBuildingArticle>>();
             return services;
         }
 
