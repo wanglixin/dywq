@@ -1,10 +1,8 @@
 ﻿using DotNetCore.CAP.Messages;
-using Dywq.Domain.Abstractions;
 using Dywq.Domain.CompanyAggregate;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Domain.UserAggregate;
 using Dywq.Infrastructure;
-using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Core.Utilitiy;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Application.IntegrationEvents;
@@ -13,12 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Dywq.Web.Extensions
 {
@@ -104,12 +97,6 @@ namespace Dywq.Web.Extensions
             }).Services.AddSingleton(new Md5Options());
 
             services.AddScoped<IMd5, MyMd5>();
-            return services;
-        }
-
-        public static IServiceCollection AddDapper(this IServiceCollection services, IConfiguration configuration)
-        {
-           
             return services;
         }
 
