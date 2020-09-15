@@ -147,7 +147,7 @@ namespace Dywq.Infrastructure.Core
 
     public class PageResult<T> : Result<IEnumerable<T>>
     {
-        [JsonProperty("data")]
+        [JsonProperty("total")]
         public int Total { get; set; }
 
         /// <summary>
@@ -174,10 +174,26 @@ namespace Dywq.Infrastructure.Core
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 Total = total,
-                Pager =Core.Pager.Create(pageSize, pageIndex, total, linkUrl, 8)
+                Pager = Core.Pager.Create(pageSize, pageIndex, total, linkUrl, 8)
             };
             return result;
         }
 
+    }
+
+
+
+    public class PageData<T>
+    {
+
+        public PageData(IEnumerable<T> data, int total)
+        {
+
+            this.Data = data;
+            this.Total = total;
+        }
+
+        public IEnumerable<T> Data { get; }
+        public int Total { get; }
     }
 }

@@ -41,6 +41,9 @@ namespace Dywq.Infrastructure.Core
 
         Task<int> SqlCountAsync(string sql, params object[] parameters);
 
+
+        Task<PageData<T>> GetPageDataAsync<T>(string fields = "", string where = "", int pageIndex = 1, int pageSize = 10, string order = "id desc") where T : class, new();
+
     }
 
 

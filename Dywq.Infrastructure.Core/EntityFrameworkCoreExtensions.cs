@@ -1,4 +1,5 @@
-﻿using Dywq.Domain.Abstractions;
+﻿using Dapper;
+using Dywq.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query;
@@ -67,10 +68,10 @@ namespace Dywq.Infrastructure.Core
         public static async Task<int> SqlCountAsync(this DatabaseFacade facade, string sql, params object[] parameters)
         {
             var command = CreateCommand(facade, sql, out DbConnection conn, parameters);
-          
+
             var obj = await command.ExecuteScalarAsync();
             var count = Convert.ToInt32(obj);
-           // conn.Close();
+            // conn.Close();
             return count;
         }
 
@@ -90,6 +91,28 @@ namespace Dywq.Infrastructure.Core
 
         private static object Private(this object obj, string privateField) => obj?.GetType().GetField(privateField, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(obj);
         private static T Private<T>(this object obj, string privateField) => (T)obj?.GetType().GetField(privateField, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(obj);
+
+
+        public async static Task<PageData<T>> GetPageData<T>(this DatabaseFacade facade, string fields = "", string where = "", int pageIndex = 1, int pageSize = 10, string order = "id desc") where T : class, new()
+        {
+            var tableName = $"[{ typeof(T).Name}]";
+            fields = string.IsNullOrWhiteSpace(fields) ? "*" : fields;
+            var _where = !string.IsNullOrWhiteSpace(where) ? $"WHERE {where}" : "";
+            var sql = $"select count(*) from {tableName} {_where}";
+
+            Console.WriteLine($"count:{sql}");
+
+            var count = await SqlCountAsync(facade, sql);
+            if (count < 1) return new PageData<T>(null, 0);
+            sql = $"SELECT {fields} FROM (SELECT  ROW_NUMBER() OVER ( ORDER BY {order}) as RowId, *  FROM      {tableName} {_where} ) AS result WHERE RowId > {(pageIndex - 1) * pageSize} AND RowId <= {(pageIndex * pageSize)} ORDER BY RowId";
+
+            Console.WriteLine($"data:{sql}");
+            var data = await SqlQueryAsync<T>(facade, sql);
+
+            return new PageData<T>(data, count);
+
+
+        }
 
 
     }

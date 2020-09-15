@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Dywq.Infrastructure.Repositories
 {
-    public class UserRepository : Repository<User, int, DomainContext>, IUserRepository
-    {
-        public UserRepository(DomainContext context) : base(context)
-        {
-        }
-    }
+    //public class UserRepository : Repository<User, int, DomainContext>, IUserRepository
+    //{
+    //    public UserRepository(DomainContext context) : base(context)
+    //    {
+    //    }
+    //}
 
-    public interface IUserRepository : IRepository<User, int>
-    { }
+    //public interface IUserRepository : IRepository<User, int>
+    //{ }
 }

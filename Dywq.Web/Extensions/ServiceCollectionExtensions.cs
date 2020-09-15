@@ -107,5 +107,11 @@ namespace Dywq.Web.Extensions
             return services;
         }
 
+        public static IServiceCollection AddDapper(this IServiceCollection services, IConfiguration configuration)
+        {
+           
+            return services;
+        }
+
     }
 }

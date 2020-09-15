@@ -56,29 +56,43 @@ namespace Dywq.Web.Application.Commands
         {
 
             // Func<User, bool> condition = x => true;
+            var where = "";
             var userSet = _userRepository.Set().AsQueryable();
             if (!string.IsNullOrWhiteSpace(request.Key))
             {
                 userSet = userSet.Where(x => x.UserName.Contains(request.Key));
                 //condition = x => x.UserName.Contains(request.Key);
+                where = $"UserName like '%{request.Key}%'";
             }
 
-            var count = await userSet.CountAsync();
+            //  var count = await userSet.CountAsync();
 
+            //if (count < 1) return PageResult<UserDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
+            //var start = (request.PageIndex - 1) * request.PageSize;
+            //var end = start + request.PageSize;
+
+
+            //var query = userSet.OrderByDescending(x => x.Id)
+            //    .Skip(start)
+            //    .Take(request.PageSize)
+            //    .AsQueryable();
+
+            //var data = await userSet.OrderByDescending(x => x.Id)
+            //   .Skip(start)
+            //   .Take(request.PageSize)
+            //   .ToListAsync();
+            //var data = query.ToList();
+
+
+            var pageData = await _userRepository.GetPageDataAsync<User>(
+                pageIndex: request.PageIndex,
+                pageSize: request.PageSize,
+                where: where);
+            var count = pageData.Total;
             if (count < 1) return PageResult<UserDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
-            var start = (request.PageIndex - 1) * request.PageSize;
-            var end = start + request.PageSize;
 
-
-            var query = userSet.OrderByDescending(x => x.Id)
-                .Skip(start)
-                .Take(request.PageSize)
-                .AsQueryable();
-
-            var data = query.ToList();
-
-            _logger.LogInformation(query.ToSql());
-
+            //_logger.LogInformation(query.ToSql());
+            var data = pageData.Data;
 
             var ids = data.Select(x => x.Id);
 
@@ -92,7 +106,7 @@ namespace Dywq.Web.Application.Commands
 
             var _data = new List<UserDTO>();
 
-            data.ForEach(x =>
+            data.ToList().ForEach(x =>
             {
                 var u = new UserDTO
                 {

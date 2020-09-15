@@ -56,36 +56,57 @@ namespace Dywq.Web.Application.Commands
 
         public async Task<PageResult<CompanyInfoDTO>> Handle(GetCompanyInfosCommand request, CancellationToken cancellationToken)
         {
-
+            var where = "";
             var companySet = _companyRepository.Set().AsQueryable();
             if (!string.IsNullOrWhiteSpace(request.Key))
             {
-                companySet = companySet.Where(x => x.Name.Contains(request.Key));
+                //companySet = companySet.Where(x => x.Name.Contains(request.Key));
+                where = $"Name like '%{request.Key}%'";
 
             }
 
-            var count = await companySet.CountAsync();
 
+            var pageData = await _companyRepository.GetPageDataAsync<Company>(
+               pageIndex: request.PageIndex,
+               pageSize: request.PageSize,
+               where: where,
+               order: "(Status + 3) % 4,Sort asc,Id desc"
+               );
+            var count = pageData.Total;
             if (count < 1) return PageResult<CompanyInfoDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
-            var start = (request.PageIndex - 1) * request.PageSize;
-            var end = start + request.PageSize;
+
+            var data = pageData.Data;
+
+
+            //var companySet = _companyRepository.Set().AsQueryable();
+            //if (!string.IsNullOrWhiteSpace(request.Key))
+            //{
+            //    companySet = companySet.Where(x => x.Name.Contains(request.Key));
+
+            //}
+
+            //var count = await companySet.CountAsync();
+
+            //if (count < 1) return PageResult<CompanyInfoDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
+            //var start = (request.PageIndex - 1) * request.PageSize;
+            //var end = start + request.PageSize;
 
             //int[] order = { 1, 2, -1, 0 };
 
-            var query =  companySet
-                .OrderBy(x => (x.Status + 3) % 4)
-                //.OrderByDescending(x => x.Status == 1)
-                //.ThenByDescending(x => x.Status == 2)
-                //.ThenByDescending(x => x.Status == -1)
-                //.ThenByDescending(x => x.Status == 0)
-                .ThenBy(x => x.Sort)
-                .ThenByDescending(x => x.Id)
-                .Skip(start)
-                .Take(request.PageSize);
+            //var query =  companySet
+            //    .OrderBy(x => (x.Status + 3) % 4)
+            //    //.OrderByDescending(x => x.Status == 1)
+            //    //.ThenByDescending(x => x.Status == 2)
+            //    //.ThenByDescending(x => x.Status == -1)
+            //    //.ThenByDescending(x => x.Status == 0)
+            //    .ThenBy(x => x.Sort)
+            //    .ThenByDescending(x => x.Id)
+            //    .Skip(start)
+            //    .Take(request.PageSize);
 
-            _logger.LogInformation(query.ToSql());
+            //_logger.LogInformation(query.ToSql());
 
-            var data = await query.ToListAsync();
+            // var data = await query.ToListAsync();
 
 
 
@@ -97,7 +118,7 @@ namespace Dywq.Web.Application.Commands
 
             var _data = new List<CompanyInfoDTO>();
 
-            data.ForEach(x =>
+            data.ToList().ForEach(x =>
             {
                 var type = companyTypes.FirstOrDefault(c => c.Id == x.CompanyTypeId);
                 var dto = new CompanyInfoDTO

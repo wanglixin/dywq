@@ -127,6 +127,11 @@ namespace Dywq.Infrastructure.Core
         {
             return await DbContext.Database.SqlCountAsync(sql, parameters);
         }
+
+        public async Task<PageData<T>> GetPageDataAsync<T>(string fields, string where, int pageIndex = 1, int pageSize = 10, string order = "id desc") where T : class, new()
+        {
+            return await DbContext.Database.GetPageData<T>(fields, where, pageIndex, pageSize, order);
+        }
     }
 
 
