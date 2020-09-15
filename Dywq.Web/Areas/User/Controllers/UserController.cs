@@ -24,7 +24,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
         [Authorize(Roles = Common.Role.Admin)]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             return View();
         }

@@ -114,7 +114,7 @@ namespace Dywq.Infrastructure.Core
         }
 
 
-        public static Result<T> Failure(string msg)
+        public new static Result<T> Failure(string msg)
         {
             var result = new Result<T>();
             result.Code = -1;

@@ -27,7 +27,7 @@ namespace Dywq.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Test()
+        public IActionResult Test()
         {
 
 

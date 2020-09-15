@@ -7,11 +7,15 @@ using System;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Domain.CompanyAggregate;
 using Dywq.Domain.UserAggregate;
+using Microsoft.Extensions.Logging;
 
 namespace Dywq.Infrastructure
 {
     public class DomainContext : EFContext
     {
+        //创建日志工厂
+      
+
         public DomainContext(DbContextOptions options, IMediator mediator, ICapPublisher capBus) : base(options, mediator, capBus)
         {
         }

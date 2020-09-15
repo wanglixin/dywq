@@ -55,22 +55,31 @@ namespace Dywq.Web.Application.Commands
         public async Task<PageResult<UserDTO>> Handle(GetUsersCommand request, CancellationToken cancellationToken)
         {
 
-            Func<User, bool> condition = x => true;
+           // Func<User, bool> condition = x => true;
             var userSet = _userRepository.Set().AsQueryable();
             if (!string.IsNullOrWhiteSpace(request.Key))
             {
-                userSet = userSet.Where(x=>x.UserName.Contains(request.Key));
-                condition = x => x.UserName.Contains(request.Key);
+                userSet = userSet.Where(x => x.UserName.Contains(request.Key));
+                //condition = x => x.UserName.Contains(request.Key);
             }
-           
-            var count =await userSet.CountAsync();
+
+            var count = await userSet.CountAsync();
 
             if (count < 1) return PageResult<UserDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
             var start = (request.PageIndex - 1) * request.PageSize;
             var end = start + request.PageSize;
 
-            var data =  _userRepository.Set()
-                .Where(condition).Skip(start).Take(request.PageSize).ToList();
+
+            var query = userSet.OrderByDescending(x => x.Id)
+                .Skip(start)
+                .Take(request.PageSize)
+                .AsQueryable();
+
+            var data = await query.ToListAsync();
+
+            _logger.LogInformation(query.ToSql());
+
+
             var ids = data.Select(x => x.Id);
 
             var companyUserids = await _companyUserRepository.Set().Where(x => ids.Contains(x.UserId)).ToListAsync();
@@ -79,11 +88,7 @@ namespace Dywq.Web.Application.Commands
 
             var cids = user_company_arr.Select(x => x.CompanyId);
 
-            var companys = await _companyRepository.Set().Where(x=>cids.Contains(x.Id)).ToListAsync();
-           
-            
-           // var fieldDatas = await _companyFieldDataRepository.Set().Where(x => x.Alias == Common.CompanyFieldAlias.CompanyName && cids.Contains(x.CompanyId)).ToListAsync();
-
+            var companys = await _companyRepository.Set().Where(x => cids.Contains(x.Id)).ToListAsync();
 
             var _data = new List<UserDTO>();
 
