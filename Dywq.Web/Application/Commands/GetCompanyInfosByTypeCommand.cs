@@ -53,46 +53,28 @@ namespace Dywq.Web.Application.Commands
 
         public async Task<PageResult<CompanyInfoDTO>> Handle(GetCompanyInfosByTypeCommand request, CancellationToken cancellationToken)
         {
+            var where = $"CompanyTypeId={request.TypeId} and Show=1 and Status=2";
+            var pageData = await _companyRepository.GetPageDataAsync<Company>(
+              pageIndex: request.PageIndex,
+              pageSize: request.PageSize,
+              where: where
+              );
 
-
-            var companys = _companyRepository.Set().Where(x => x.CompanyTypeId == request.TypeId && x.Show && x.Status == 2);
-
-            var count = await companys.CountAsync();
-
+            var count = pageData.Total;
             if (count < 1) return PageResult<CompanyInfoDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
-            var start = (request.PageIndex - 1) * request.PageSize;
-            var end = start + request.PageSize;
 
-
-            var data = await companys
-                .OrderByDescending(x => x.CreatedTime)
-                .Skip(start)
-                .Take(request.PageSize)
-                .ToListAsync();
-
+            var data = pageData.Data;
             var _data = new List<CompanyInfoDTO>();
 
-            data.ForEach(x =>
+            data.ToList().ForEach(x =>
             {
                 var dto = new CompanyInfoDTO
                 {
-
-                    //Status = x.Status,
                     CompanyId = x.Id,
-                    // CompanyTypeId = x.CompanyTypeId,
-                    //Contact = x.Contact,
-                    //CooperationContent = x.CooperationContent,
-                    //Introduce = x.Introduce,
-                    //IntroduceImage = x.IntroduceImage,
-                    //MainBusiness = x.MainBusiness,
-                    //Show = x.Show,
-                    //Sort = x.Sort,
-                    //UpdatedTime = x.UpdatedTime,
                     CompanyName = x.Name
                 };
 
                 _data.Add(dto);
-
             });
 
             return PageResult<CompanyInfoDTO>.Success(_data, count, request.PageIndex, request.PageSize, request.LinkUrl);
