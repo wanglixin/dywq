@@ -55,7 +55,7 @@ namespace Dywq.Web.Application.Commands
         public async Task<PageResult<UserDTO>> Handle(GetUsersCommand request, CancellationToken cancellationToken)
         {
 
-           // Func<User, bool> condition = x => true;
+            // Func<User, bool> condition = x => true;
             var userSet = _userRepository.Set().AsQueryable();
             if (!string.IsNullOrWhiteSpace(request.Key))
             {
@@ -75,7 +75,7 @@ namespace Dywq.Web.Application.Commands
                 .Take(request.PageSize)
                 .AsQueryable();
 
-            var data = await query.ToListAsync();
+            var data = query.ToList();
 
             _logger.LogInformation(query.ToSql());
 

@@ -44,10 +44,10 @@ namespace Dywq.Web.Extensions
 
         public static IServiceCollection AddSqlServerDomainContext(this IServiceCollection services, string connectionString)
         {
-             
+
             return services.AddDomainContext(builder =>
             {
-              
+
                 builder.UseSqlServer(connectionString);
             });
         }
