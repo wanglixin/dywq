@@ -31,5 +31,17 @@ namespace Dywq.Infrastructure.Core.Extensions
             return stringBuilder.ToString();
 
         }
+
+
+        public static string Cut(this string input,int count)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return "";
+            var length = input.Length;
+            if (length <= count) return input;
+
+            return input.Substring(0, count) + "...";
+
+        }
+
     }
 }

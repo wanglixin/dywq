@@ -1,0 +1,57 @@
+﻿@using Dywq.Infrastructure.Core.Extensions;
+@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Article.PartyBuildingArticleDTO>
+@section head{
+    <link href="~/css/index2.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .paginabox .count {
+            padding: 5px;
+            margin: 5px;
+            display: inline-block;
+            min-width: 32px;
+            height: 32px;
+            text-align: center;
+            color: rgba(102, 102, 102, 1);
+            font-size: 14px;
+            background: #fff;
+            border-radius: 6px;
+        }
+    </style>
+
+}
+<div class="container">
+    <div id="banner">
+        <img src="" alt="">
+        <h4>企业党建</h4>
+    </div>
+</div>
+<!-- sec -->
+<div class="container">
+    @{
+        if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+                <div class="sec">
+                    <div class="sec_left">
+                        <img src="@(item.Pic)" alt="">
+                    </div>
+                    <div class="sec_right">
+                        <h4 class="title_sec"><a href="/article/PartyBuildingDetail/@(item.Id)">@(item.ThemeTitle.Cut(40))</a></h4>
+                        <p class="con_sec">@(item.Content.Cut(300))</p>
+                        <div class="time_sec">@(item.CreatedTime)</div>
+                    </div>
+
+                </div>
+            }
+        }
+    }
+
+</div>
+
+
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>
+

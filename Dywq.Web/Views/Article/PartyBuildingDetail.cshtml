@@ -1,0 +1,67 @@
+﻿@model Dywq.Web.Dto.Article.PartyBuildingArticleDTO
+@section head{
+    <link href="~/css/index8.css" rel="stylesheet" />
+
+}
+
+<div id="main_content">
+    <div class="container">
+        <div class="main_title">
+            <span class="home">首页</span>/<span class="activething">企业党建</span>
+        </div>
+        <div class="main_con">
+           
+            <div class="comp_img">
+                <img src="@(Model.Pic)" alt="">
+            </div>
+        </div>
+
+        <!-- ul -->
+        <ul class="con_ul">
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>党建主题</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.ThemeTitle)</p>
+            </li>
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>副标题</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.Subtitle)</p>
+            </li>
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>来源</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.Source)</p>
+            </li>
+            <li>
+                <div class="li_top">
+                    <div class="ti">
+                        <img src="img/search.png" alt="">
+                    </div>
+                    <h4>党建内容</h4>
+                    <h5>Enterprise profile</h5>
+                </div>
+                <p>@(Model.Content) [@(Model.CreatedTime)]</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+

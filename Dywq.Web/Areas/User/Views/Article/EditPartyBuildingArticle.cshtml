@@ -1,0 +1,151 @@
+﻿@model Dywq.Web.Dto.Article.PartyBuildingArticleDTO
+@section head{
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .tools {
+            margin-bottom: 20px;
+        }
+
+        .field-item {
+            width: 100%;
+        }
+
+            .field-item span {
+                width: 15%;
+            }
+
+            .field-item .cb {
+                margin-left: initial;
+                width: 50%;
+            }
+    </style>
+}
+
+
+
+<h2>企业党建详情</h2>
+<div class="tools">
+    <div class="left_btns">
+        <div class="addbtn">
+            <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+        </div>
+    </div>
+
+</div>
+
+<form id="form_data">
+
+    <input type="hidden" name="Id" value="@(Model?.Id)" />
+    <div class="field-group">
+        <fieldset>
+            <legend>填写信息</legend>
+
+            <div class="field-item ">
+                <span>党建主题</span>
+                <input type="text" name="ThemeTitle" value="@(Model?.ThemeTitle)" placeholder=" 必填">
+            </div>
+
+            <div class="field-item ">
+                <span>副标题</span>
+                <input type="text" name="Subtitle" value="@(Model?.Subtitle)" placeholder=" 必填">
+            </div>
+
+            <div class="field-item ">
+                <span>来源</span>
+                <input type="text" name="Source" value="@(Model?.Source)" placeholder=" 必填">
+            </div>
+
+            <div class="field-item upload">
+                <span>照片</span>
+                <input type="file" id="PicFile" multiple />
+                <input type="hidden" name="Pic" value="@(Model?.Pic)" />
+                <input type="button" id="btnUpload" data-name="Pic" data-file="#PicFile" data-preview=".preview_img" value="上传" />
+
+            </div>
+            <div class="field-item">
+                <span>图片预览</span>
+                <img class="preview_img" src="@(Model?.Pic)" />
+            </div>
+
+            <div class="field-item ">
+                <span>党建内容</span>
+                <textarea type="text" name="Content" placeholder=" 必填">@(Model?.Content)</textarea>
+            </div>
+
+            @{
+                if (Model != null)
+                {
+                    <div class="field-item ">
+                        <span>发布时间</span>
+                        <input type="text" disabled="disabled" value="@(Model?.CreatedTime)">
+                    </div>
+                }
+            }
+
+            <div class="field-item ">
+                <span>显示</span>
+                <select name="Show">
+                    <option value="1" @(Model?.Show == true ? "selected=\"selected\"" : "")>
+                        是
+                    </option>
+                    <option value="0" @(Model?.Show == false ? "selected=\"selected\"" : "")>
+                        否
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="field-item ">
+                <span>排序</span>
+                <input type="number" name="Sort" value="@(Model?.Sort)" />
+            </div>
+
+
+
+
+
+        </fieldset>
+    </div>
+
+</form>
+
+<div class="btn-box">
+    <input type="button" class="btn-save" value="保存" />
+</div>
+
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            $(".btn-save").req("#form_data", "/api/article/editPartyBuildingArticle", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                } else {
+                    alert("保存成功");
+                }
+
+            });
+
+            $("#btnUpload").uploadImg(function (r, target) {
+                if (r.code == 0) {
+                    var name = target.attr("data-name");
+                    var preview = target.attr("data-preview");
+                    $("[name='" + name + "']").val(r.data);
+                    $(preview).attr("src", r.data);
+                } else {
+                    alert(r.message);
+                }
+            });
+        });
+
+
+
+
+
+    </script>
+
+}
