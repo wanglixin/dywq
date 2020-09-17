@@ -50,8 +50,8 @@ namespace Dywq.Web.Controllers
             var model = new LoginUserDTO();
             model.UserName = claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
-            int.TryParse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value, out int type);
-            model.Type = type;
+            var role = claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            model.Type = role == Role.User ? 0 : 1;
 
             int.TryParse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int id);
             model.Id = id;

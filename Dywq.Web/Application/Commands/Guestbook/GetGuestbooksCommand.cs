@@ -71,6 +71,7 @@ namespace Dywq.Web.Application.Commands.Guestbook
             var id_arr = data.Select(x => x.Id);
             var replys = await _guestbookRepository.Set().Select(x => new GuestbookDTO()
             {
+                Id = x.Id,
                 Content = x.Content,
                 ReplyId = x.ReplyId,
                 Type = x.Type,
@@ -96,6 +97,7 @@ namespace Dywq.Web.Application.Commands.Guestbook
             {
                 var dto = new GuestbookDTO()
                 {
+                    Id = item.Id,
                     Content = item.Content,
                     CreatedTime = item.CreatedTime,
                     ReplyId = item.ReplyId,

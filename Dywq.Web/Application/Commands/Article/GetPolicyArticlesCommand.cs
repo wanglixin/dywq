@@ -25,7 +25,7 @@ namespace Dywq.Web.Application.Commands.Article
         /// <summary>
         /// 政策类型id
         /// </summary>
-        public string PolicyTypeId { get; set; } = "";
+        public string TypeId { get; set; } = "";
         public bool? Show { get; set; } = null;
     }
 
@@ -62,9 +62,9 @@ namespace Dywq.Web.Application.Commands.Article
                 sb.Add($"Show = " + (request.Show.Value ? 1 : 0));
             }
 
-            if (!string.IsNullOrWhiteSpace(request.PolicyTypeId))
+            if (!string.IsNullOrWhiteSpace(request.TypeId))
             {
-                sb.Add($"PolicyTypeId = " + request.PolicyTypeId);
+                sb.Add($"PolicyTypeId = " + request.TypeId);
             }
             var where = string.Join(" and ", sb);
 

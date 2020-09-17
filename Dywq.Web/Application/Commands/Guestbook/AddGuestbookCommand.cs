@@ -11,6 +11,7 @@ using System.Threading;
 using DotNetCore.CAP;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Dywq.Domain.UserAggregate;
 
 namespace Dywq.Web.Application.Commands.Guestbook
 {
@@ -20,15 +21,12 @@ namespace Dywq.Web.Application.Commands.Guestbook
     public class AddGuestbookCommand : IRequest<Result>
     {
 
-        [Range(0, int.MaxValue, ErrorMessage = "id错误")]
-        public string Id { get; set; }
 
-
-        [Range(1, int.MaxValue, ErrorMessage = "用户id错误")]
+        //[Range(1, int.MaxValue, ErrorMessage = "用户id错误")]
         /// <summary>
         /// 留言用户，或管理员id
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
 
         [Required(ErrorMessage = "内容不能为空")]
@@ -55,21 +53,33 @@ namespace Dywq.Web.Application.Commands.Guestbook
     public class AddGuestbookCommandHandler : BaseRequestHandler<AddGuestbookCommand, Result>
     {
         readonly IBaseRepository<Domain.GuestbookAggregate.Guestbook> _guestbookRepository;
+        readonly IBaseRepository<User> _userRepository;
 
         public AddGuestbookCommandHandler(
             ICapPublisher capPublisher,
             ILogger<AddGuestbookCommandHandler> logger,
-            IBaseRepository<Domain.GuestbookAggregate.Guestbook> guestbookRepository
+            IBaseRepository<Domain.GuestbookAggregate.Guestbook> guestbookRepository,
+            IBaseRepository<User> userRepository
             ) : base(capPublisher, logger)
         {
             _guestbookRepository = guestbookRepository;
+            _userRepository = userRepository;
         }
 
         public override async Task<Result> Handle(AddGuestbookCommand request, CancellationToken cancellationToken)
         {
+
+            var user = await _userRepository.Set().FirstOrDefaultAsync(x => x.Id == request.UserId);
+
             var replyId = string.IsNullOrWhiteSpace(request.ReplyId) ? 0 : Convert.ToInt32(request.ReplyId);
-            if (replyId > 0)
+            if (replyId > 0)  //回复
             {
+                if (user.Type != 1)
+                {
+                    return Result.Failure($"只能管理员才能回复");
+                }
+
+
                 var _guestbook = await _guestbookRepository.Set().FirstOrDefaultAsync(x => x.Id == replyId);
 
                 if (_guestbook == null)
@@ -84,10 +94,25 @@ namespace Dywq.Web.Application.Commands.Guestbook
 
                 //目前只能回复一次
 
-                if (!await _guestbookRepository.AnyAsync(x => x.ReplyId == replyId))
+                if (await _guestbookRepository.AnyAsync(x => x.ReplyId == replyId))
                 {
                     return Result.Failure($"已经回复过");
                 }
+            }
+            else //新增留言
+            {
+                //判断留言次数 一天内目前暂定2次留言
+
+                var start = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                var end = Convert.ToDateTime(DateTime.Now.ToShortDateString()).AddDays(1);
+
+                var count = await _guestbookRepository.Set().CountAsync(x => x.UserId == request.UserId && x.Type == 0 && start <= x.CreatedTime && x.CreatedTime < end);
+
+                if (count >= 2)
+                {
+                    return Result.Failure($"一天最多留言2条");
+                }
+
             }
 
             var guestBook = new Domain.GuestbookAggregate.Guestbook()

@@ -21,13 +21,15 @@
             background: #fff;
             border-radius: 6px;
         }
-        .sec_tab a{
-            color:black;
-            text-decoration:none;
+
+        .sec_tab a {
+            color: black;
+            text-decoration: none;
         }
-         .sec_tab li.tab_active a{
-             color:white;
-         }
+
+        .sec_tab li.tab_active a {
+            color: white;
+        }
     </style>
 
 }
@@ -45,7 +47,7 @@
                 @{
                     foreach (var type in types)
                     {
-                        <li class="@(typeId==type.Id?"tab_active":"")"><a href="/article/policy?PolicyTypeId=@(type.Id)">@(type.Name)</a> </li>
+                        <li class="@(typeId==type.Id?"tab_active":"")"><a href="/article/policy?typeId=@(type.Id)">@(type.Name)</a> </li>
                     }
                 }
             </ul>
@@ -88,66 +90,74 @@
 
 <div class="container">
     <form class="ques">
+        <input type="hidden" name="Type" value="0" />
+        <input type="hidden" name="ReplyId" value="0" />
         <div class="ques_title">
             <div class="ques_img">?</div>
             <h3>政策答疑</h3>
         </div>
         <div class="ques_con">
-            <textarea name="" id="" cols="30" rows="10" placeholder="请描述您的问题…"></textarea>
+            <textarea name="Content" cols="30" rows="10" placeholder="请描述您的问题…"></textarea>
         </div>
         <div style="text-align:right;">
-            <input type="submit" value="提交" class="submitbtn">
+            <input type="button" value="提交" class="submitbtn">
         </div>
     </form>
 </div>
 
 
 <div class="container" style="margin-top: 20px;">
-    <form class="ques" action>
-        <div class="ques_title">
-            <div class="ques_img">=</div>
-            <h3>全部留言</h3>
-        </div>
-        <!-- ques_sec -->
-        <div class="ques_sec">
-            <div class="sec_top">
-                <img src="img/quesimg.png" alt="" class="quesimg">
-                <div class="top_title">
-                    <h5>江下科技有限公司</h5>
-                    <h6>5月12日</h6>
-                    <div class="title_con">想了解下具体的政策实施方案！！</div>
-                    <div class="sec_top answer">
-                        <img src="img/quesimg.png" alt="" class="quesimg">
-                        <div class="top_title">
-                            <h5>江下科技有限公司</h5>
-                            <h6>5月12日</h6>
-                            <div class="title_con">想了解下具体的政策实施方案！！</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ques_sec">
-            <div class="sec_top">
-                <img src="img/quesimg.png" alt="" class="quesimg">
-                <div class="top_title">
-                    <h5>江下科技有限公司</h5>
-                    <h6>5月12日</h6>
-                    <div class="title_con">想了解下具体的政策实施方案！！</div>
-                </div>
-            </div>
-        </div>
-        <div class="ques_sec">
-            <div class="sec_top">
-                <img src="img/quesimg.png" alt="" class="quesimg">
-                <div class="top_title">
-                    <h5>江下科技有限公司</h5>
-                    <h6>5月12日</h6>
-                    <div class="title_con">想了解下具体的政策实施方案！！</div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <div class="seemore"><a href="">查看更多</a></div>
+
+    <div class="ques_title">
+        <div class="ques_img">=</div>
+        <h3>全部留言</h3>
+    </div>
+    <!-- ques_sec -->
+    <div class="guestbook">
+
+    </div>
+
+    <div class="seemore"><a href="javascript:getGuestbooks()">查看更多</a></div>
 </div>
 
+
+@section js{
+    <script type="text/javascript">
+
+        var config = { page: 1 };
+
+
+        $(function () {
+            $(".submitbtn").req(".ques", "/api/guestbook/AddGuestbook", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                }
+                alert("留言成功");
+            });
+
+            getGuestbooks();
+
+
+
+        });
+
+        var getGuestbooks = function () {
+            var page = config.page;
+            $.get("/article/getGuestbook?pageIndex=" + page + "&pageSize=1", function (r) {
+                config.page++;
+                if (r != '') {
+                    $(".guestbook").append(r);
+                } else {
+                    $(".seemore").hide();
+                    alert("没有更多留言了");
+                }
+
+            })
+        }
+
+
+
+    </script>
+
+}

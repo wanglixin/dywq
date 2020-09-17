@@ -92,7 +92,7 @@
                         foreach (var type in types)
                         {
                             <div class="cb-item">
-                                <input name="CompanyTypeId" id="rd_@(type.Id)" type="radio" value="@(type.Id)" @(type.Id == Model.CompanyTypeId ? "checked=\"checked\"" : "")> <label for="rd_@(type.Id)">@(type.Name)</label>
+                                <input name="CompanyTypeId" id="rd_@(type.Id)" type="radio" value="@(type.Id)" @(type.Id == Model?.CompanyTypeId ? "checked=\"checked\"" : "")> <label for="rd_@(type.Id)">@(type.Name)</label>
                             </div>
                         }
                     }

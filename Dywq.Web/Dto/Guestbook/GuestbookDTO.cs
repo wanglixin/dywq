@@ -7,6 +7,9 @@ namespace Dywq.Web.Dto.Guestbook
 {
     public class GuestbookDTO
     {
+
+        public int Id { get; set; }
+
         /// <summary>
         /// 留言用户，或管理员id
         /// </summary>

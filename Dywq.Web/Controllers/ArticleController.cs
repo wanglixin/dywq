@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dywq.Web.Application.Commands.Article;
+using Dywq.Web.Application.Commands.Guestbook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -39,11 +40,11 @@ namespace Dywq.Web.Controllers
             var types = await _mediator.Send(new GetPolicyTypesCommand() { }, HttpContext.RequestAborted);
             ViewBag.types = types;
 
-            var typeId = string.IsNullOrWhiteSpace(cmd.PolicyTypeId) ? types.FirstOrDefault()?.Id.ToString() : cmd.PolicyTypeId;
+            var typeId = string.IsNullOrWhiteSpace(cmd.TypeId) ? types.FirstOrDefault()?.Id.ToString() : cmd.TypeId;
 
-            cmd.PolicyTypeId = typeId;
+            cmd.TypeId = typeId;
             cmd.Show = true;
-            cmd.LinkUrl = $"/article/policy?PolicyTypeId={typeId}&PageIndex=__id__&PageSize={cmd.PageSize}";
+            cmd.LinkUrl = $"/article/policy?typeId={typeId}&PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
 
 
@@ -59,6 +60,15 @@ namespace Dywq.Web.Controllers
             var result = await _mediator.Send(new GetPolicyArticlesCommand() { Id = id }, HttpContext.RequestAborted);
             return View(result?.Data?.FirstOrDefault());
         }
+
+
+        public async Task<IActionResult> GetGuestbook(GetGuestbooksCommand cmd)
+        {
+            cmd.LinkUrl = $"/article/getGuestbook?PageIndex=__id__&PageSize={cmd.PageSize}";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return PartialView(result);
+        }
+
 
 
 

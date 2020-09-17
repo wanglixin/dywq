@@ -123,7 +123,7 @@
                             </div>
                         </div>
                         <div class="login_btn">
-                            <input class="btn_logout" onclick="javascript: window.location.href='/user/company/list'" type="button" value="进入个人中心" />
+                            <input class="btn_logout" onclick="javascript: window.location.href='@(user.Type==0?"/user/company/AddCompanyInfo":"/user/company/list")'" type="button" value="进入个人中心" />
                         </div>
 
 
