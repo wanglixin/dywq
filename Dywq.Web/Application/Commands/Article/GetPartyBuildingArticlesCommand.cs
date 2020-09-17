@@ -27,11 +27,9 @@ namespace Dywq.Web.Application.Commands.Article
     }
 
 
-    public class GetPartyBuildingArticlesCommandHandler : IRequestHandler<GetPartyBuildingArticlesCommand, PageResult<PartyBuildingArticleDTO>>
+    public class GetPartyBuildingArticlesCommandHandler : BaseRequestHandler<GetPartyBuildingArticlesCommand, PageResult<PartyBuildingArticleDTO>>
     {
 
-        readonly ICapPublisher _capPublisher;
-        readonly ILogger<GetPartyBuildingArticlesCommandHandler> _logger;
 
         readonly IBaseRepository<PartyBuildingArticle> _partyBuildingArticleRepository;
 
@@ -39,17 +37,16 @@ namespace Dywq.Web.Application.Commands.Article
             ICapPublisher capPublisher,
             ILogger<GetPartyBuildingArticlesCommandHandler> logger,
             IBaseRepository<PartyBuildingArticle> partyBuildingArticleRepository
-            )
+            ) : base(capPublisher, logger)
         {
-            _capPublisher = capPublisher;
-            _logger = logger;
+
             _partyBuildingArticleRepository = partyBuildingArticleRepository;
         }
 
-        public async Task<PageResult<PartyBuildingArticleDTO>> Handle(GetPartyBuildingArticlesCommand request, CancellationToken cancellationToken)
+        public override async Task<PageResult<PartyBuildingArticleDTO>> Handle(GetPartyBuildingArticlesCommand request, CancellationToken cancellationToken)
         {
             var sb = new List<string>();
-           
+
 
             if (request.Id != 0)
             {
@@ -71,6 +68,10 @@ namespace Dywq.Web.Application.Commands.Article
                order: "Sort asc,Id desc"
                );
             var count = pageData.Total;
+            if (count < 1)
+            {
+                return PageResult<PartyBuildingArticleDTO>.Success(null, count, request.PageIndex, request.PageSize, request.LinkUrl);
+            }
             var data = pageData.Data.Select(x => new PartyBuildingArticleDTO()
             {
                 Id = x.Id,
