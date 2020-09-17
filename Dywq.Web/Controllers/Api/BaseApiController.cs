@@ -25,7 +25,7 @@ namespace Dywq.Web.Controllers.Api
         protected readonly ILogger<BaseApiController> _logger;
         protected readonly IWebHostEnvironment _webhostEnvironment;
 
-       
+
 
         public BaseApiController(IMediator mediator, ILogger<BaseApiController> logger, IWebHostEnvironment webhostEnvironment)
         {
@@ -78,6 +78,42 @@ namespace Dywq.Web.Controllers.Api
             if (!list.Contains(ext)) return Result<string>.Failure("图片格式不正确");
 
             return await Upload(file, "logo");
+
+        }
+
+
+        [Authorize]
+        public async Task<dynamic> EditorUploadImg(IFormFile file)
+        {
+            var ext = Path.GetExtension(file.FileName).ToLower();
+            var list = new List<string>
+            {
+                ".png",
+                ".jpg",
+                ".jpeg",
+                ".gif",
+                ".bmp"
+            };
+            if (!list.Contains(ext)) return new { errno = -1, msg = "图片格式不正确", data = new List<string>() };
+
+            try
+            {
+                var r = await Upload(file, "logo");
+                if (r.Code == 0)
+                {
+
+                    return new { errno = 0, msg = "上传成功", data = new List<string>() { r.Data } };
+                }
+                else
+                {
+
+                    return new { errno = -1, msg = r.Message, data = new List<string>() };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { errno = -2, msg = ex.Message, data = new List<string>() };
+            }
 
         }
 

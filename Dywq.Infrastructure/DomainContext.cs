@@ -34,6 +34,9 @@ namespace Dywq.Infrastructure
             modelBuilder.ApplyConfiguration(new CompanyTypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PartyBuildingArticleEntityTypeConfiguration());
 
+            modelBuilder.ApplyConfiguration(new PolicyTypeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PolicyArticleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new GuestbookEntityTypeConfiguration());
             #endregion
             base.OnModelCreating(modelBuilder);
         }

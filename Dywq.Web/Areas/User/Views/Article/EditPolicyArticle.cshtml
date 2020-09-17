@@ -1,4 +1,7 @@
-﻿@model Dywq.Web.Dto.Article.PartyBuildingArticleDTO
+﻿@model Dywq.Web.Dto.Article.PolicyArticleDTO
+@{
+    var types = ViewBag.types as IEnumerable<Dywq.Web.Dto.Article.PolicyTypeDTO>;
+}
 @section head{
     <link href="~/css/company_add.css" rel="stylesheet" />
 
@@ -31,7 +34,7 @@
 
 
 
-<h2>企业党建详情</h2>
+<h2>惠企政策详情</h2>
 <div class="tools">
     <div class="left_btns">
         <div class="addbtn">
@@ -44,40 +47,33 @@
 <form id="form_data">
 
     <input type="hidden" name="Id" value="@(Model?.Id)" />
-    <input  type="hidden" name="Content" value="@(Model?.Content)"/>
+    <input type="hidden" name="Content" value="@(Model?.Content)" />
     <div class="field-group">
         <fieldset>
             <legend>填写信息</legend>
 
             <div class="field-item ">
-                <span>党建主题</span>
+                <span>政策类型</span>
+                <select name="PolicyTypeId">
+                    @{
+                        foreach (var item in types)
+                        {
+                            <option value="@(item.Id)" @(Model?.PolicyTypeId == item.Id ? "selected=\"selected\"" : "")>
+                                @(item.Name)
+                            </option>
+                        }
+                    }
+                </select>
+
+            </div>
+
+
+            <div class="field-item ">
+                <span>政策主题</span>
                 <input type="text" name="ThemeTitle" value="@(Model?.ThemeTitle)" placeholder=" 必填">
             </div>
-
             <div class="field-item ">
-                <span>副标题</span>
-                <input type="text" name="Subtitle" value="@(Model?.Subtitle)" placeholder=" 必填">
-            </div>
-
-            <div class="field-item ">
-                <span>来源</span>
-                <input type="text" name="Source" value="@(Model?.Source)" placeholder=" 必填">
-            </div>
-
-            <div class="field-item upload">
-                <span>照片</span>
-                <input type="file" id="PicFile" multiple />
-                <input type="hidden" name="Pic" value="@(Model?.Pic)" />
-                <input type="button" id="btnUpload" data-name="Pic" data-file="#PicFile" data-preview=".preview_img" value="上传" />
-
-            </div>
-            <div class="field-item">
-                <span>图片预览</span>
-                <img class="preview_img" src="@(Model?.Pic)" />
-            </div>
-
-            <div class="field-item ">
-                <span>党建内容</span>
+                <span>政策内容</span>
                 <div id="editor" style="width: 51%;">
                     <p>@(Html.Raw(Model?.Content))</p>
                 </div>
@@ -108,7 +104,7 @@
 
             <div class="field-item ">
                 <span>排序</span>
-                <input type="number" name="Sort" value="@(Model?.Sort)" />
+                <input type="number" name="Sort" value="@(Model==null?0:Model?.Sort)" />
             </div>
 
 
@@ -130,7 +126,7 @@
 
 
         $(function () {
-            $(".btn-save").req("#form_data", "/api/article/editPartyBuildingArticle", function (res) {
+            $(".btn-save").req("#form_data", "/api/article/editPolicyArticle", function (res) {
                 if (res.code != 0) {
                     alert(res.message);
                     return;
@@ -140,23 +136,13 @@
 
             });
 
-            $("#btnUpload").uploadImg(function (r, target) {
-                if (r.code == 0) {
-                    var name = target.attr("data-name");
-                    var preview = target.attr("data-preview");
-                    $("[name='" + name + "']").val(r.data);
-                    $(preview).attr("src", r.data);
-                } else {
-                    alert(r.message);
-                }
-            });
 
 
             var E = window.wangEditor;
             var editor = new E('#editor');
             editor.customConfig.uploadImgServer = '/api/baseapi/EditorUploadImg';
             editor.customConfig.uploadFileName = 'file';
-              editor.customConfig.onchange = function (html) {
+            editor.customConfig.onchange = function (html) {
                 // 监控变化，同步更新到 textarea
                 console.log(html);
                 $("input[name='Content']").val(html);
@@ -164,7 +150,7 @@
             editor.create();
             E.fullscreen.init('#editor');
 
-          
+
 
 
         });

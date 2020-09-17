@@ -32,5 +32,35 @@ namespace Dywq.Web.Controllers
             return View(result?.Data?.FirstOrDefault());
         }
 
+
+
+        public async Task<IActionResult> Policy(GetPolicyArticlesCommand cmd)
+        {
+            var types = await _mediator.Send(new GetPolicyTypesCommand() { }, HttpContext.RequestAborted);
+            ViewBag.types = types;
+
+            var typeId = string.IsNullOrWhiteSpace(cmd.PolicyTypeId) ? types.FirstOrDefault()?.Id.ToString() : cmd.PolicyTypeId;
+
+            cmd.PolicyTypeId = typeId;
+            cmd.Show = true;
+            cmd.LinkUrl = $"/article/policy?PolicyTypeId={typeId}&PageIndex=__id__&PageSize={cmd.PageSize}";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+
+
+            ViewBag.PolicyTypeId = Convert.ToInt32(typeId);
+
+
+
+            return View(result);
+        }
+
+        public async Task<IActionResult> PolicyDetail(int id)
+        {
+            var result = await _mediator.Send(new GetPolicyArticlesCommand() { Id = id }, HttpContext.RequestAborted);
+            return View(result?.Data?.FirstOrDefault());
+        }
+
+
+
     }
 }

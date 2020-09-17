@@ -40,5 +40,24 @@ namespace Dywq.Web.Controllers.Api
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
         }
+
+
+        [Authorize(Roles = Common.Role.Admin)]
+        [HttpPost]
+        public async Task<Result> EditPolicyArticle([FromBody]EditPolicyArticleCommand cmd)
+        {
+            _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
+
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<Result> DeletePolicyArticle(DeletePolicyArticleCommand cmd)
+        {
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
     }
 }
