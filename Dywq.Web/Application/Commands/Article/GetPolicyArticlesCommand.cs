@@ -41,7 +41,7 @@ namespace Dywq.Web.Application.Commands.Article
             ILogger<GetPolicyArticlesCommandHandler> logger,
             IBaseRepository<PolicyArticle> policyArticleRepository,
              IBaseRepository<PolicyType> policyTypeRepository
-            ):base(capPublisher, logger)
+            ) : base(capPublisher, logger)
         {
             _policyArticleRepository = policyArticleRepository;
             _policyTypeRepository = policyTypeRepository;
@@ -95,7 +95,8 @@ namespace Dywq.Web.Application.Commands.Article
                     ThemeTitle = x.ThemeTitle,
                     UpdatedTime = x.UpdatedTime,
                     PolicyTypeId = x.PolicyTypeId,
-                    PolicyTypeName = types.FirstOrDefault(t => t.Id == x.PolicyTypeId)?.Name
+                    PolicyTypeName = types.FirstOrDefault(t => t.Id == x.PolicyTypeId)?.Name,
+                    Source = x.Source
                 }
             );
 

@@ -18,17 +18,17 @@
     </div>
 
     <div class="right_btn">
-        <form action="/user/company/list">
+        
             <div class="work_input">
 
                 <div class="input-group search_con">
                     <input type="text" class="form-control" value="@(Context.Request.Query["key"])" name="key" placeholder="请输入企业名称">
                 </div>
-                <button class="btn btn-primary " type="submit">搜索</button>
+                <button class="btn btn-primary " type="button" onclick="getlist(1)">搜索</button>
 
                 @*<button class="btn btn-primary higer_search" type="button"><a href="./index11.html" style="color: #fff;">高级搜索</a></button>*@
             </div>
-        </form>
+    
     </div>
 </div>
 <!-- table -->
@@ -47,13 +47,11 @@
         {
             foreach (var item in Model.Data)
             {
-                <tr>
-                    <td>
+                <tr class="company_@(item.CompanyId)">
+                    <td class="company_id_@(item.CompanyId)">
                         @(item.CompanyId)
                     </td>
-                    <td>
-                        @(item.Name)
-                    </td>
+                    <td class="company_name_@(item.CompanyId)">@(item.Name)</td>
                     <td>
                         @(item.Industry)
                     </td>

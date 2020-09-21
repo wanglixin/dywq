@@ -1,0 +1,196 @@
+﻿@model Dywq.Web.Dto.Financing.FinancingDTO
+@{
+    var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
+}
+@section head{
+    <link href="~/css/index10.css" rel="stylesheet" />
+    <link href="~/css/company_add.css" rel="stylesheet" />
+
+    <link href="~/css/pager.css" rel="stylesheet" />
+
+    <script src="~/wangEditor/wangEditor.js"></script>
+    <link href="~/wangEditor/wangEditor-fullscreen-plugin.css" rel="stylesheet" />
+    <script src="~/wangEditor/wangEditor-fullscreen-plugin.js"></script>
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .tools {
+            margin-bottom: 20px;
+        }
+
+        .field-item {
+            width: 100%;
+        }
+
+            .field-item span {
+                width: 15%;
+            }
+
+            .field-item .cb {
+                margin-left: initial;
+                width: 50%;
+            }
+
+        .popbox {
+            z-index: 20000;
+        }
+
+        .list {
+            padding: 10px;
+        }
+    </style>
+}
+
+
+
+<h2>企业融资详情</h2>
+<div class="tools">
+    <div class="left_btns">
+        <div class="addbtn">
+            <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+        </div>
+    </div>
+
+</div>
+
+<form id="form_data">
+
+    <input type="hidden" name="Id" value="@(Model?.Id)" />
+    @*<input type="hidden" name="Content" value="@(Model?.Content)" />*@
+    <input type="hidden" name="Status" value="@(Model==null?0:Model?.Status)" />
+    <div class="field-group">
+        <fieldset>
+            <legend>填写信息</legend>
+            @{
+                if (Model != null)
+                {
+                    <div class="field-item " data-required="true">
+                        <span>当前状态</span>
+                        <div class="tips">@(Model?.StatusStr)</div>
+                    </div>
+                }
+            }
+            <div class="field-item">
+                <span>发布单位</span>
+                <input type="text" id="CompanyName" value="@(user.CompanyName)" disabled="disabled" />
+            </div>
+
+            <div class="field-item">
+                <span>银行</span>
+                <input type="text" name="Bank" value="@(Model?.Bank)" />
+            </div>
+
+
+
+            <div class="field-item ">
+                <span>标题</span>
+                <input type="text" name="Title" value="@(Model?.Title)" placeholder=" 必填">
+            </div>
+
+            <div class="field-item upload">
+                <span>照片</span>
+                <input type="file" id="PicFile" multiple />
+                <input type="hidden" name="Pic" value="@(Model?.Pic)" />
+                <input type="button" id="btnUpload" data-name="Pic" data-file="#PicFile" data-preview=".preview_img" value="上传" />
+
+            </div>
+
+            <div class="field-item">
+                <span>图片预览</span>
+                <img class="preview_img" src="@(Model?.Pic)" />
+            </div>
+
+            <div class="field-item ">
+                <span>内容</span>
+                <textarea name="Content" >@Model?.Content</textarea>
+               
+            </div>
+
+            @{
+                if (Model != null)
+                {
+                    <div class="field-item ">
+                        <span>添加时间</span>
+                        <input type="text" disabled="disabled" value="@(Model?.CreatedTime)">
+                    </div>
+                }
+            }
+
+
+
+
+
+        </fieldset>
+    </div>
+
+</form>
+
+<div class="btn-box">
+    <input type="button" class="btn-save" value="保存" />
+</div>
+
+
+<!-- pop -->
+<div class="popbox">
+    <div class="list">
+
+    </div>
+
+    <!-- 底部推送 -->
+    <div class="push_btns">
+        <button class="push_btn_per btn push_btn_cancel">取消</button>
+        @*<button class="push_btn_per btn push_btn_confirm">推送</button>*@
+    </div>
+
+</div>
+
+
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            $(".btn-save").req("#form_data", "/api/Financing/editC", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                } else {
+                    alert("保存成功");
+                }
+
+            });
+
+           $("#btnUpload").uploadImg(function (r, target) {
+                if (r.code == 0) {
+                    var name = target.attr("data-name");
+                    var preview = target.attr("data-preview");
+                    $("[name='" + name + "']").val(r.data);
+                     $(preview).attr("src",r.data);
+                } else {
+                    alert(r.message);
+                }
+            });
+
+            var E = window.wangEditor;
+            var editor = new E('#editor');
+            editor.customConfig.uploadImgServer = '/api/baseapi/EditorUploadImg';
+            editor.customConfig.uploadFileName = 'file';
+            editor.customConfig.onchange = function (html) {
+                // 监控变化，同步更新到 textarea
+                console.log(html);
+                $("input[name='Content']").val(html);
+            }
+            editor.create();
+            E.fullscreen.init('#editor');
+
+        });
+
+
+
+
+
+
+
+    </script>
+
+}

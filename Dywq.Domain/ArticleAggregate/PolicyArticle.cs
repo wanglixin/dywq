@@ -14,6 +14,12 @@ namespace Dywq.Domain.ArticleAggregate
         /// 政策主题
         /// </summary>
         public string ThemeTitle { get; set; }
+
+        /// <summary>
+        /// 来源
+        /// </summary>
+        public string Source { get; set; }
+
         /// <summary>
         /// 内容
         /// </summary>

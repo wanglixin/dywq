@@ -1,6 +1,8 @@
 ﻿using DotNetCore.CAP.Messages;
 using Dywq.Domain.ArticleAggregate;
 using Dywq.Domain.CompanyAggregate;
+using Dywq.Domain.CooperationAggregate;
+using Dywq.Domain.FinancingAggregate;
 using Dywq.Domain.GuestbookAggregate;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Domain.UserAggregate;
@@ -64,6 +66,11 @@ namespace Dywq.Web.Extensions
             services.AddScoped<IBaseRepository<PolicyType>, BaseRepository<PolicyType>>();
             services.AddScoped<IBaseRepository<PolicyArticle>, BaseRepository<PolicyArticle>>();
             services.AddScoped<IBaseRepository<Guestbook>, BaseRepository<Guestbook>>();
+
+            services.AddScoped<IBaseRepository<CooperationType>, BaseRepository<CooperationType>>();
+            services.AddScoped<IBaseRepository<CooperationInfo>, BaseRepository<CooperationInfo>>();
+
+            services.AddScoped<IBaseRepository<Financing>, BaseRepository<Financing>>();
 
             return services;
         }

@@ -4,41 +4,23 @@
 
 }
 
+
 <div id="main_content">
     <div class="container">
         <div class="main_title">
             <span class="home">首页</span>/<span class="activething">惠企政策</span>
         </div>
-      
 
-        <!-- ul -->
-        <ul class="con_ul">
-            <li>
-                <div class="li_top">
-                    <div class="ti">
-                        <img src="img/search.png" alt="">
-                    </div>
-                    <h4>政策主题</h4>
-                    <h5>Enterprise profile</h5>
-                </div>
-                <p>@(Model.ThemeTitle)</p>
-            </li>
-           
-          
-            <li>
-                <div class="li_top">
-                    <div class="ti">
-                        <img src="img/search.png" alt="">
-                    </div>
-                    <h4>政策内容</h4>
-                    <h5>Enterprise profile</h5>
-                </div>
-                <p>@(Html.Raw(Model.Content)) [@(Model.CreatedTime)]</p>
-            </li>
-        </ul>
+        <div style="text-align:center;"><h3>@(Model.ThemeTitle)</h3></div>
+
+        <div style="text-align:center; margin-top:20px;">来源：@(Model.Source)</div>
+        <div style="text-align:center; ">@(Model.CreatedTime)</div>
+        <hr />
+        <div style="line-height:2;font-size:16px;">
+            @(Html.Raw(Model.Content))
+        </div>
     </div>
 </div>
-
 
 
 

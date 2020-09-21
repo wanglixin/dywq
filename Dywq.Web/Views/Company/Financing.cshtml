@@ -1,0 +1,65 @@
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Financing.FinancingDTO>
+@using Dywq.Infrastructure.Core.Extensions;
+
+@section head{
+    <link href="~/css/index4.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .paginabox .count {
+            padding: 5px;
+            margin: 5px;
+            display: inline-block;
+            min-width: 32px;
+            height: 32px;
+            text-align: center;
+            color: rgba(102, 102, 102, 1);
+            font-size: 14px;
+            background: #fff;
+            border-radius: 6px;
+        }
+
+        .sec_tab a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .sec_tab li.tab_active a {
+            color: white;
+        }
+    </style>
+
+}
+
+<div class="container">
+    <div id="banner">
+        <img src="" alt="">
+        <h4>企业融资</h4>
+    </div>
+</div>
+<!-- sec -->
+<div class="container">
+    <ul class="sec">
+        @{
+            if (Model.Data != null)
+            {
+                foreach (var item in Model.Data)
+                {
+                    <li>
+                        <img src="@(item.Pic)" alt="" class="backimg">
+                        <h4>@(item.Bank)</h4>
+                        <div class="sec_content">@(item.Title)</div>
+                        <p>@(item.Content)</p>
+                        <h6>发布日期：@(item.CreatedTime.ToShortDateString())</h6>
+                    </li>
+                }
+            }
+        }
+
+    </ul>
+</div>
+
+
+<section class="paginabox">
+   @Html.Raw(Model.Pager)
+</section>

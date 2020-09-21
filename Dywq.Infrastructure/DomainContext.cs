@@ -37,6 +37,11 @@ namespace Dywq.Infrastructure
             modelBuilder.ApplyConfiguration(new PolicyTypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new PolicyArticleEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new GuestbookEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CooperationTypeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CooperationInfoEntityConfiguration());
+
+            modelBuilder.ApplyConfiguration(new FinancingEntityTypeConfiguration());
             #endregion
             base.OnModelCreating(modelBuilder);
         }

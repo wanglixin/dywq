@@ -45,6 +45,13 @@ namespace Dywq.Web.Application.Commands.Article
 
         [RegularExpression("^[0|1]+$", ErrorMessage = "显示值错误")]
         public string Show { get; set; } = "1";
+
+
+        [Required(ErrorMessage = "来源不能为空")]
+        /// <summary>
+        /// 来源
+        /// </summary>
+        public string Source { get; set; }
     }
 
 
@@ -91,7 +98,8 @@ namespace Dywq.Web.Application.Commands.Article
                     Show = show,
                     Sort = sort,
                     ThemeTitle = request.ThemeTitle,
-                    PolicyTypeId = typeId
+                    PolicyTypeId = typeId,
+                    Source = request.Source
                 };
                 await _policyArticleRepository.AddAsync(article);
             }
@@ -109,6 +117,7 @@ namespace Dywq.Web.Application.Commands.Article
                 article.Sort = sort;
                 article.ThemeTitle = request.ThemeTitle;
                 article.PolicyTypeId = typeId;
+                article.Source = request.Source;
 
                 await _policyArticleRepository.UpdateAsync(article);
 

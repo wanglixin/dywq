@@ -1,7 +1,13 @@
-﻿@{
+﻿@using Dywq.Infrastructure.Core.Extensions;
+@{
     var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
     var types = ViewBag.types as IEnumerable<Dywq.Web.Dto.Commpany.CompanyTypeDTO>;
     var banners = ViewBag.banners as IEnumerable<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
+
+    var policys = ViewBag.policyArticles as IEnumerable<Dywq.Web.Dto.Article.PolicyArticleDTO>;
+    var cooperationInfos = ViewBag.cooperationInfos as IEnumerable<Dywq.Web.Dto.Cooperation.CooperationInfoDTO>;
+    var financings= ViewBag.financings as IEnumerable<Dywq.Web.Dto.Financing.FinancingDTO>;
+
 
     var companyInfos = ViewBag.companyInfos as Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
 }
@@ -15,7 +21,7 @@
 
         .paginabox {
             margin-top: 0;
-            height:42px;
+            height: 42px;
         }
 
             .paginabox .count {
@@ -26,20 +32,22 @@
             padding-bottom: 17px;
         }
 
-        .company  a{
+            .company a {
+                color: black;
+                text-decoration: none;
+            }
+
+        .bannner_con {
+            width: 880.5px;
+            height: 393.3px;
+        }
+
+        .swiper-slide img {
+            height: 393.3px;
+        }
+        .sec_common a{
             color:black;
-             text-decoration:none;
         }
-
-        .bannner_con{
-            width:880.5px;
-            height:393.3px;
-        }
-
-        .swiper-slide img{
-            height:393.3px;
-        }
-
     </style>
 
 
@@ -186,29 +194,29 @@
                                     }
 
                                     <!--div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容动态内容信息动态内容<span class="flagnum">1</span></!--div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
-        <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div-->
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div>
+                                    <div class="companylist">1. 企业动态内容信息企业动态内容信息动态内容</div-->
                                 </section>
                                 <!-- 分页 -->
                                 <section class="paginabox">
                                     @Html.Raw(companyInfos.Pager)
                                     <!--a href="#" class="prev_btn">上一页</!--a>
-        <a href="#" class="page_btn choose">1</a>
-        <a href="#" class="page_btn">2</a>
-        <a href="#" class="page_btn">3</a>
-        <a href="#" class="next_btn">下一页</a-->
+                                    <a href="#" class="page_btn choose">1</a>
+                                    <a href="#" class="page_btn">2</a>
+                                    <a href="#" class="page_btn">3</a>
+                                    <a href="#" class="next_btn">下一页</a-->
                                 </section>
 
                             </div>
 
-                          
+
                         </div>
 
                     </div>
@@ -254,7 +262,8 @@
                                 <div class="date">2020-07-09</div>
                             </div>
                             <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
+                                <div style="        display: flex;
+        align-items: center;">
                                     <span></span>
                                     <p>惠州农业中心开展新业务…</p>
                                 </div>
@@ -361,52 +370,36 @@
                     <img src="img/downarrow.png" alt="" class="downarrow">
                     <img src="img/p1.png" alt="" class="title_img">
                     <div class="more_btn_accept">
-                        <a href="#">查看更多  ></a>
+                        <a href="/article/policy">查看更多  ></a>
                     </div>
                 </div>
                 <section class="sec_common">
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
+                    @{
+                        if (policys != null)
+                        {
+                            foreach (var item in policys)
+                            {
+                                <div class="policy_li">
+                                    <div style="display: flex;align-items: center;">
+                                        <span></span>
+                                        <p><a href="/article/policyDetail/@(item.Id)">@(item.ThemeTitle.Cut(15))</a></p>
+                                    </div>
+                                    <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="policy_li">
+                                <div style="display: flex;align-items: center;">
+                                    <span></span>
+                                    <p>暂无数据</p>
+                                </div>
+                                <div class="date"></div>
+                            </div>
+                        }
+                    }
+
                 </section>
             </div>
             <div class="accept_list1 center_accept">
@@ -414,52 +407,36 @@
                     <img src="img/downarrow.png" alt="" class="downarrow">
                     <img src="img/p2.png" alt="" class="title_img">
                     <div class="more_btn_accept">
-                        <a href="#">查看更多  ></a>
+                        <a href="/Company/Financing">查看更多  ></a>
                     </div>
                 </div>
                 <section class="sec_common">
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
+                    @{
+                        if (financings != null)
+                        {
+                            foreach (var item in financings)
+                            {
+                                <div class="policy_li">
+                                    <div style="display: flex;align-items: center;">
+                                        <span></span>
+                                        <p><a href="/Company/Financing">@(item.Title.Cut(15))</a></p>
+                                    </div>
+                                    <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                </div>
+
+                            }
+                        }
+                        else
+                        {
+                            <div class="policy_li">
+                                <div style="display: flex;align-items: center;">
+                                    <span></span>
+                                    <p>暂无数据</p>
+                                </div>
+                                <div class="date"></div>
+                            </div>
+                        }
+                    }
                 </section>
             </div>
             <div class="accept_list1">
@@ -467,52 +444,36 @@
                     <img src="img/downarrow.png" alt="" class="downarrow">
                     <img src="img/p3.png" alt="" class="title_img">
                     <div class="more_btn_accept">
-                        <a href="#">查看更多 </a>
+                        <a href="/company/cooperation">查看更多 </a>
                     </div>
                 </div>
                 <section class="sec_common">
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
-                    <div class="policy_li">
-                        <div style="display: flex;align-items: center;">
-                            <span></span>
-                            <p>惠州农业中心开展新业务…</p>
-                        </div>
-                        <div class="date">2020-07-09</div>
-                    </div>
+                    @{
+                        if (cooperationInfos != null)
+                        {
+                            foreach (var item in cooperationInfos)
+                            {
+                                <div class="policy_li">
+                                    <div style="display: flex;align-items: center;">
+                                        <span></span>
+                                        <p><a href="/Company/Cooperation/Detail/@(item.Id)">@(item.Title.Cut(15))</a></p>
+                                    </div>
+                                    <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                </div>
+
+                            }
+                        }
+                        else
+                        {
+                            <div class="policy_li">
+                                <div style="display: flex;align-items: center;">
+                                    <span></span>
+                                    <p>暂无数据</p>
+                                </div>
+                                <div class="date"></div>
+                            </div>
+                        }
+                    }
                 </section>
             </div>
         </div>
@@ -774,7 +735,7 @@
 
             });
 
-           
+
 
 
 
@@ -784,15 +745,15 @@
 
         });
 
-         var getCompanyInfos = function (type,pageIndex,pageSize) {
+        var getCompanyInfos = function (type, pageIndex, pageSize) {
 
-                $.get("/company/GetCompanyInfosByType?type=" + type + "&pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&linkUrl=javascript:getCompanyInfos(" + type + ",__id__," + pageSize + ")", function (r) {
-                    console.log(r);
-                    $(".company_cnt").html(r);
+            $.get("/company/GetCompanyInfosByType?type=" + type + "&pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&linkUrl=javascript:getCompanyInfos(" + type + ",__id__," + pageSize + ")", function (r) {
+                console.log(r);
+                $(".company_cnt").html(r);
 
 
-                });
-            }
+            });
+        }
     </script>
 
 }

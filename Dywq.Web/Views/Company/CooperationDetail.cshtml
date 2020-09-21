@@ -1,0 +1,24 @@
+﻿@model Dywq.Web.Dto.Cooperation.CooperationInfoDTO
+@section head{
+    <link href="~/css/index8.css" rel="stylesheet" />
+
+}
+
+<div id="main_content">
+    <div class="container">
+        <div class="main_title">
+            <span class="home">首页</span>/<span class="activething">企业对接</span>
+        </div>
+
+        <div style="text-align:center;"><h3>@(Model.Title)</h3></div>
+        <div style="text-align:center; margin-top:20px;">@(Model.CreatedTime)</div>
+        <hr />
+        <div style="line-height:2;font-size:16px;">
+            @(Html.Raw(Model.Content))
+        </div>
+    </div>
+</div>
+
+
+
+

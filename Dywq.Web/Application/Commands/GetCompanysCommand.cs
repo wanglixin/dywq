@@ -61,24 +61,28 @@ namespace Dywq.Web.Application.Commands
             if (!string.IsNullOrWhiteSpace(request.Key))
             {
                 //condition.Add($"(d.Alias='{Common.CompanyFieldAlias.CompanyName}' and d.Value like '%{request.Key}%')");
-                condition.Add($"(c.Name like '%{request.Key}%')");
+                condition.Add($"(Name like '%{request.Key}%')");
             }
 
             var where = condition.Count > 0 ? $" where {string.Join(" or ", condition)}" : "";
 
             var count = await _companyRepository.SqlCountAsync(@$"
-select count(*) from(
-SELECT CompanyId FROM [CompanyFieldData] as d {where} group by CompanyId
-) as t");
+SELECT count(*) FROM [Company] {where}");
             if (count < 1) return PageResult<CompanyDTO>.Success(null, 0, request.PageIndex, request.PageSize,"");
 
             var start = (request.PageIndex - 1) * request.PageSize;
             var end = start + request.PageSize;
 
-            var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(@$"select t.*,c.Name,c.Logo,c.CreatedTime from (
+            /*var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(@$"select t.*,c.Name,c.Logo,c.CreatedTime from (
 SELECT CompanyId,ROW_NUMBER() over(order by CompanyId desc) Rowid  FROM [CompanyFieldData] as d {where}  group by CompanyId
 ) as t left join Company as c on c.Id=t.CompanyId where t.Rowid>{start} and t.Rowid<={end}
-;");
+;");*/
+
+            var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(@$"select * from (
+SELECT Id as CompanyId,Name,Logo,CreatedTime,ROW_NUMBER() over(order by Id desc) Rowid 
+  FROM [Company] {where}
+) as c where c.Rowid>{start} and c.Rowid<={end}");
+
             var companyIdArr = data.Select(x => x.CompanyId);
 
 

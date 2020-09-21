@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Dywq.Web.Application.Commands;
 using MediatR;
+using Dywq.Web.Application.Commands.Article;
+using Dywq.Web.Application.Commands.Cooperation;
+using Dywq.Web.Application.Commands.Financing;
 
 namespace Dywq.Web.Controllers
 {
@@ -44,6 +47,19 @@ namespace Dywq.Web.Controllers
             var banners = await _mediator.Send(new GetCompanyBannersCommand(), HttpContext.RequestAborted);
             ViewBag.banners = banners;
 
+            //惠企政策
+
+            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6}, HttpContext.RequestAborted);
+            ViewBag.policyArticles = policyArticles.Data;
+
+            //企业对接
+            var cooperationInfos = await _mediator.Send(new GetCooperationInfosCommand() { Show = true, PageSize = 6, Status = 1 }, HttpContext.RequestAborted);
+            ViewBag.cooperationInfos = cooperationInfos.Data;
+
+
+            //企业对接
+            var financings = await _mediator.Send(new GetFinancingsCommand() { Show = true, PageSize = 6, Status = 1 }, HttpContext.RequestAborted);
+            ViewBag.financings = financings.Data;
 
 
             ViewBag.companyInfos = companyInfos;

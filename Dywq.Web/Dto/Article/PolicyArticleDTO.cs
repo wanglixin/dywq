@@ -46,5 +46,10 @@ namespace Dywq.Web.Dto.Article
         /// 排序
         /// </summary>
         public int Sort { get; set; }
+
+        /// <summary>
+        /// 来源
+        /// </summary>
+        public string Source { get; set; }
     }
 }

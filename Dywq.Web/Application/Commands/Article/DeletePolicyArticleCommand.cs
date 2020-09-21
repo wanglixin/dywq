@@ -16,6 +16,7 @@ namespace Dywq.Web.Application.Commands.Article
 {
     public class DeletePolicyArticleCommand : IRequest<Result>
     {
+        [Required(ErrorMessage = "id不能为空")]
         [Range(0, int.MaxValue, ErrorMessage = "id错误")]
         public int Id { get; set; }
     }

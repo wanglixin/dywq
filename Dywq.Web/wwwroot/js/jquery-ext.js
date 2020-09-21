@@ -100,3 +100,34 @@ $.fn.uploadImg = function (callback) {
 
     });
 }
+
+var reqPost = function (url, data, callback) {
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: "json",
+        data: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+        beforeSend: function () {
+        },
+        success: function (r) {
+            callback(r);
+        },
+        complete: function (e) {
+        }
+    })
+}
+
+var formatDate = function (date) {
+    date = date.replace(/T/, " ");
+    console.log(date);
+    date = new Date(Date.parse(date.replace(/-/g, "/"))); //转换成Data();
+    console.log(date);
+    var y = date.getFullYear();
+    console.log(y);
+    var m = date.getMonth() + 1;
+    m = m < 10 ? '0' + m : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    return y + '-' + m + '-' + d;
+}
