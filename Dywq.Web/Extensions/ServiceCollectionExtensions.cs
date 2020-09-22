@@ -2,6 +2,7 @@
 using Dywq.Domain.ArticleAggregate;
 using Dywq.Domain.CompanyAggregate;
 using Dywq.Domain.CooperationAggregate;
+using Dywq.Domain.Expert;
 using Dywq.Domain.FinancingAggregate;
 using Dywq.Domain.GuestbookAggregate;
 using Dywq.Domain.SiteAggregate;
@@ -71,6 +72,9 @@ namespace Dywq.Web.Extensions
             services.AddScoped<IBaseRepository<CooperationInfo>, BaseRepository<CooperationInfo>>();
 
             services.AddScoped<IBaseRepository<Financing>, BaseRepository<Financing>>();
+
+            services.AddScoped<IBaseRepository<Expert>, BaseRepository<Expert>>();
+            services.AddScoped<IBaseRepository<ExpertType>, BaseRepository<ExpertType>>();
 
             return services;
         }

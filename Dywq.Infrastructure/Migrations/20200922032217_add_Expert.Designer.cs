@@ -4,14 +4,16 @@ using Dywq.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dywq.Infrastructure.Migrations
 {
     [DbContext(typeof(DomainContext))]
-    partial class DomainContextModelSnapshot : ModelSnapshot
+    [Migration("20200922032217_add_Expert")]
+    partial class add_Expert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -461,9 +463,6 @@ namespace Dywq.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ExpertTypeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Introduction")
                         .HasColumnType("nvarchar(max)");

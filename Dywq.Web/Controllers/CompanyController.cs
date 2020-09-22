@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Dywq.Web.Application.Commands;
 using Dywq.Web.Application.Commands.Cooperation;
+using Dywq.Web.Application.Commands.Expert;
 using Dywq.Web.Application.Commands.Financing;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -106,6 +107,31 @@ namespace Dywq.Web.Controllers
             }, HttpContext.RequestAborted);
             return View(pageData);
         }
+
+        public async Task<IActionResult> Expert()
+        {
+            var data = await _mediator.Send(new GetAllExpertsCommand()
+            {
+
+            }, HttpContext.RequestAborted);
+            return View(data);
+        }
+
+        [Route("/Company/Expert/{id}")]
+        public async Task<IActionResult> ExpertDetail(int id)
+        {
+            var data = await _mediator.Send(new GetExpertsCommand()
+            {
+                Id = id,
+                PageIndex = 1,
+                PageSize = 1,
+                Show = true
+
+            }, HttpContext.RequestAborted);
+            return View("ExpertDetail", data?.Data?.FirstOrDefault());
+        }
+
+
 
     }
 }

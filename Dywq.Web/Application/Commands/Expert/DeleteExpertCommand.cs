@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dywq.Web.Application.Commands.Article
+namespace Dywq.Web.Application.Commands.Expert
 {
     public class DeleteExpertCommand : IRequest<Result>
     {
@@ -22,33 +22,33 @@ namespace Dywq.Web.Application.Commands.Article
     }
 
 
-    public class DeletePolicyArticleCommandHandler : BaseRequestHandler<DeleteExpertCommand, Result>
+    public class DeleteExpertCommandHandler : BaseRequestHandler<DeleteExpertCommand, Result>
     {
 
-        readonly IBaseRepository<PolicyArticle> _policyArticleRepository;
+        readonly IBaseRepository<Dywq.Domain.Expert.Expert> _expertRepository;
 
-        public DeletePolicyArticleCommandHandler(
+        public DeleteExpertCommandHandler(
              ICapPublisher capPublisher,
-            ILogger<DeletePolicyArticleCommandHandler> logger,
-             IBaseRepository<PolicyArticle> policyArticleRepository
+            ILogger<DeleteExpertCommandHandler> logger,
+             IBaseRepository<Domain.Expert.Expert> expertRepository
             ) : base(capPublisher, logger)
         {
-            _policyArticleRepository = policyArticleRepository;
+            _expertRepository = expertRepository;
 
         }
 
         public override async Task<Result> Handle(DeleteExpertCommand request, CancellationToken cancellationToken)
         {
-            var article = await _policyArticleRepository.Set().FirstOrDefaultAsync(x => x.Id == request.Id);
+            var article = await _expertRepository.Set().FirstOrDefaultAsync(x => x.Id == request.Id);
             if (article != null)
             {
-                _policyArticleRepository.Set().Remove(article);
+                _expertRepository.Set().Remove(article);
             }
             else
             {
                 return Result.Failure($"id={request.Id} 不存在");
             }
-            return Result.Success(); ;
+            return Result.Success();
         }
     }
 }

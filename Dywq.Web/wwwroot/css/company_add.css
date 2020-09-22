@@ -112,8 +112,8 @@
     }
 
 .field-item img {
-    width: 570px;
-    height: 150px;
+    max-width: 570px;
+    max-height: 150px;
 }
 
 

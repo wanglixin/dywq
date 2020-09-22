@@ -42,6 +42,10 @@ namespace Dywq.Infrastructure
             modelBuilder.ApplyConfiguration(new CooperationInfoEntityConfiguration());
 
             modelBuilder.ApplyConfiguration(new FinancingEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ExpertEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ExpertTypeEntityTypeConfiguration());
+
             #endregion
             base.OnModelCreating(modelBuilder);
         }

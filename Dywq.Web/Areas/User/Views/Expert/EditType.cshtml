@@ -1,0 +1,101 @@
+﻿@model Dywq.Web.Dto.Expert.ExpertTypeDTO
+@section head{
+    <link href="~/css/company_add.css" rel="stylesheet" />
+
+    <script src="~/wangEditor/wangEditor.js"></script>
+    <link href="~/wangEditor/wangEditor-fullscreen-plugin.css" rel="stylesheet" />
+    <script src="~/wangEditor/wangEditor-fullscreen-plugin.js"></script>
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .tools {
+            margin-bottom: 20px;
+        }
+
+        .field-item {
+            width: 100%;
+        }
+
+            .field-item span {
+                width: 15%;
+            }
+
+            .field-item .cb {
+                margin-left: initial;
+                width: 50%;
+            }
+    </style>
+}
+
+
+
+<h2>添加专家类型</h2>
+<div class="tools">
+    <div class="left_btns">
+        <div class="addbtn">
+            <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+        </div>
+    </div>
+
+</div>
+
+<form id="form_data">
+
+    <input type="hidden" name="Id" value="@(Model?.Id)" />
+    <div class="field-group">
+        <fieldset>
+            <legend>填写信息</legend>
+
+
+
+            <div class="field-item ">
+                <span>名称</span>
+                <input type="text" name="Name" value="@(Model?.Name)" placeholder=" 必填">
+            </div>
+
+            <div class="field-item ">
+                <span>排序</span>
+                <input type="number" name="Sort" value="@(Model==null?0:Model?.Sort)" />
+            </div>
+
+
+
+
+
+        </fieldset>
+    </div>
+
+</form>
+
+<div class="btn-box">
+    <input type="button" class="btn-save" value="保存" />
+</div>
+
+@section js{
+    <script type="text/javascript">
+
+
+
+        $(function () {
+            $(".btn-save").req("#form_data", "/api/Expert/EditExpertType", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                } else {
+                    alert("保存成功");
+                }
+
+            });
+
+
+        });
+
+
+
+
+
+    </script>
+
+}

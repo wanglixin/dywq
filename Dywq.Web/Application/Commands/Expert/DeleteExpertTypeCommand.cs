@@ -12,9 +12,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dywq.Web.Application.Commands.Article
+namespace Dywq.Web.Application.Commands.Expert
 {
-    public class DeleteExpertCommand : IRequest<Result>
+    public class DeleteExpertTypeCommand : IRequest<Result>
     {
         [Required(ErrorMessage = "id不能为空")]
         [Range(0, int.MaxValue, ErrorMessage = "id错误")]
@@ -22,33 +22,33 @@ namespace Dywq.Web.Application.Commands.Article
     }
 
 
-    public class DeletePolicyArticleCommandHandler : BaseRequestHandler<DeleteExpertCommand, Result>
+    public class DeleteExpertTypeCommandHandler : BaseRequestHandler<DeleteExpertTypeCommand, Result>
     {
 
-        readonly IBaseRepository<PolicyArticle> _policyArticleRepository;
+        readonly IBaseRepository<Dywq.Domain.Expert.ExpertType> _expertTypeRepository;
 
-        public DeletePolicyArticleCommandHandler(
+        public DeleteExpertTypeCommandHandler(
              ICapPublisher capPublisher,
-            ILogger<DeletePolicyArticleCommandHandler> logger,
-             IBaseRepository<PolicyArticle> policyArticleRepository
+            ILogger<DeleteExpertTypeCommandHandler> logger,
+             IBaseRepository<Domain.Expert.ExpertType> expertTypeRepository
             ) : base(capPublisher, logger)
         {
-            _policyArticleRepository = policyArticleRepository;
+            _expertTypeRepository = expertTypeRepository;
 
         }
 
-        public override async Task<Result> Handle(DeleteExpertCommand request, CancellationToken cancellationToken)
+        public override async Task<Result> Handle(DeleteExpertTypeCommand request, CancellationToken cancellationToken)
         {
-            var article = await _policyArticleRepository.Set().FirstOrDefaultAsync(x => x.Id == request.Id);
+            var article = await _expertTypeRepository.Set().FirstOrDefaultAsync(x => x.Id == request.Id);
             if (article != null)
             {
-                _policyArticleRepository.Set().Remove(article);
+                _expertTypeRepository.Set().Remove(article);
             }
             else
             {
                 return Result.Failure($"id={request.Id} 不存在");
             }
-            return Result.Success(); ;
+            return Result.Success();
         }
     }
 }
