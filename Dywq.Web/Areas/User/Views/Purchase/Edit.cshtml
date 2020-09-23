@@ -1,7 +1,6 @@
-﻿@model Dywq.Web.Dto.Cooperation.CooperationInfoDTO
+﻿@model Dywq.Web.Dto.Purchase.PurchaseDTO
 @{
-    var types = ViewBag.types as IEnumerable<Dywq.Web.Dto.Cooperation.CooperationTypeDTO>;
-    var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
+    var type = ViewBag.type as int?;
 }
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
@@ -46,7 +45,7 @@
 
 
 
-<h2>企业对接详情</h2>
+<h2>@(type == 0 ? "采购信息" : "产品信息")</h2>
 <div class="tools">
     <div class="left_btns">
         <div class="addbtn">
@@ -57,11 +56,10 @@
 </div>
 
 <form id="form_data">
-
+    <input type="hidden" name="Type" value="@(type)" />
     <input type="hidden" name="Id" value="@(Model?.Id)" />
-   
     <input type="hidden" name="Content" value="@(Model?.Content)" />
-    <input type="hidden" name="Status" value="@(Model==null?0:Model?.Status)" />
+   
     <div class="field-group">
         <fieldset>
             <legend>填写信息</legend>
@@ -74,35 +72,66 @@
                     </div>
                 }
             }
-            <div class="field-item">
-                <span>当前企业</span>
-                <input type="text" id="CompanyName" value="@(user.CompanyName)" text-align:left;" disabled="disabled" />
+
+            <div class="field-item choice">
+                <span>审核</span>
+
+                <div class="cb">
+                    <div class="cb-item">
+                        <input name="Status" id="rd_-1" type="radio" value="-1" @(-1 == Model?.Status ? "checked=\"checked\"" : "")> <label for="rd_-1">不通过</label>
+                    </div>
+                    <div class="cb-item">
+                        <input name="Status" id="rd_1" type="radio" value="1" @(1 == Model?.Status ? "checked=\"checked\"" : "")> <label for="rd_1">通过</label>
+                    </div>
+                </div>
+
             </div>
+
+            <div class="field-item">
+                <span>发布单位</span>
+                <input type="text" value="@(Model?.CompanyName)" disabled="disabled" />
+            </div>
+
+            <div class="field-item">
+                <span>商品名称</span>
+                <input type="text" name="ProductName" value="@(Model?.ProductName)" placeholder=" 必填" />
+            </div>
+
+
+
             <div class="field-item ">
-                <span>对接类型</span>
-                <select name="CooperationTypeId">
-                    @{
-                        foreach (var item in types)
-                        {
-                            <option value="@(item.Id)" @(Model?.CooperationTypeId == item.Id ? "selected=\"selected\"" : "")>
-                                @(item.Name)
-                            </option>
-                        }
-                    }
+                <span>联系人</span>
+                <input type="text" name="Contacts" value="@(Model?.Contacts)" placeholder=" 必填">
+            </div>
+
+            <div class="field-item ">
+                <span>联系电话</span>
+                <input type="text" name="Mobile" value="@(Model?.Mobile)" placeholder=" 必填">
+            </div>
+
+            <div class="field-item ">
+                <span>产品参数</span>
+                <div id="editor" style="width: 51%;">
+                    <p>@(Html.Raw(Model?.Content))</p>
+                </div>
+            </div>
+
+            <div class="field-item ">
+                <span>显示</span>
+                <select name="Show">
+                    <option value="1" @(Model?.Show == true ? "selected=\"selected\"" : "")>
+                        是
+                    </option>
+                    <option value="0" @(Model?.Show == false ? "selected=\"selected\"" : "")>
+                        否
+                    </option>
                 </select>
 
             </div>
 
-
             <div class="field-item ">
-                <span>标题</span>
-                <input type="text" name="Title" value="@(Model?.Title)" placeholder=" 必填">
-            </div>
-            <div class="field-item ">
-                <span>描述</span>
-                <div id="editor" style="width: 51%;">
-                    <p>@(Html.Raw(Model?.Content))</p>
-                </div>
+                <span>排序</span>
+                <input type="number" name="Sort" value="@(Model==null?0:Model?.Sort)" />
             </div>
 
             @{
@@ -146,13 +175,8 @@
 
 @section js{
     <script type="text/javascript">
-           var config = {
-               CompanyId: @(Model==null?0:Model?.CompanyId)
-        }
-
-
         $(function () {
-            $(".btn-save").req("#form_data", "/api/cooperation/editC", function (res) {
+            $(".btn-save").req("#form_data", "/api/Purchase/edit", function (res) {
                 if (res.code != 0) {
                     alert(res.message);
                     return;
@@ -160,17 +184,6 @@
                     alert("保存成功");
                 }
 
-            });
-
-            $("#btnUpload").uploadImg(function (r, target) {
-                if (r.code == 0) {
-                    var name = target.attr("data-name");
-                    var preview = target.attr("data-preview");
-                    $("[name='" + name + "']").val(r.data);
-                     $(preview).attr("src",r.data);
-                } else {
-                    alert(r.message);
-                }
             });
 
             var E = window.wangEditor;

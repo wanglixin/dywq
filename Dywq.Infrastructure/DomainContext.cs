@@ -46,6 +46,8 @@ namespace Dywq.Infrastructure
             modelBuilder.ApplyConfiguration(new ExpertEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ExpertTypeEntityTypeConfiguration());
 
+            modelBuilder.ApplyConfiguration(new PurchaseEntityTypeConfiguration());
+
             #endregion
             base.OnModelCreating(modelBuilder);
         }

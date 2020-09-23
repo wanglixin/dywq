@@ -1,0 +1,30 @@
+﻿@using Dywq.Infrastructure.Core.Extensions;
+@model IEnumerable<Dywq.Web.Dto.Purchase.PurchaseDTO>
+@{
+    var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
+    var type = ViewBag.type as int?;
+    var login = user != null;
+}
+<ul>
+    @{
+        if (Model!= null)
+        {
+            foreach (var item in Model)
+            {
+                <li>
+                    <ul class="tabel_con_ul">
+                        <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
+                        <li>@(item.CompanyName)</li>
+                        <li>@(item.Contacts)</li>
+                        <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
+                    </ul>
+                </li>
+            }
+
+        }
+        else
+        {
+            <li>暂无数据</li>
+        }
+    }
+</ul>

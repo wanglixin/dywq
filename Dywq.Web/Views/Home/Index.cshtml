@@ -6,10 +6,17 @@
 
     var policys = ViewBag.policyArticles as IEnumerable<Dywq.Web.Dto.Article.PolicyArticleDTO>;
     var cooperationInfos = ViewBag.cooperationInfos as IEnumerable<Dywq.Web.Dto.Cooperation.CooperationInfoDTO>;
-    var financings= ViewBag.financings as IEnumerable<Dywq.Web.Dto.Financing.FinancingDTO>;
+    var financings = ViewBag.financings as IEnumerable<Dywq.Web.Dto.Financing.FinancingDTO>;
+
+
+    var purchase0 = ViewBag.purchase0 as IEnumerable<Dywq.Web.Dto.Purchase.PurchaseDTO>;
+    var purchase1 = ViewBag.purchase1 as IEnumerable<Dywq.Web.Dto.Purchase.PurchaseDTO>;
 
 
     var companyInfos = ViewBag.companyInfos as Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
+
+   
+    var login = user != null;
 }
 
 @section head{
@@ -45,8 +52,13 @@
         .swiper-slide img {
             height: 393.3px;
         }
-        .sec_common a{
-            color:black;
+
+        .sec_common a {
+            color: black;
+        }
+
+        .tabel_con_ul li a{
+            color: black;
         }
     </style>
 
@@ -293,7 +305,7 @@
                     <div class="active_con_rights_sec">
                         <section>
                             <div class="policy_li active_policy">
-                                <div style="display: flex;align-items: center;">
+                                <div style=" display: flex; align-items: center;">
                                     <span></span>
                                     <p>惠2州农业中心开展新业务…</p>
                                 </div>
@@ -501,8 +513,8 @@
                 </div>
                 <div class="title_right">
                     <img src="img/search.png" alt="" class="search_img">
-                    <input type="text" placeholder="搜索内容…" class="search_input">
-                    <input type="button" value="搜索" class="search_btn">
+                    <input type="text" placeholder="搜索内容…" class="search_input search_purchase_0">
+                    <input type="button" onclick="getPurchase(this)" data-type="0" value="搜索" class="search_btn">
                 </div>
             </div>
             <div class="buy_con">
@@ -513,77 +525,35 @@
                         <li>联系人</li>
                         <li>联系电话</li>
                     </ul>
-                    <div class="table_con">
+                    <div class="table_con table_con_0">
                         <ul>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
+                            @{
+                                if (purchase0 != null)
+                                {
+                                    foreach (var item in purchase0)
+                                    {
+                                        <li>
+                                            <ul class="tabel_con_ul">
+                                                <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
+                                                <li>@(item.CompanyName)</li>
+                                                <li>@(item.Contacts)</li>
+                                                <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
+                                            </ul>
+                                        </li>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <li>暂无数据</li>
+                                }
+                            }
+
                         </ul>
                     </div>
                 </div>
                 <div class="buy_morebtn">
-                    <a href="#">查看更多  ></a>
+                    <a href="/company/purchase?type=0">查看更多  ></a>
                 </div>
             </div>
         </div>
@@ -596,8 +566,9 @@
                 </div>
                 <div class="title_right">
                     <img src="img/search.png" alt="" class="search_img">
-                    <input type="text" placeholder="搜索内容…" class="search_input">
-                    <input type="button" value="搜索" class="search_btn">
+                    <input type="text" placeholder="搜索内容…" class="search_input search_purchase_1">
+                    <input type="button" onclick="getPurchase(this)" data-type="1" value="搜索" class="search_btn">
+
                 </div>
             </div>
             <div class="buy_con">
@@ -608,77 +579,34 @@
                         <li>联系人</li>
                         <li>联系电话</li>
                     </ul>
-                    <div class="table_con">
+                    <div class="table_con table_con_1">
                         <ul>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="tabel_con_ul">
-                                    <li>乙醇</li>
-                                    <li>宏盛科技 (惠州)</li>
-                                    <li>王先生</li>
-                                    <li>145****8989</li>
-                                </ul>
-                            </li>
+                            @{
+                                if (purchase1 != null)
+                                {
+                                    foreach (var item in purchase1)
+                                    {
+                                        <li>
+                                            <ul class="tabel_con_ul">
+                                                <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
+                                                <li>@(item.CompanyName)</li>
+                                                <li>@(item.Contacts)</li>
+                                                <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
+                                            </ul>
+                                        </li>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <li>暂无数据</li>
+                                }
+                            }
                         </ul>
                     </div>
                 </div>
                 <div class="buy_morebtn">
-                    <a href="#">查看更多  ></a>
+                    <a href="/company/purchase?type=1">查看更多  ></a>
                 </div>
             </div>
         </div>
@@ -731,17 +659,7 @@
 
                 //alert(type);
 
-
-
             });
-
-
-
-
-
-
-
-
 
         });
 
@@ -750,10 +668,24 @@
             $.get("/company/GetCompanyInfosByType?type=" + type + "&pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&linkUrl=javascript:getCompanyInfos(" + type + ",__id__," + pageSize + ")", function (r) {
                 console.log(r);
                 $(".company_cnt").html(r);
-
-
             });
         }
+
+
+        var getPurchase = function (obj) {
+            var target = $(obj);
+            var type = target.data("type");
+            var key = $(".search_purchase_" + type).val();
+            if (key.length < 1) {
+                alert("请输入关键词");
+                return;
+            }
+            $.get("/company/purchaseSearch?type=" + type + "&key=" + key, function (r) {
+                console.log(r);
+                $(".table_con_" + type).html(r);
+            });
+        }
+
     </script>
 
 }

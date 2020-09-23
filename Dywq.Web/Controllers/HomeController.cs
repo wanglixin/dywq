@@ -15,6 +15,7 @@ using MediatR;
 using Dywq.Web.Application.Commands.Article;
 using Dywq.Web.Application.Commands.Cooperation;
 using Dywq.Web.Application.Commands.Financing;
+using Dywq.Web.Application.Commands.Purchase;
 
 namespace Dywq.Web.Controllers
 {
@@ -49,7 +50,7 @@ namespace Dywq.Web.Controllers
 
             //惠企政策
 
-            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6}, HttpContext.RequestAborted);
+            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6 }, HttpContext.RequestAborted);
             ViewBag.policyArticles = policyArticles.Data;
 
             //企业对接
@@ -60,6 +61,16 @@ namespace Dywq.Web.Controllers
             //企业对接
             var financings = await _mediator.Send(new GetFinancingsCommand() { Show = true, PageSize = 6, Status = 1 }, HttpContext.RequestAborted);
             ViewBag.financings = financings.Data;
+
+
+            //企业采购信息
+            var purchase0 = await _mediator.Send(new GetPurchasesCommand() { Show = true, PageSize = 8, Status = 1, PageIndex = 1, Type = 0 }, HttpContext.RequestAborted);
+            ViewBag.purchase0 = purchase0.Data;
+
+            var purchase1 = await _mediator.Send(new GetPurchasesCommand() { Show = true, PageSize = 8, Status = 1, PageIndex = 1, Type = 1 }, HttpContext.RequestAborted);
+            ViewBag.purchase1 = purchase1.Data;
+
+
 
 
             ViewBag.companyInfos = companyInfos;

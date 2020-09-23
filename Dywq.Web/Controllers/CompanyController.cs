@@ -7,6 +7,7 @@ using Dywq.Web.Application.Commands;
 using Dywq.Web.Application.Commands.Cooperation;
 using Dywq.Web.Application.Commands.Expert;
 using Dywq.Web.Application.Commands.Financing;
+using Dywq.Web.Application.Commands.Purchase;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -130,6 +131,53 @@ namespace Dywq.Web.Controllers
             }, HttpContext.RequestAborted);
             return View("ExpertDetail", data?.Data?.FirstOrDefault());
         }
+
+
+        public async Task<IActionResult> Purchase(int type = 0, int pageIndex = 1, int pageSize = 10)
+        {
+            ViewBag.type = type;
+            var pageData = await _mediator.Send(new GetPurchasesCommand()
+            {
+                LinkUrl = $"/company/purchase?pageIndex=__id__&pageSize={pageSize}",
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Show = true,
+                Status = 1,
+                Type = type
+            }, HttpContext.RequestAborted);
+            return View(pageData);
+        }
+
+
+        [Route("/company/purchase/detail/{id}")]
+        public async Task<IActionResult> PurchaseDetail(int Id)
+        {
+            var pageData = await _mediator.Send(new GetPurchasesCommand()
+            {
+                Id = Id,
+                PageIndex = 1,
+                PageSize = 1,
+                Show = true,
+                Status = 1
+            }, HttpContext.RequestAborted);
+            return View(pageData?.Data?.FirstOrDefault());
+        }
+
+        public async Task<IActionResult> PurchaseSearch(string key, int type = 0)
+        {
+            ViewBag.type = type;
+            var pageData = await _mediator.Send(new GetPurchasesCommand()
+            {
+                PageIndex = 1,
+                PageSize = 8,
+                Show = true,
+                Status = 1,
+                Type = type,
+                Key = key
+            }, HttpContext.RequestAborted);
+            return PartialView(pageData.Data);
+        }
+
 
 
 

@@ -1,0 +1,32 @@
+﻿@model Dywq.Web.Dto.Purchase.PurchaseDTO
+@{
+    var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
+    var type = ViewBag.type as int?;
+    var login = user != null;
+}
+@section head{
+    <link href="~/css/index8.css" rel="stylesheet" />
+
+}
+
+
+<div id="main_content">
+    <div class="container">
+        <div class="main_title">
+            <span class="home">首页</span>/<span class="activething">@(Model.Type == 0 ? "采购信息" : "生产信息")</span>
+        </div>
+
+        <div style="text-align:center;"><h3>@(Model.ProductName)</h3></div>
+        <div style="text-align:center; ">@(Model.CreatedTime)</div>
+        <hr />
+        <div style="line-height:2;font-size:16px;">
+            <p>联系人：@(Model.Contacts)</p>
+            <p>号码：@(login?Model.Mobile:Model.EncryptedMobile+"(登陆可见)")</p>
+            <p>产品参数： @(Html.Raw(Model.Content))</p>
+           
+        </div>
+    </div>
+</div>
+
+
+
