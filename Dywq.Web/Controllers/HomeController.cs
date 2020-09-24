@@ -16,6 +16,7 @@ using Dywq.Web.Application.Commands.Article;
 using Dywq.Web.Application.Commands.Cooperation;
 using Dywq.Web.Application.Commands.Financing;
 using Dywq.Web.Application.Commands.Purchase;
+using Dywq.Web.Application.Commands.News;
 
 namespace Dywq.Web.Controllers
 {
@@ -48,9 +49,9 @@ namespace Dywq.Web.Controllers
             var banners = await _mediator.Send(new GetCompanyBannersCommand(), HttpContext.RequestAborted);
             ViewBag.banners = banners;
 
-            //惠企政策
+            //惠企政策 展示惠企政策的“民企类”信息 根据实际情况写 typeid
 
-            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6 }, HttpContext.RequestAborted);
+            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6, TypeId = "8" }, HttpContext.RequestAborted);
             ViewBag.policyArticles = policyArticles.Data;
 
             //企业对接
@@ -70,6 +71,22 @@ namespace Dywq.Web.Controllers
             var purchase1 = await _mediator.Send(new GetPurchasesCommand() { Show = true, PageSize = 8, Status = 1, PageIndex = 1, Type = 1 }, HttpContext.RequestAborted);
             ViewBag.purchase1 = purchase1.Data;
 
+
+
+            var news = await _mediator.Send(new GetNoticeNewsCommand()
+            {
+                PageIndex = 1,
+                PageSize = 7,
+                Show = true
+            }, HttpContext.RequestAborted);
+
+            ViewBag.news = news.Data;
+
+
+            //政策速递
+
+            var policys = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 7 }, HttpContext.RequestAborted);
+            ViewBag.policys = policys.Data;
 
 
 

@@ -5,6 +5,7 @@ using Dywq.Domain.CooperationAggregate;
 using Dywq.Domain.Expert;
 using Dywq.Domain.FinancingAggregate;
 using Dywq.Domain.GuestbookAggregate;
+using Dywq.Domain.News;
 using Dywq.Domain.Purchase;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Domain.UserAggregate;
@@ -78,6 +79,8 @@ namespace Dywq.Web.Extensions
             services.AddScoped<IBaseRepository<ExpertType>, BaseRepository<ExpertType>>();
 
             services.AddScoped<IBaseRepository<Purchase>, BaseRepository<Purchase>>();
+
+            services.AddScoped<IBaseRepository<NoticeNews>, BaseRepository<NoticeNews>>();
 
             return services;
         }

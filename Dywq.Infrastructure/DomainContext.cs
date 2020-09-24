@@ -48,6 +48,8 @@ namespace Dywq.Infrastructure
 
             modelBuilder.ApplyConfiguration(new PurchaseEntityTypeConfiguration());
 
+            modelBuilder.ApplyConfiguration(new NoticeNewsEntityTypeConfiguration());
+
             #endregion
             base.OnModelCreating(modelBuilder);
         }

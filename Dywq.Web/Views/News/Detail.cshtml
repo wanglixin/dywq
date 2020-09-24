@@ -1,0 +1,29 @@
+﻿@model Dywq.Web.Dto.News.NoticeNewsDTO
+@{
+
+}
+@section head{
+    <link href="~/css/index8.css" rel="stylesheet" />
+
+}
+
+
+<div id="main_content">
+    <div class="container">
+        <div class="main_title">
+            <span class="home">首页</span>/<span class="activething">通知公告</span>
+        </div>
+
+        <div style="text-align:center;"><h3>@(Model.Title)</h3></div>
+        <div style="text-align:center; ">@(Model.CreatedTime)</div>
+        <hr />
+        <div style="line-height:2;font-size:16px;">
+            <div style="text-align:center;"> <img  src="@(Model.Pic)"/></div>
+            <p> @(Html.Raw(Model.Content))</p>
+
+        </div>
+    </div>
+</div>
+
+
+

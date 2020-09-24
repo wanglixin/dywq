@@ -12,10 +12,12 @@
     var purchase0 = ViewBag.purchase0 as IEnumerable<Dywq.Web.Dto.Purchase.PurchaseDTO>;
     var purchase1 = ViewBag.purchase1 as IEnumerable<Dywq.Web.Dto.Purchase.PurchaseDTO>;
 
+    var news = ViewBag.news as IEnumerable<Dywq.Web.Dto.News.NoticeNewsDTO>;
+    var policyss = ViewBag.policys as IEnumerable<Dywq.Web.Dto.Article.PolicyArticleDTO>;
 
     var companyInfos = ViewBag.companyInfos as Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
 
-   
+
     var login = user != null;
 }
 
@@ -53,11 +55,7 @@
             height: 393.3px;
         }
 
-        .sec_common a {
-            color: black;
-        }
-
-        .tabel_con_ul li a{
+        .tabel_con_ul li a, .active_con_rights_sec a, .sec_common a {
             color: black;
         }
     </style>
@@ -243,119 +241,73 @@
                     </section>
                     <div class="active_con_rights_sec">
                         <section>
-                            <div class="policy_li active_policy">
-                                <div style="        display: flex;
-        align-items: center;
-">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex; align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="        display: flex;
-        align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
+                            @{
+                                var active = false;
+                                if (news != null)
+                                {
+                                    foreach (var item in news)
+                                    {
+                                        <div class="policy_li @(!active?"active_policy":"")">
+                                            <div style="display: flex; align-items: center;">
+                                                <span></span>
+                                                <p><a href="/news/detail/@(item.Id)">@(item.Title.Cut(11))</a></p>
+                                            </div>
+                                            <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                        </div>
+                                        active = true;
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="policy_li">
+                                        <div style="display: flex; align-items: center;">
+                                            <span></span>
+                                            <p>无数据</p>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+
                         </section>
                         <div class="more_btn">
-                            <a href="#">查看更多  ></a>
+                            <a href="/news/list">查看更多  ></a>
                         </div>
                     </div>
 
 
                     <div class="active_con_rights_sec">
                         <section>
-                            <div class="policy_li active_policy">
-                                <div style=" display: flex; align-items: center;">
-                                    <span></span>
-                                    <p>惠2州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠2州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
-                            <div class="policy_li">
-                                <div style="display: flex;align-items: center;">
-                                    <span></span>
-                                    <p>惠州农业中心开展新业务…</p>
-                                </div>
-                                <div class="date">2020-07-09</div>
-                            </div>
+                            @{
+                                active = false;
+                                if (policyss != null)
+                                {
+                                    foreach (var item in policyss)
+                                    {
+                                        <div class="policy_li @(!active?"active_policy":"")">
+                                            <div style="display: flex; align-items: center;">
+                                                <span></span>
+                                                <p><a href="/article/policyDetail/@(item.Id)">@(item.ThemeTitle.Cut(11))</a></p>
+                                            </div>
+                                            <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                        </div>
+                                        active = true;
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="policy_li">
+                                        <div style="display: flex; align-items: center;">
+                                            <span></span>
+                                            <p>无数据</p>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
                         </section>
                         <div class="more_btn">
-                            <a href="#">查看更多  ></a>
+                            <a href="/article/policy">查看更多  ></a>
                         </div>
                     </div>
 
