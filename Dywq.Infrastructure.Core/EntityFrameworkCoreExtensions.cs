@@ -72,6 +72,16 @@ namespace Dywq.Infrastructure.Core
             return count;
         }
 
+
+
+        public static async Task<int> SqlUpdateAsync(this DatabaseFacade facade, string sql, params object[] parameters)
+        {
+            var command = CreateCommand(facade, sql, out DbConnection conn, parameters);
+            var obj = await command.ExecuteNonQueryAsync();
+            return obj;
+        }
+
+
         public static string ToSql<TEntity>(this IQueryable<TEntity> query) where TEntity : class
         {
             var enumerator = query.Provider.Execute<IEnumerable<TEntity>>(query.Expression).GetEnumerator();

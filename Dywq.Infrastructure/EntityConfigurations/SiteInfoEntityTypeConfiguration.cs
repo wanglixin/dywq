@@ -17,4 +17,20 @@ namespace Dywq.Infrastructure.EntityConfigurations
 
         }
     }
+
+
+    class AboutUsEntityTypeConfiguration : BaseEntityTypeConfiguration<AboutUs, int>
+    {
+        public override void Configure(EntityTypeBuilder<AboutUs> builder)
+        {
+            base.Configure(builder);
+            builder.ToTable("AboutUs");
+            builder.Property(p => p.Title).HasMaxLength(50);
+            builder.Property(p => p.Content);
+            builder.Property(p => p.Pic).HasMaxLength(200);
+            builder.Property(p => p.Show);
+            builder.Property(p => p.Sort);
+
+        }
+    }
 }

@@ -132,6 +132,11 @@ namespace Dywq.Infrastructure.Core
         {
             return await DbContext.Database.GetPageData<T>(fields, where, pageIndex, pageSize, order);
         }
+
+        public async Task<int> SqlUpdateAsync(string sql, params object[] parameters)
+        {
+            return await DbContext.Database.SqlUpdateAsync(sql, parameters);
+        }
     }
 
 

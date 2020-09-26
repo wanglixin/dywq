@@ -44,6 +44,7 @@ namespace Dywq.Infrastructure.Core
 
         Task<PageData<T>> GetPageDataAsync<T>(string fields = "", string where = "", int pageIndex = 1, int pageSize = 10, string order = "id desc") where T : class, new();
 
+        Task<int> SqlUpdateAsync(string sql, params object[] parameters);
     }
 
 

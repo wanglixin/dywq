@@ -82,6 +82,10 @@ namespace Dywq.Web.Extensions
 
             services.AddScoped<IBaseRepository<NoticeNews>, BaseRepository<NoticeNews>>();
 
+            services.AddScoped<IBaseRepository<AboutUs>, BaseRepository<AboutUs>>();
+
+            services.AddScoped<IBaseRepository<Domain.CompanyAggregate.Message>, BaseRepository<Domain.CompanyAggregate.Message>>();
+
             return services;
         }
 

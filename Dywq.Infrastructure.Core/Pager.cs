@@ -8,6 +8,10 @@ namespace Dywq.Infrastructure.Core
     {
         public static string Create(int pageSize, int pageIndex, int totalCount, string linkUrl, int centSize)
         {
+            if (string.IsNullOrWhiteSpace(linkUrl))
+            {
+                return "";
+            }
             if ((totalCount < 1) || (pageSize < 1))
             {
                 return "";

@@ -1,0 +1,85 @@
+﻿@using Dywq.Infrastructure.Core.Extensions;
+@model IEnumerable<Dywq.Web.Dto.Site.AboutUsDTO>
+@section head{
+    <link href="~/css/index7.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .paginabox .count {
+            padding: 5px;
+            margin: 5px;
+            display: inline-block;
+            min-width: 32px;
+            height: 32px;
+            text-align: center;
+            color: rgba(102, 102, 102, 1);
+            font-size: 14px;
+            background: #fff;
+            border-radius: 6px;
+        }
+        .none{
+            display:none;
+        }
+    </style>
+
+}
+<div class="container">
+    <div id="banner">
+        <img src="" alt="">
+        <h4>关于我们</h4>
+    </div>
+</div>
+<!-- sec -->
+<div class="container">
+    <div class="tab_choose">
+        @{
+            if (Model != null)
+            {
+                var choose = false;
+                foreach (var item in Model)
+                {
+                    <div class="tab_per @(!choose?"choose":"")">@(item.Title)</div>
+                    choose = true;
+                }
+            }
+        }
+    </div>
+</div>
+
+<div class="container">
+    @{
+        if (Model != null)
+        {
+            var none = false;
+            foreach (var item in Model)
+            {
+               
+                <div class="main_con @(!none?"":"none")">
+                    <img src="@(item.Pic)" alt="">
+                    <p>
+                       @Html.Raw(item.Content)
+                    </p>
+                </div>
+                none = true;
+            }
+        }
+    }
+
+</div>
+
+@section js{
+
+
+    <script>
+        $(function () {
+            $(".tab_per").click(function () {
+                let index = $(this).index();
+                $(".tab_per").removeClass("choose");
+                $(this).addClass("choose");
+                $(".main_con").hide().eq(index).show();
+            })
+        });
+
+    </script>
+
+}

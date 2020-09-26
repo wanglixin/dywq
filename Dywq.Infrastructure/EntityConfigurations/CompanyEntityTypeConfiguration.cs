@@ -97,6 +97,20 @@ namespace Dywq.Infrastructure.EntityConfigurations
 
         }
     }
+    class MessageEntityTypeConfiguration : BaseEntityTypeConfiguration<Message, int>
+    {
+        public override void Configure(EntityTypeBuilder<Message> builder)
+        {
+            base.Configure(builder);
+            builder.ToTable("Message");
+            builder.Property(p => p.CompanyId);
+            builder.Property(p => p.Type);
+            builder.Property(p => p.IsRead);
+            builder.Property(p => p.AssociationId);
+            builder.Property(p => p.Content);
+
+        }
+    }
 
 
 }

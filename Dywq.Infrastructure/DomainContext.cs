@@ -50,6 +50,11 @@ namespace Dywq.Infrastructure
 
             modelBuilder.ApplyConfiguration(new NoticeNewsEntityTypeConfiguration());
 
+            modelBuilder.ApplyConfiguration(new AboutUsEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new MessageEntityTypeConfiguration());
+
+            
             #endregion
             base.OnModelCreating(modelBuilder);
         }
