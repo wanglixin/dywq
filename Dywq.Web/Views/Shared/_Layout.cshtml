@@ -61,24 +61,24 @@
     </header>
 
 
-    <div class="shade">
-        <ul>
-            <li><a href="./index.html">首页</a></li>
-            <li><a href="./index2.html">企业党建</a></li>
-            <li><a href="./index3.html">惠企政策</a></li>
-            <li><a href="./index4.html">企业融资</a></li>
-            <li><a href="./index5.html">企业对接</a></li>
-            <li><a href="./index6.html">专家智库</a></li>
-            <li class="about">
-                <a href="javascript:;"><span>关于我们</span><img class="arrowimg" src="/img/arrow.png" alt=""></a>
-                <section class="about_sec">
-                    <div class="about_sec_per"><a href="/index7.html">关于我们1</a></div>
-                    <div class="about_sec_per"><a href="/index7.html">关于我们2</a></div>
-                    <div class="about_sec_per"><a href="/index7.html">关于我们3</a></div>
-                </section>
-            </li>
-        </ul>
-    </div>
+    @*<div class="shade">
+            <ul>
+                <li><a href="./index.html">首页</a></li>
+                <li><a href="./index2.html">企业党建</a></li>
+                <li><a href="./index3.html">惠企政策</a></li>
+                <li><a href="./index4.html">企业融资</a></li>
+                <li><a href="./index5.html">企业对接</a></li>
+                <li><a href="./index6.html">专家智库</a></li>
+                <li class="about">
+                    <a href="javascript:;"><span>关于我们</span><img class="arrowimg" src="/img/arrow.png" alt=""></a>
+                    <section class="about_sec">
+                        <div class="about_sec_per"><a href="/index7.html">关于我们1</a></div>
+                        <div class="about_sec_per"><a href="/index7.html">关于我们2</a></div>
+                        <div class="about_sec_per"><a href="/index7.html">关于我们3</a></div>
+                    </section>
+                </li>
+            </ul>
+        </div>*@
 
     <!-- logo -->
     <div id="logo">
@@ -93,22 +93,23 @@
     <nav>
         <div class="container">
             <div class="wrap">
-                <ul class="list">
-                    <li class="active"><a href="/">首页</a></li>
-                    <li><a href="/article/partyBuilding">企业党建</a></li>
-                    <li><a href="/article/policy">惠企政策</a></li>
-                    <li><a href="/Company/Financing">企业融资</a></li>
-                    <li><a href="/company/cooperation">企业对接</a></li>
-                    <li><a href="/company/expert">专家智库</a>
+                <ul class="list menu">
+                    <li class="active"><a _href="/home/index" href="/">首页</a></li>
+                    <li><a _href="/article/partyBuilding;" href="/article/partyBuilding">企业党建</a></li>
+                    <li><a _href="/article/policy;" href="/article/policy">惠企政策</a></li>
+                    <li><a _href="/Company/Financing;" href="/Company/Financing">企业融资</a></li>
+                    <li><a _href="/company/cooperation;" href="/company/cooperation">企业对接</a></li>
+                    <li><a _href="/company/expert;" href="/company/expert">专家智库</a>
                     <li class="about">
-                        <a href="/aboutus"><span>关于我们</span>
-                        @*<img class="arrowimg" src="/img/arrow.png" alt="">*@
+                        <a _href="/aboutus;" href="/aboutus">
+                            <span>关于我们</span>
+                            @*<img class="arrowimg" src="/img/arrow.png" alt="">*@
                         </a>
                         @*<section class="about_sec">
-                            <div class="about_sec_per"><a href="./index7.html">关于我们1</a></div>
-                            <div class="about_sec_per"><a href="./index7.html">关于我们2</a></div>
-                            <div class="about_sec_per"><a href="./index7.html">关于我们3</a></div>
-                        </section>*@
+                                <div class="about_sec_per"><a href="./index7.html">关于我们1</a></div>
+                                <div class="about_sec_per"><a href="./index7.html">关于我们2</a></div>
+                                <div class="about_sec_per"><a href="./index7.html">关于我们3</a></div>
+                            </section>*@
                     </li>
                 </ul>
             </div>
@@ -165,41 +166,31 @@
 
 
     <script>
-        var mySwiper = new Swiper('.swiper-container', {
-            direction: 'horizontal',
-            loop: true,
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            autoplay: {
-                delay: 3000,
-            }
-        })
-        let num = 0;
-        let num2 = 0;
-        $(".tab").click(function () {
-            if (num % 2 == 0) {
-                $(".shade").css("height", "352px")
-            } else {
-                $(".shade").css("height", "0")
-            }
-            ++num;
-        })
-        $(".list li.about").click(function () {
-            $(".about_sec").slideToggle();
-        })
 
-        $(".shade li.about").click(function () {
-            if (num2 % 2 == 0) {
-                $(".shade").css("height", "500px")
-            } else {
-                $(".shade").css("height", "352px")
-            }
-            ++num2;
-            $(".about_sec").slideToggle();
+        //let num = 0;
+        //let num2 = 0;
+        //$(".tab").click(function () {
+        //    if (num % 2 == 0) {
+        //        $(".shade").css("height", "352px")
+        //    } else {
+        //        $(".shade").css("height", "0")
+        //    }
+        //    ++num;
+        //})
+        //$(".list li.about").click(function () {
+        //    $(".about_sec").slideToggle();
+        //})
 
-        })
+        //$(".shade li.about").click(function () {
+        //    if (num2 % 2 == 0) {
+        //        $(".shade").css("height", "500px")
+        //    } else {
+        //        $(".shade").css("height", "352px")
+        //    }
+        //    ++num2;
+        //    $(".about_sec").slideToggle();
+
+        //})
 
         // nav
         //$(".company").hide().eq(0).show();
@@ -209,13 +200,38 @@
         //    $(this).addClass("active_coned");
         //    $(".company").hide().eq(index).show();
         //})
-        $(".active_con_rights_sec").hide().eq(0).show();
-        $(".choose_tip_li").click(function () {
-            let index = $(this).index();
-            $(".choose_tip_li").removeClass("actived_tip");
-            $(this).addClass("actived_tip");
-            $(".active_con_rights_sec").hide().eq(index).show();
-        })
+        //$(".active_con_rights_sec").hide().eq(0).show();
+        //$(".choose_tip_li").click(function () {
+        //    let index = $(this).index();
+        //    $(".choose_tip_li").removeClass("actived_tip");
+        //    $(this).addClass("actived_tip");
+        //    $(".active_con_rights_sec").hide().eq(index).show();
+        //})
+
+
+        var url = window.location.href.toLowerCase();
+        //alert(url);
+        //if()
+
+        $(".menu").find("li").each(function (i, item) {
+            var a = $(item).find("a");
+            var hrefs = $(a).attr("_href").split(";");
+            for (var k = 0; k < hrefs.length; k++) {
+                var href = hrefs[k].toLowerCase();
+                if (href.length < 1) {
+                    return;
+                }
+                console.log(href);
+                var index = url.indexOf(href);
+                console.log(index);
+                if (index > -1) {
+                    $(".menu li.active").removeClass("active");
+                    $(item).addClass("active");
+                    return;
+                }
+            }
+        });
+
     </script>
 
     @RenderSection("js", false);

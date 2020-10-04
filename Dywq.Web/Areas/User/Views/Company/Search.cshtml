@@ -1,0 +1,368 @@
+﻿@model Dywq.Web.Dto.Commpany.CompanyFieldsDTO
+@section head{
+    <link href="~/css/index10.css" rel="stylesheet" />
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .tools {
+            margin-bottom: 20px;
+        }
+
+        .btn-box {
+            min-height: initial;
+        }
+
+        .popbox .list {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+}
+
+<h2>企业搜索</h2>
+<div class="tools">
+    <div class="left_btns">
+
+    </div>
+
+</div>
+
+<form id="form_data">
+    @{
+        foreach (var group in Model.Groups)
+        {
+            <div class="field-group">
+                <fieldset>
+                    <legend>@group.Name</legend>
+
+                    @{
+                        <div class="field-item">
+                            <span>企业名称</span>
+                            <input type="text" data-type="-1" name="-1" placeholder="必填 企业名称" />
+                        </div>
+
+                    }
+                    @{
+                        foreach (var field in group.CompanyFieldItems)
+                        {
+
+
+                            <div class="field-item @(field.Type == 3||field.Type == 4?"w-100 choice":"")" data-choice="@(field.Id)" data-type="@(field.Type)" data-alias="@(field.Alias)" data-required=@(field.Required.ToString().ToLower()) data-title="@(field.Name)">
+                                <span>@field.Name</span>
+
+                                @if (field.Type == 0)
+                                {
+                                    <input type="text" name="@(field.Id)" data-type="@(field.Type)" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" placeholder="@(field.Required?" 必填":"")" />
+                                }
+                                else if (field.Type == 1)
+                                {
+                                    <input type="number" name="@(field.Id)" data-type="@(field.Type)" placeholder="填写数字@(field.Required?" 必填":"")" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" />
+                                }
+                                else if (field.Type == 2)
+                                {
+                                    <input type="date" name="@(field.Id)" data-type="@(field.Type)" placeholder="选择日期@(field.Required?" 必填":"")" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" />
+                                }
+                                else if (field.Type == 3)
+                                {
+
+                                    <div class="cb">
+                                        <div class="cb-item">
+                                            <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="radio" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
+                                        </div>
+                                        @foreach (var v in field.CompanyFieldDefaultValues)
+                                        {
+                                            <div class="cb-item">
+                                                <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(v.Id)" type="radio" value="@(v.Value)" /> <label for="rd_@(v.Id)">@(v.Text)</label>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else if (field.Type == 4)
+                                {
+
+                                    <div class="cb">
+                                        <div class="cb-item">
+                                            <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="checkbox" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
+                                        </div>
+                                        @foreach (var v in field.CompanyFieldDefaultValues)
+                                        {
+                                            <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
+
+                                        }
+                                    </div>
+                                }
+                                else if (field.Type == 5)
+                                {
+                                    <select data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-type="@(field.Type)" name="@(field.Id)" data-title="@(field.Name)">
+                                        <option value="">
+                                            不选择
+                                        </option>
+                                        @foreach (var v in field.CompanyFieldDefaultValues)
+                                        {
+                                            <option value="@(v.Value)">
+                                                @(v.Text)
+                                            </option>
+                                        }
+                                    </select>
+                                }
+
+
+                            </div>
+                        }
+                    }
+
+                </fieldset>
+            </div>
+        }
+    }
+</form>
+<div class="btn-box">
+    <input type="button" class="btn-save btn-search" value="搜索" /> <input type="button" class="btn-save btn-open" value="隐藏搜索条件" style="background-color: cadetblue;" />
+</div>
+
+
+<div class="list">
+
+</div>
+
+
+<!-- pop -->
+<div class="popbox">
+    <div class="list">
+
+    </div>
+
+    <!-- 底部推送 -->
+    <div class="push_btns">
+        <button class="push_btn_per btn push_btn_cancel">取消</button>
+    </div>
+
+</div>
+
+
+@section js{
+    <script type="text/javascript">
+        var conf = {
+            companyIds: []
+        };
+        $(function () {
+            $(".btn-search").on("click", function () {
+                search(1);
+            });
+
+            $(".btn-open").on("click", function () {
+                $("#form_data").toggle();
+                if ($(this).val() == "隐藏搜索条件") {
+                    $(this).val("展开搜索条件");
+                } else {
+                    $(this).val("隐藏搜索条件");
+                }
+
+            });
+
+            $(".push_btn_cancel").click(function () {
+                $(".popbox").fadeOut();
+            });
+
+            $("body").on("change", ".cb_company", function () {
+                var id = $(this).data("id");
+                var index = conf.companyIds.indexOf(id);
+                console.log(index);
+                if ($(this).is(':checked')) {
+                    if (index < 0) {
+                        conf.companyIds.push(id);
+                    }
+                } else {
+                    if (index >= 0) {
+                        conf.companyIds.splice(index, 1);
+                    }
+                }
+                console.log(conf.companyIds);
+            })
+
+            $("body").on("change", ".cb_company_all", function () {
+                var checked = $(this).is(':checked');
+                $(".cb_company").each(function (idx, item) {
+                    $(item).prop("checked", checked);
+                    var id = $(item).data("id");
+                    var index = conf.companyIds.indexOf(id);
+                    if (checked) {
+                        if (index < 0) {
+                            conf.companyIds.push(id);
+                        }
+                    } else {
+                        if (index >= 0) {
+                            conf.companyIds.splice(index, 1);
+                        }
+                    }
+                });
+                console.log(conf.companyIds);
+            });
+
+
+        });
+
+        var search = function (page, clear) {
+            if (clear) {
+                conf.companyIds = [];
+            }
+            var data = $("#form_data").serialize();
+            //console.log(data);
+            inputs = $("#form_data").find('input[class!=nofield]');
+            selects = $("#form_data").find('select');
+            choices = $("#form_data").find('.choice');
+            var data = [];
+            $(inputs).each(function (index, item) {
+                var id = $(item).attr("name") * 1;
+                var type = $(item).attr("type");
+                var field_type = $(item).attr("data-type") * 1;
+                var alias = $(item).attr("data-alias");
+                var required = $(item).attr("data-required") == "true";
+                var title = $(item).attr("data-title");
+                // console.log(id, type);
+                var val = $(item).val();
+                if (type == "text" || type == "number" || type == "date") {
+                    data.push({
+                        FieldId: id,
+                        Value: $(item).val(),
+                        Type: field_type,
+                        Alias: alias,
+                        Required: required,
+                        Name: title
+                    });
+                }
+
+            });
+            $(choices).each(function (index, item) {
+                var id = $(item).attr("data-choice") * 1;
+                var type = $(item).attr("data-type") * 1;
+                var alias = $(item).attr("data-alias");
+                var required = $(item).attr("data-required") == "true";
+                var title = $(item).attr("data-title");
+
+                //console.log(id, type);
+                if (type == 3) {
+                    var val = $("[name=" + id + "]:checked").val();
+                    //  console.log(id, type);
+                    data.push({
+                        FieldId: id,
+                        Value: val,
+                        Type: type,
+                        Alias: alias,
+                        Required: required,
+                        Name: title
+                    });
+                } else if (type == 4) {
+                    var id_arr = [];
+                    $("[name=" + id + "]:checked").each(function () {
+                        id_arr.push($(this).val());
+                    });
+                    var idstr = id_arr.join(',');//将数组元素连接起来以构建一个字符串
+                    console.log(idstr);
+                    data.push({
+                        FieldId: id,
+                        Value: idstr,
+                        Type: type,
+                        Alias: alias,
+                        Required: required,
+                        Name: title
+                    });
+                }
+
+            });
+            $(selects).each(function (index, item) {
+                var id = $(item).attr("name") * 1;
+                var type = $(item).attr("data-type") * 1;
+                var val = $(item).find("option:selected").val();
+                var alias = $(item).attr("data-alias");
+                var required = $(item).attr("data-required") == "true";
+                var title = $(item).attr("data-title");
+                //console.log(id, val);
+                data.push({
+                    FieldId: id,
+                    Value: val,
+                    Type: type,
+                    Alias: alias,
+                    Required: required,
+                    Name: title
+                });
+            });
+            $.ajax({
+                url: "/user/company/getsearchlist",
+                type: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                data: JSON.stringify({ Searches: data, PageIndex: page }),
+                success: function (r) {
+                    $(".list").html(r);
+                }
+            })
+        }
+
+
+        function push() {
+            if (conf.companyIds.length < 1) {
+                alert("请选择企业！");
+                return;
+            }
+            $(".popbox").fadeIn();
+            getPolicyList(1);
+        }
+
+        function singlePush(id) {
+            $(".cb_company").each(function (idx, item) {
+                $(item).prop("checked", false);
+            })
+            conf.companyIds = [];
+            conf.companyIds.push(id);
+            $(".cb_company[data-id=" + id + "]").prop("checked", true);
+
+            console.log(conf);
+            $(".popbox").fadeIn();
+            getPolicyList(1);
+        }
+
+
+        function getPolicyList(page) {
+            var type = $("#TypeId").val();
+            var key = $("#Key").val();
+            var where = [];
+            type ? where.push("typeId=" + type) : "";
+            key ? where.push("key=" + key) : "";
+
+            var query = where.join("&");
+            query = query.length > 0 ? query + "&" : "";
+
+            $.get("/user/Article/PolicyList?" + query + "pageSize=5&pageIndex=" + page, function (r) {
+                $(".popbox .list").html(r);
+            })
+        }
+
+        function doPush(id) {
+            console.log(conf.companyIds, id);
+            //alert(id);
+            $.ajax({
+                url: "/api/message/push",
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ AssociationId: id, Type: 0, CompanyIds: conf.companyIds }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code != 0) {
+                        alert(r.message);
+                    } else {
+                        alert("推送成功");
+                    }
+                }
+            })
+        }
+
+
+
+    </script>
+
+}

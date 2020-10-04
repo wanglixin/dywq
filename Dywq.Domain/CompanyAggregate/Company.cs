@@ -64,5 +64,11 @@ namespace Dywq.Domain.CompanyAggregate
         /// 排序
         /// </summary>
         public int Sort { get; set; }
+
+
+        /// <summary>
+        /// 企业登陆次数，所有绑定用户的之和
+        /// </summary>
+        public int LoginCount { get; set; }
     }
 }

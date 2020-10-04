@@ -55,57 +55,63 @@
         {
             foreach (var item in Model.Data)
             {
-                <tr>
-                    <td>
-                        @(item.CompanyId)
-                    </td>
-                    <td>
-                        @(item.CompanyName)
-                    </td>
-                    <td>
-                        @(item.MainBusiness)
-                    </td>
-                    <td>
-                        @(item.Contact)
-                    </td>
-                    <td>
-                        @(item.UpdatedTime)
-                    </td>
-                    <td>
-                        @(item.Show ? "是" : "否")
-                    </td>
-                    <td>
-                        @(item.Sort)
-                    </td>
-                    <td class="editbtn">
-                        <a href="/user/company/editCompanyInfo?CompanyId=@(item.CompanyId)">编辑</a>
-                    </td>
-                    <td>
-                        @{
+        <tr>
+            <td>
+                @(item.CompanyId)
+            </td>
+            <td>
+                @(item.CompanyName)
+            </td>
+            <td>
+                @(item.MainBusiness)
+            </td>
+            <td>
+                @(item.Contact)
+            </td>
+            <td>
+                @(item.UpdatedTime)
+            </td>
+            <td>
+                @(item.Show ? "是" : "否")
+            </td>
+            <td>
+                @(item.Sort)
+            </td>
+            <td class="editbtn">
+                <a href="/user/company/editCompanyInfo?CompanyId=@(item.CompanyId)">编辑</a>
+            </td>
+            <td>
+                @{
                             if (item.Status == 1)
                             {
-                                <font style="color:red;">@(item.StatusStr)</font>
+                    <font style="color:red;">@(item.StatusStr)</font>
                             }
                             else
                             {
-                                @(item.StatusStr)
+                    @(item.StatusStr)
                             }
-                        }
-                    </td>
-                    <td class="editbtn">
-                        @{
+                }
+            </td>
+            <td class="editbtn">
+                @{
                             if (item.Status == 1)
                             {
-                                @Html.Raw(" <a href=\"javascript:check("+item.CompanyId+",2,this)\">通过</a> | <a href= \"javascript:check("+item.CompanyId+",-1,this)\"> 不通过 </a>")
+                    @Html.Raw(" <a href=\"javascript:check("+item.CompanyId+",2,this)\">通过</a> | <a href= \"javascript:check("+item.CompanyId+",-1,this)\"> 不通过 </a>")
+                            }else if(item.Status == 2)
+                            {
+                    @Html.Raw("<a href= \"javascript:check("+item.CompanyId+",-1,this)\"> 不通过 </a>")
+                            }else if(item.Status == -1)
+                            {
+                    @Html.Raw("<a href= \"javascript:check("+item.CompanyId+",2,this)\"> 通过 </a>")
                             }
                             else
                             {
-                                @("--")
+                    @("--")
                             }
-                        }
+                }
 
-                    </td>
-                </tr>
+            </td>
+        </tr>
             }
         }
 

@@ -40,11 +40,24 @@ namespace Dywq.Web.Dto.Commpany
         {
             get
             {
-                switch (this.Type)
+                return this.Type switch
                 {
-                    case 0: return "惠企政策";
-                    default:return "";
-                }
+                    0 => "惠企政策",
+                    _ => "",
+                };
+            }
+        }
+
+
+        public string Link
+        {
+            get
+            {
+                return this.Type switch
+                {
+                    0 => $"/article/policyDetail/{AssociationId}?_source=user",
+                    _ => "",
+                };
             }
         }
     }

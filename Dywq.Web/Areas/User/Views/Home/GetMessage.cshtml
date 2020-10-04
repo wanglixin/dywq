@@ -1,0 +1,28 @@
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.MessageDTO>
+    <div class="title"><h3>待办事项（@(Model.Total)）</h3></div>
+    <ul>
+        @if (Model.Data != null)
+        {
+
+            foreach (var item in Model.Data)
+            {
+                <li>
+                    <a target="_blank" href="@(item.Link)">
+                        <span class="cont">【@(item.TypeStr)】@(item.Content)</span>
+                        <span class="time">@(item.CreatedTime)</span>
+                    </a>
+                </li>
+            }
+        }
+        else
+        {
+            <li>
+                <span class="cont">无消息</span>
+            </li>
+        }
+
+    </ul>
+
+    <section class="paginabox">
+        @Html.Raw(Model.Pager)
+    </section>

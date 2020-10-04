@@ -41,5 +41,10 @@ namespace Dywq.Domain.UserAggregate
         /// 身份证
         /// </summary>
         public string IDCard { get; set; }
+
+        /// <summary>
+        /// 登陆次数
+        /// </summary>
+        public int LoginCount { get; set; }
     }
 }

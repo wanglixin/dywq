@@ -59,10 +59,10 @@ namespace Dywq.Web.Application.Commands
                 return Result.Failure("企业不存在");
             }
 
-            if (company.Status != 1)
-            {
-                return Result.Failure("当前状态不能审核 ");
-            }
+            //if (company.Status != 1)
+            //{
+            //    return Result.Failure("当前状态不能审核 ");
+            //}
             if (request.Status != -1 && request.Status != 2)
             {
                 return Result.Failure("审核状态错误 ");

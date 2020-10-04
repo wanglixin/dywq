@@ -24,6 +24,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Sort);
             builder.Property(p => p.Show);
             builder.Property(p => p.Status);
+            builder.Property(p => p.LoginCount);
         }
     }
 

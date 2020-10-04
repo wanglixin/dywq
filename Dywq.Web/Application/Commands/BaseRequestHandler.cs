@@ -11,8 +11,8 @@ namespace Dywq.Web.Application.Commands
 {
     public abstract class BaseRequestHandler<T, R> : IRequestHandler<T, R> where T : IRequest<R>
     {
-        private readonly ICapPublisher _capPublisher;
-        private readonly ILogger<BaseRequestHandler<T, R>> _logger;
+        protected readonly ICapPublisher _capPublisher;
+        protected readonly ILogger<BaseRequestHandler<T, R>> _logger;
         public BaseRequestHandler(ICapPublisher capPublisher, ILogger<BaseRequestHandler<T, R>> logger)
         {
             _capPublisher = capPublisher;

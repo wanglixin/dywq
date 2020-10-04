@@ -69,6 +69,10 @@ namespace Dywq.Web.Application.Commands
              && x.Password == pwd);
             if (user == null) return null;
 
+
+            user.LoginCount++;
+            await _userRepository.UpdateAsync(user);
+
             var dto = new LoginUserDTO();
             dto.UserName = user.UserName;
             dto.Id = user.Id;
@@ -88,12 +92,16 @@ namespace Dywq.Web.Application.Commands
                 dto.Logo = commpany.Logo;
                 dto.CompanyName = commpany.Name ?? "[未填写企业名称]";
 
-                //获取企业名称
+                //更新登陆次数
 
-                //var companyFieldData = await _companyFieldDataRepository.GetAsync(x => x.Alias == CompanyFieldAlias.CompanyName);
-
-                //dto.CompanyName = companyFieldData?.Value;
+                commpany.LoginCount++;
+                await _companyRepository.UpdateAsync(commpany);
             }
+
+
+
+
+
 
             return dto;
 

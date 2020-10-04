@@ -21,5 +21,7 @@ namespace Dywq.Web.Dto.User
         public string RealName { get; set; }
         public string IDCard { get; set; }
         public string Mobile { get; set; }
+
+        public int LoginCount { get; set; }
     }
 }

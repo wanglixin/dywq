@@ -2,6 +2,7 @@
 using Dywq.Domain.CompanyAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
+using Dywq.Web.Dto;
 using Dywq.Web.Dto.Commpany;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,38 +15,36 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class GetCompanysCommand : IRequest<PageResult<CompanyDTO>>
+    public class SearchCompanysCommand : IRequest<PageResult<CompanyDTO>>
     {
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-
-        public string Key { get; set; }
-
-
         public string LinkUrl { get; set; }
+
+        /// <summary>
+        /// 搜索条件
+        /// </summary>
+        public IEnumerable<SearchDTO> Searches { get; set; } = new List<SearchDTO>();
+
     }
 
-    public class GetCompanysCommandHandler : IRequestHandler<GetCompanysCommand, PageResult<CompanyDTO>>
+    public class SearchCompanysCommandHandler : BaseRequestHandler<SearchCompanysCommand, PageResult<CompanyDTO>>
     {
-        private readonly ICapPublisher _capPublisher;
-        readonly ILogger<GetCompanyFieldsCommandHandler> _logger;
+
         readonly IBaseRepository<CompanyFieldData> _companyFieldDataRepository;
         readonly IBaseRepository<CompanyField> _companyFieldRepository;
         readonly IBaseRepository<Company> _companyRepository;
 
-        IBaseRepository<CompanyFieldDefaultValue> _companyFieldDefaultValueRepository;
-        public GetCompanysCommandHandler(
+        readonly IBaseRepository<CompanyFieldDefaultValue> _companyFieldDefaultValueRepository;
+        public SearchCompanysCommandHandler(
             ICapPublisher capPublisher,
-            ILogger<GetCompanyFieldsCommandHandler> logger,
+            ILogger<SearchCompanysCommandHandler> logger,
             IBaseRepository<CompanyFieldData> companyFieldDataRepository,
             IBaseRepository<CompanyField> companyFieldRepository,
              IBaseRepository<CompanyFieldDefaultValue> companyFieldDefaultValueRepository,
              IBaseRepository<Company> companyRepository
-            )
+            ) : base(capPublisher, logger)
         {
-            _capPublisher = capPublisher;
-            _logger = logger;
-
             _companyFieldDataRepository = companyFieldDataRepository;
             _companyFieldRepository = companyFieldRepository;
             _companyFieldDefaultValueRepository = companyFieldDefaultValueRepository;
@@ -53,34 +52,66 @@ namespace Dywq.Web.Application.Commands
         }
 
 
-        public async Task<PageResult<CompanyDTO>> Handle(GetCompanysCommand request, CancellationToken cancellationToken)
+        public override async Task<PageResult<CompanyDTO>> Handle(SearchCompanysCommand request, CancellationToken cancellationToken)
         {
-
             var condition = new List<string>();
-            if (!string.IsNullOrWhiteSpace(request.Key))
+            var name = string.Empty;
+            foreach (var item in request.Searches)
             {
-                //condition.Add($"(d.Alias='{Common.CompanyFieldAlias.CompanyName}' and d.Value like '%{request.Key}%')");
-                condition.Add($"(Name like '%{request.Key}%')");
+                if (string.IsNullOrWhiteSpace(item.Value))
+                    continue;
+                if (item.Type == 0)
+                {
+                    condition.Add($"( d.FieldId={item.FieldId} and d.Value like '%{item.Value}%' )");
+                }
+                else if (item.Type == -1)
+                {
+                    name = item.Value;
+                    //condition.Add($"( t.Name like '%{item.Value}%' )");
+                }
+                else
+                {
+                    condition.Add($"( d.FieldId={item.FieldId} and d.Value='{item.Value}' )");
+                }
             }
 
-            var where = condition.Count > 0 ? $" where {string.Join(" or ", condition)}" : "";
+            var where = condition.Count > 0 ? $" {string.Join(" or ", condition)}" : "";
 
-            var count = await _companyRepository.SqlCountAsync(@$"
-SELECT count(*) FROM [Company] {where}");
-            if (count < 1) return PageResult<CompanyDTO>.Success(null, 0, request.PageIndex, request.PageSize,"");
+            if (string.IsNullOrWhiteSpace(where))
+            {
+                where = !string.IsNullOrWhiteSpace(name) ? $" where ( c.Name like '%{name}%' )" : "";
+            }
+            else
+            {
+                where = !string.IsNullOrWhiteSpace(name) ? $" where ( c.Name like '%{name}%' ) and ( {where} )" : $" where {where}";
+            }
 
+
+            var where2 = condition.Count > 0 ? $"where t.c={condition.Count}" : "";
+
+
+
+
+
+             var sql = @$" select count(*) from (
+   select c.id,count(c.id) c from Company as c left join CompanyFieldData as d on d.CompanyId=c.id  {where} group by c.id 
+   ) as t {where2}";
+            var count = await _companyRepository.SqlCountAsync(sql);
+
+            this._logger.LogInformation($"count={sql}");
+
+            if (count < 1) return PageResult<CompanyDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
             var start = (request.PageIndex - 1) * request.PageSize;
             var end = start + request.PageSize;
 
-            /*var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(@$"select t.*,c.Name,c.Logo,c.CreatedTime from (
-SELECT CompanyId,ROW_NUMBER() over(order by CompanyId desc) Rowid  FROM [CompanyFieldData] as d {where}  group by CompanyId
-) as t left join Company as c on c.Id=t.CompanyId where t.Rowid>{start} and t.Rowid<={end}
-;");*/
+            sql = @$"  select * from (
+	   select id CompanyId,Name,ROW_NUMBER() over(order by Id desc) Rowid from (
+   select c.id,min(c.Name) Name,count(c.id) c from Company as c left join CompanyFieldData as d on d.CompanyId=c.id {where}   group by c.id 
+   ) as t {where2} ) as tt where tt.Rowid>{start} and tt.Rowid<={end}";
 
-            var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(@$"select * from (
-SELECT Id as CompanyId,Name,Logo,CreatedTime,ROW_NUMBER() over(order by Id desc) Rowid 
-  FROM [Company] {where}
-) as c where c.Rowid>{start} and c.Rowid<={end}");
+            var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(sql);
+
+            this._logger.LogInformation($"data={sql}");
 
             var companyIdArr = data.Select(x => x.CompanyId);
 
@@ -142,7 +173,6 @@ SELECT Id as CompanyId,Name,Logo,CreatedTime,ROW_NUMBER() over(order by Id desc)
 
 
             }
-
 
             return PageResult<CompanyDTO>.Success(data, count, request.PageIndex, request.PageSize, request.LinkUrl);
         }

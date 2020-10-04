@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dywq.Web.Application.Commands.Article;
 using Dywq.Web.Application.Commands.Guestbook;
+using Dywq.Web.Application.Commands.Message;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -55,9 +56,17 @@ namespace Dywq.Web.Controllers
             return View(result);
         }
 
-        public async Task<IActionResult> PolicyDetail(int id)
+        public async Task<IActionResult> PolicyDetail(int id, string _source = "")
         {
             var result = await _mediator.Send(new GetPolicyArticlesCommand() { Id = id }, HttpContext.RequestAborted);
+
+            if ("user" == _source && this.CurrentUser != null)
+            {
+                //更新阅读状态 已读
+
+                await _mediator.Send(new EditMessageCommand() { AssociationId = id, Type = 0, CompanyId = this.CurrentUser.CompanyId }, HttpContext.RequestAborted);
+            }
+
             return View(result?.Data?.FirstOrDefault());
         }
 

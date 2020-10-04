@@ -10,30 +10,32 @@
     </style>
 }
 
-
-<h2>企业名录</h2>
 <div class="tools">
     <div class="left_btns">
-        
+        <div class="addbtn">
+            <div class="add_left">+</div>
+            <span class="add_txt"><a href="javascript:push();">批量推送</a></span>
+        </div>
     </div>
 
     <div class="right_btn">
-        
-            <div class="work_input">
 
-                <div class="input-group search_con">
-                    <input type="text" class="form-control" value="@(Context.Request.Query["key"])" name="company_key" placeholder="请输入企业名称">
+        <div class="work_input">
+
+            @*<div class="input-group search_con">
+                    <input type="text" class="form-control" value="@(Context.Request.Query["key"])" name="key" placeholder="请输入企业名称">
                 </div>
-                <button class="btn btn-primary " type="button" onclick="getlist(1)">搜索</button>
+                <button class="btn btn-primary " type="button" onclick="getlist(1)">搜索</button>*@
 
-                @*<button class="btn btn-primary higer_search" type="button"><a href="./index11.html" style="color: #fff;">高级搜索</a></button>*@
-            </div>
-    
+            @*<button class="btn btn-primary higer_search" type="button"><a href="./index11.html" style="color: #fff;">高级搜索</a></button>*@
+        </div>
+
     </div>
 </div>
 <!-- table -->
 <table id="table_con">
     <tr class="head">
+        <th><input type="checkbox" class="cb_company_all" /></th>
         <th>Id</th>
         <th>企业名称</th>
         <th>行业</th>
@@ -48,6 +50,7 @@
             foreach (var item in Model.Data)
             {
                 <tr class="company_@(item.CompanyId)">
+                    <td><input type="checkbox" class="cb_company" data-id="@(item.CompanyId)" /></td>
                     <td class="company_id_@(item.CompanyId)">
                         @(item.CompanyId)
                     </td>
@@ -65,7 +68,8 @@
                         @(item.CreatedTime)
                     </td>
                     <td class="editbtn">
-                       <a href="javascript:select(@(item.CompanyId),this)">选择</a>
+                        <a target="_blank" href="/user/company/edit?companyId=@(item.CompanyId)">详情</a> | <a href="javascript:singlePush(@(item.CompanyId))">推送</a>
+
                     </td>
                 </tr>
             }

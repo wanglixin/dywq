@@ -27,6 +27,8 @@ namespace Dywq.Web.Application.Commands.Article
         /// </summary>
         public string TypeId { get; set; } = "";
         public bool? Show { get; set; } = null;
+
+        public string Key { get; set; }
     }
 
 
@@ -60,6 +62,11 @@ namespace Dywq.Web.Application.Commands.Article
             if (request.Show.HasValue)
             {
                 sb.Add($"Show = " + (request.Show.Value ? 1 : 0));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Key))
+            {
+                sb.Add($"ThemeTitle like '%{request.Key}%'");
             }
 
             if (!string.IsNullOrWhiteSpace(request.TypeId))

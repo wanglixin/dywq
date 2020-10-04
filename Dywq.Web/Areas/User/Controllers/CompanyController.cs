@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Dywq.Web.Areas.User.Controllers
 {
@@ -100,6 +101,25 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(result);
         }
 
+
+
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> Search(GetCompanyFieldsCommand cmd)
+        {
+            var fields = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return View(fields);
+        }
+
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> GetSearchList([FromBody]SearchCompanysCommand cmd)
+        {
+            _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
+            cmd.LinkUrl = $"javascript:search(__id__,true)";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return PartialView(result);
+        }
 
 
     }

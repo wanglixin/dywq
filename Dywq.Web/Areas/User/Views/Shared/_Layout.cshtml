@@ -18,10 +18,10 @@
 </head>
 <body>
     <header>
-        <img src="~/img/admin_log.png" alt="" class="admin_logo">
+        <a href="/"><img src="~/img/admin_log.png" alt="" class="admin_logo"></a>
         <div class="right_top">
             <div class="user_defaultimg">
-                <img src="~/img/user_default/png" alt="">
+                <img src="@(string.IsNullOrWhiteSpace(user.Logo)?"~/img/user_default/png":user.Logo)" alt="">
             </div>
             <h4>
                 欢迎您，@{
@@ -40,49 +40,91 @@
     <div class="content">
         <div class="asidebar">
             <ul id="main-nav" class="nav nav-tabs nav-stacked">
-                <li>
-                    <a href="/user" class="nav-header">
-                    <img src="img/icon2.png" alt="" class="icon">
-                    <span>我的首页</span>
-                    <img src="img/arrow.png" alt="" class="arrow">
-                    </a>
+                @{
+                    if (user.Type == 1)
+                    {
+                        <li>
+                            <a href="/user/home/Statistic" class="nav-header">
+                                <img src="img/icon2.png" alt="" class="icon">
+                                <span>我的首页</span>
+                                <img src="img/arrow.png" alt="" class="arrow">
+                            </a>
 
-                </li>
-                <li>
-                    <a href="javascript:;" class="nav-header">
-                    <img src="img/icon2.png" alt="" class="icon">
-                    <span>信息管理</span>
-                    <img src="img/arrow.png" alt="" class="arrow">
-                    </a>
-                    <ul id="systemSetting" class="nav nav-list">
-                        <li class="active"><a href="/user/company/list"><span>企业名录</span></a></li>
-                        <li><a href="#"><span>通知公告</span></a></li>
-                        <li><a href="/user/article/PartyBuildingArticleList"><span>企业党建</span></a></li>
-                        <li><a href="/user/article/PolicyArticleList"><span>惠企政策</span></a></li>
-                        <li><a href="/user/guestbook/list"><span>留言列表</span></a></li>
-                        <li><a href="#"><span>专家智库</span></a></li>
-                        <li><a href="#"><span>关于我们</span></a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:;" class="nav-header">
-                    <img src="img/icon2.png" alt="" class="icon">
-                    <span>企业信息</span>
-                    <img src="img/arrow.png" alt="" class="arrow">
-                    </a>
-                    <ul id="systemSetting" class="nav nav-list">
-                        <li><a href="/user/user/list"><span>用户列表</span></a></li>
-                        <li><a href="/user/company/companyinfolist"><span>企业动态</span></a></li>
-                        <li><a href="/user/company/AddCompanyInfo"><span>企业动态</span></a></li>
-                        <li><a href="#"><span>企业融资</span></a></li>
-                        <li><a href="#"><span>企业对接</span></a></li>
-                        <li><a href="#"><span>产品信息</span></a></li>
-                        <li><a href="#"><span>采购信息</span></a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="http://www.baidu.com" class="nav-header"> </a>
-                </li>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="nav-header">
+                                <img src="img/icon2.png" alt="" class="icon">
+                                <span>信息管理</span>
+                                <img src="img/arrow.png" alt="" class="arrow">
+                            </a>
+                            <ul id="systemSetting" class="nav nav-list">
+                                <li><a _href="/user/company/list;/user/company/add" href="/user/company/list"><span>企业名录</span></a></li>
+                                <li><a _href="/user/news/list;/user/news/edit" href="/user/news/list"><span>通知公告</span></a></li>
+                                <li><a _href="/user/article/PartyBuildingArticleList;/user/article/EditPartyBuildingArticle" href="/user/article/PartyBuildingArticleList"><span>企业党建</span></a></li>
+                                <li><a _href="/user/article/PolicyArticleList;/user/article/EditPolicyArticle;/user/company/search" href="/user/article/PolicyArticleList"><span>惠企政策</span></a></li>
+                                <li><a _href="/user/guestbook/list" href="/user/guestbook/list"><span>留言列表</span></a></li>
+                                <li><a _href="/user/expert/list;/user/expert/edit" href="/user/expert/list"><span>专家智库</span></a></li>
+                                <li><a _href="/user/aboutus/list;/user/aboutus/edit" href="/user/aboutus/list"><span>关于我们</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="nav-header">
+                                <img src="img/icon2.png" alt="" class="icon">
+                                <span>企业信息</span>
+                                <img src="img/arrow.png" alt="" class="arrow">
+                            </a>
+                            <ul class="nav nav-list">
+                                <li><a _href="/user/user/list;/user/user/add;/user/user/edit" href="/user/user/list"><span>用户列表</span></a></li>
+                                <li><a _href="/user/company/companyinfolist;/user/company/editCompanyInfo" href="/user/company/companyinfolist"><span>企业动态</span></a></li>
+                                @*<li><a href="/user/company/AddCompanyInfo"><span>企业动态</span></a></li>*@
+                                <li><a _href="/user/financing/list;/user/financing/edit" href="/user/financing/list"><span>企业融资</span></a></li>
+                                <li><a _href="/user/cooperation/list;/user/cooperation/edit/" href="/user/cooperation/list"><span>企业对接</span></a></li>
+                                <li><a _href="/user/purchase/list?type=1" href="/user/purchase/list?type=1"><span>产品信息</span></a></li>
+                                <li><a _href="/user/purchase/list?type=0" href="/user/purchase/list?type=0"><span>采购信息</span></a></li>
+                            </ul>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="/user/" class="nav-header">
+                                <img src="img/icon2.png" alt="" class="icon">
+                                <span>我的首页</span>
+                                <img src="img/arrow.png" alt="" class="arrow">
+                            </a>
+
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="nav-header">
+                                <img src="img/icon2.png" alt="" class="icon">
+                                <span>信息管理</span>
+                                <img src="img/arrow.png" alt="" class="arrow">
+                            </a>
+                            <ul class="nav nav-list">
+
+                                <li><a _href="/user/company/addcompanyinfo" href="/user/company/addcompanyinfo"><span>企业信息</span></a></li>
+
+                              
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="nav-header">
+                                <img src="img/icon2.png" alt="" class="icon">
+                                <span>企业信息</span>
+                                <img src="img/arrow.png" alt="" class="arrow">
+                            </a>
+                            <ul class="nav nav-list">
+                       
+                                <li><a _href="/user/financing/listc;/user/financing/editc" href="/user/financing/listc"><span>企业融资</span></a></li>
+                                <li><a _href="/user/cooperation/listc;/user/cooperation/editc/" href="/user/cooperation/listc"><span>企业对接</span></a></li>
+                                <li><a _href="/user/purchase/listc?type=1" href="/user/purchase/listc?type=1"><span>产品信息</span></a></li>
+                                <li><a _href="/user/purchase/listc?type=0" href="/user/purchase/listc?type=0"><span>采购信息</span></a></li>
+                            </ul>
+                        </li>
+                    }
+                }
+
             </ul>
         </div>
         <div class="content_right">
@@ -93,9 +135,41 @@
 
 
     <script>
-        $(".nav-header").click(function () {
-            $(this).next().slideToggle();
-        })
+        $(function () {
+            $(".nav-header").click(function () {
+                $(this).next().slideToggle();
+            })
+
+            var url = window.location.href.toLowerCase();
+            //alert(url);
+
+            $("#main-nav").find("li").each(function (i, item) {
+                $(item).find("li").each(function (j, _item) {
+                    var a = $(_item).find("a");
+                    var hrefs = $(a).attr("_href").split(";");
+                    for (var k = 0; k < hrefs.length; k++) {
+                        var href = hrefs[k].toLowerCase();
+                        console.log(href);
+                        var index = url.indexOf(href);
+                        console.log(index);
+                        if (index > -1) {
+                            $(_item).addClass("active");
+                            $(_item).parents("ul").show();
+                            return;
+                        }
+                    }
+
+                });
+            });
+
+        });
+
+
+
+
+
+
+
     </script>
 
     @RenderSection("js", false);

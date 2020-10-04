@@ -80,6 +80,14 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<Result> Search(SearchCompanysCommand cmd)
+        {
+            cmd.LinkUrl = $"javascript:search(__id__)";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+
+        }
 
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dywq.Web.Application.Commands;
+using Dywq.Web.Application.Commands.Message;
 using Dywq.Web.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -15,17 +16,60 @@ namespace Dywq.Web.Areas.User.Controllers
     [Area("User")]
     public class HomeController : BaseController
     {
-   
+
         public HomeController(IMediator mediator, ILogger<HomeController> logger) : base(mediator, logger)
         {
 
         }
 
-        public IActionResult Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            if(this.CurrentUser.Role == Common.Role.User)
+            {
+                var companyId = this.CurrentUser.CompanyId;
+                var obj = await _mediator.Send(new GetTodoInfoCommand() { CompanyId = companyId }, HttpContext.RequestAborted);
+
+                return View(obj);
+            }
+            else
+            {
+                return RedirectToAction("Statistic");
+            }
+         
         }
 
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> Statistic()
+        {
+            var obj = await _mediator.Send(new GetAdminTodoInfoCommand() { }, HttpContext.RequestAborted);
+
+            return View(obj);
+        }
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> StatisticInfo(GetAdminTodoInfoCommand cmd)
+        {
+            cmd.Start = !cmd.Start.HasValue ? Convert.ToDateTime(DateTime.Now.ToString("yyyy-01-01")) : cmd.Start;
+            cmd.End = !cmd.End.HasValue ? Convert.ToDateTime(DateTime.Now.ToString("yyyy-12-31")) : cmd.End;
+
+            var obj = await _mediator.Send(cmd, HttpContext.RequestAborted);
+
+            return View(obj);
+        }
+
+
+
+        [Authorize(Roles = Common.Role.User)]
+        public async Task<IActionResult> GetMessage(GetMessagesCommand cmd)
+        {
+            var companyId = this.CurrentUser.CompanyId;
+            cmd.CompanyId = companyId;
+            cmd.IsRead = 0;
+            cmd.LinkUrl = "javascript:getdata(__id__)";
+            var obj = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return PartialView(obj);
+        }
 
 
         public async Task<IActionResult> Test(GetCompanyFieldsCommand cmd)

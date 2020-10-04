@@ -113,7 +113,9 @@ namespace Dywq.Web.Application.Commands
                     CreatedTime = x.CreatedTime,
                     Id = x.Id,
                     Type = x.Type,
-                    UserName = x.UserName
+                    UserName = x.UserName,
+                    LoginCount = x.LoginCount,
+                    Mobile = x.Mobile
                 };
                 var user_company = user_company_arr.FirstOrDefault(y => y.UserId == x.Id);
                 if (user_company == null)

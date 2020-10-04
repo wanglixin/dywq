@@ -1,4 +1,9 @@
-﻿@model Dywq.Web.Dto.Commpany.StatisticInfoDto
+﻿@model Dywq.Web.Dto.Commpany.AdminStatisticInfoDto
+@{ 
+    var start = string.IsNullOrWhiteSpace(Context.Request.Query["start"]) ? DateTime.Now.ToString("yyyy-01-01") : Context.Request.Query["start"].ToString();
+
+      var end = string.IsNullOrWhiteSpace(Context.Request.Query["end"]) ? DateTime.Now.ToString("yyyy-12-31") : Context.Request.Query["end"].ToString();
+}
 @section head{
     <link href="~/css/pager.css" rel="stylesheet" />
     <style type="text/css">
@@ -95,45 +100,58 @@
         .items a {
             color: black;
         }
+         .date{
+             margin-bottom:20px;
+         }
+
+        .date span{
+            font-size:15px;
+        }
+        .date input{
+            margin-right:20px;
+        }
+
+         .date input[type=submit]{
+             width:100px;
+             height:30px;
+             border-radius: 4px;
+             background-color:#0094ff;
+             border:none;
+             color:white;
+         }
     </style>
 }
 
+
+
+
 <div class="todo">
-    <div class="title"><h3>待审核事项</h3></div>
+    <div class="title">
+        <h3>统计信息  <span style=" font-size: 20px; margin-left: 10px;">选择日期</span></h3>
+
+    </div>
+
+    <div class="date">
+        <form method="get">
+            <span>开始日期：</span> <input type="date" name="Start" value="@(start)" /> <span>结束日期：</span> <input type="date" value="@(end)" name="End" /> <input type="submit" value="搜索" />
+        </form>
+    </div>
+
     <div class="items">
         <ul>
             <li>
-                <a href="/user/company/addcompanyinfo">
-                    <span class="number">@(Model.CompanyInfoCount)</span>
-                    <span>企业信息-待审核</span>
+                <a href="/user/article/policyArticleList">
+                    <span class="number">@(Model.PolicyArticleTotalCount)</span>
+                    <span>惠企政策总数</span>
                 </a>
             </li>
             <li>
-                <a href="/user/cooperation/listc">
-                    <span class="number">@(Model.CooperationInfoCount)</span>
-                    <span>企业对接-待审核</span>
+                <a href="/user/cooperation/list">
+                    <span class="number">@(Model.CooperationInfoTotalCount)</span>
+                    <span>企业对接信息总数</span>
                 </a>
             </li>
-            <li>
-                <a href="/user/financing/listc">
-                    <span class="number">@(Model.FinancingCount)</span>
-                    <span>企业融资-待审核</span>
-                </a>
 
-            </li>
-            <li>
-                <a href="/user/purchase/listc">
-                    <span class="number">@(Model.PurchaseCount0)</span>
-                    <span>企业采购-待审核</span>
-                </a>
-
-            </li>
-            <li>
-                <a href="/user/purchase/listc?type=1">
-                    <span class="number">@(Model.PurchaseCount1)</span>
-                    <span>企业生产-待审核</span>
-                </a>
-            </li>
 
         </ul>
     </div>
@@ -151,13 +169,6 @@
 
 @section js{
     <script type="text/javascript">
-        var getdata = function (page) {
-            $.get("/user/home/getmessage?pageIndex=" + page + "&pageSize=10", function (res) {
-                $(".todo-message").html(res);
-            });
-        }
-        $(function () {
-            getdata(1);
-        });
+
     </script>
 }

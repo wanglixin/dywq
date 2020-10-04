@@ -1,4 +1,4 @@
-﻿@model Dywq.Web.Dto.Commpany.StatisticInfoDto
+﻿@model Dywq.Web.Dto.Commpany.AdminStatisticInfoDto
 @section head{
     <link href="~/css/pager.css" rel="stylesheet" />
     <style type="text/css">
@@ -103,37 +103,64 @@
     <div class="items">
         <ul>
             <li>
-                <a href="/user/company/addcompanyinfo">
+                <a href="/user/company/companyInfoList">
                     <span class="number">@(Model.CompanyInfoCount)</span>
                     <span>企业信息-待审核</span>
                 </a>
             </li>
             <li>
-                <a href="/user/cooperation/listc">
+                <a href="/user/cooperation/list">
                     <span class="number">@(Model.CooperationInfoCount)</span>
                     <span>企业对接-待审核</span>
                 </a>
             </li>
             <li>
-                <a href="/user/financing/listc">
+                <a href="/user/financing/list">
                     <span class="number">@(Model.FinancingCount)</span>
                     <span>企业融资-待审核</span>
                 </a>
 
             </li>
             <li>
-                <a href="/user/purchase/listc">
+                <a href="/user/purchase/list">
                     <span class="number">@(Model.PurchaseCount0)</span>
                     <span>企业采购-待审核</span>
                 </a>
 
             </li>
             <li>
-                <a href="/user/purchase/listc?type=1">
+                <a href="/user/purchase/list?type=1">
                     <span class="number">@(Model.PurchaseCount1)</span>
                     <span>企业生产-待审核</span>
                 </a>
             </li>
+
+        </ul>
+    </div>
+</div>
+
+
+
+<div class="todo">
+    <div class="title">
+        <h3>统计信息  <span style="font-size:20px;margin-left:10px;"><a style="color:black;text-decoration:none;" href="/user/home/StatisticInfo">按日期查询</a></span></h3>
+       
+    </div>
+    <div class="items">
+        <ul>
+            <li>
+                <a href="/user/article/policyArticleList">
+                    <span class="number">@(Model.PolicyArticleTotalCount)</span>
+                    <span>惠企政策总数</span>
+                </a>
+            </li>
+            <li>
+                <a href="/user/cooperation/list">
+                    <span class="number">@(Model.CooperationInfoTotalCount)</span>
+                    <span>企业对接信息总数</span>
+                </a>
+            </li>
+
 
         </ul>
     </div>
@@ -151,13 +178,6 @@
 
 @section js{
     <script type="text/javascript">
-        var getdata = function (page) {
-            $.get("/user/home/getmessage?pageIndex=" + page + "&pageSize=10", function (res) {
-                $(".todo-message").html(res);
-            });
-        }
-        $(function () {
-            getdata(1);
-        });
+
     </script>
 }

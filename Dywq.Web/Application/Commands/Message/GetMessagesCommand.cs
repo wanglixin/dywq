@@ -89,7 +89,6 @@ namespace Dywq.Web.Application.Commands.Message
                 AssociationId = x.AssociationId,
                 CompanyId = x.CompanyId,
                 Type = x.Type
-
             }
             );
 

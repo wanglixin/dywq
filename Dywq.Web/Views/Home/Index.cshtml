@@ -141,7 +141,7 @@
                             </div>
                         </div>
                         <div class="login_btn">
-                            <input class="btn_logout" onclick="javascript: window.location.href='@(user.Type==0?"/user/company/AddCompanyInfo":"/user/company/list")'" type="button" value="进入个人中心" />
+                            <input class="btn_logout" onclick="javascript: window.location.href='/user/'" type="button" value="进入个人中心" />
                         </div>
 
 
@@ -578,6 +578,18 @@
 @section js{
     <script type="text/javascript">
         $(function () {
+            var mySwiper = new Swiper('.swiper-container', {
+                direction: 'horizontal',
+                loop: true,
+                // 如果需要分页器
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                autoplay: {
+                    delay: 3000,
+                }
+            })
+
             $(".submitbtn").req("#login_form", "/api/user/login", function (res) {
                 if (res.code != 0) {
                     alert(res.message);

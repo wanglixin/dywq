@@ -66,6 +66,22 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> PolicyList(GetPolicyArticlesCommand cmd)
+        {
+
+            var types = await _mediator.Send(new GetPolicyTypesCommand(), HttpContext.RequestAborted);
+
+            ViewBag.types = types;
+
+            cmd.Show = true;
+            
+            cmd.LinkUrl = $"javascript:getPolicyList(__id__)";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return PartialView(result);
+        }
+
+
 
 
 

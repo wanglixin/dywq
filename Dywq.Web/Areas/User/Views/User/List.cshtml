@@ -48,6 +48,7 @@
         <th>类型</th>
         <th>企业</th>
         <th>创建时间</th>
+        <th>登陆次数</th>
         <th>操作</th>
     </tr>
     @{
@@ -72,11 +73,14 @@
                     <td>
                         @(item.CreatedTime)
                     </td>
+                    <td>
+                        @(item.LoginCount)
+                    </td>
                     <td class="editbtn">
                         @{
                             if (item.Type == 0)
                             {
-                                <a href="javascript:push(@(item.Id),@(item.CompanyId))">@(item.CompanyId==0?"绑定企业":"换绑企业")</a> @Html.Raw("|")
+                                <a href="javascript:push(@(item.Id),@(item.CompanyId))">@(item.CompanyId == 0 ? "绑定企业" : "换绑企业")</a> @Html.Raw("|")
                             }
                         }
                         <a href="/user/user/edit?id=@(item.Id)">编辑</a> | <a href="javascript:del(@(item.Id),this)">删除</a>
@@ -152,7 +156,12 @@
 
 
         function getlist(page) {
-            $.get("/user/company/getlist?pageSize=5&pageIndex=" + page, function (r) {
+            var query = "";
+            var key = $("input[name='company_key']").val();
+            if (key) {
+                query = "&key=" + key;
+            }
+            $.get("/user/company/getlist?pageSize=5&pageIndex=" + page + query, function (r) {
                 // console.log(r);
                 $(".popbox .list").html(r);
             })
@@ -177,7 +186,7 @@
                 success: function (r) {
                     console.log(r);
                     if (r.code == 0) {
-                         alert(r.message);
+                        alert(r.message);
                     } else {
                         alert(r.message);
                     }
