@@ -70,9 +70,9 @@
                                 {
 
                                     <div class="cb">
-                                        <div class="cb-item">
+                                        @*<div class="cb-item">
                                             <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="radio" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
-                                        </div>
+                                        </div>*@
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
                                             <div class="cb-item">
@@ -85,9 +85,9 @@
                                 {
 
                                     <div class="cb">
-                                        <div class="cb-item">
+                                        @*<div class="cb-item">
                                             <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="checkbox" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
-                                        </div>
+                                        </div>*@
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
                                             <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
