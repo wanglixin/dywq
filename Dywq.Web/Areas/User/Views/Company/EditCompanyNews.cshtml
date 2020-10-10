@@ -1,0 +1,177 @@
+﻿@model Dywq.Web.Dto.Commpany.CompanyNewsDto
+@{
+    var types = ViewBag.types as IEnumerable<Dywq.Web.Dto.Commpany.CompanyTypeDTO>;
+}
+@section head{
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .tools {
+            margin-bottom: 20px;
+        }
+
+        .field-item {
+            width: 100%;
+        }
+
+            .field-item span {
+                width: 15%;
+            }
+
+            .field-item .cb {
+                margin-left: initial;
+                width: 50%;
+            }
+    </style>
+}
+
+
+
+<h2>填写信息</h2>
+<div class="tools">
+    <div class="left_btns">
+        <div class="addbtn">
+            <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+        </div>
+    </div>
+
+</div>
+
+<form id="form_data">
+    <div class="field-group">
+        <fieldset>
+            <legend>填写信息</legend>
+            <input type="hidden" value="@(Model?.Id)" name="Id" />
+
+            <div class="field-item " data-required="true">
+                <span>当前状态</span>
+                <div class="tips">@(Model?.StatusStr)</div>
+            </div>
+
+            <div class="field-item choice">
+                <span>审核</span>
+
+                <div class="cb">
+                    <div class="cb-item">
+                        <input name="Status" id="rd_-1" type="radio" value="-1" @(-1 == Model?.Status ? "checked=\"checked\"" : "")> <label for="rd_-1">不通过</label>
+                    </div>
+                    <div class="cb-item">
+                        <input name="Status" id="rd_1" type="radio" value="1" @(1 == Model?.Status ? "checked=\"checked\"" : "")> <label for="rd_1">通过</label>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="field-item " data-required="true">
+                <span>标题</span>
+                <input type="text" value="@(Model?.Title)" name="Title" />
+            </div>
+
+            <div class="field-item upload">
+                <span>照片</span>
+                <input type="file" id="IntroduceImageFile" multiple />
+                <input type="hidden" name="IntroduceImage" value="@(Model?.IntroduceImage)" />
+                <input type="button" id="btnUpload" data-name="IntroduceImage" data-file="#IntroduceImageFile" data-preview=".preview_img" value="上传" />
+
+            </div>
+            <div class="field-item">
+                <span>图片预览</span>
+                <img class="preview_img" src="@(Model?.IntroduceImage)" />
+            </div>
+
+            <div class="field-item " data-required="true">
+                <span>企业概况</span>
+                <textarea type="text" name="Introduce" placeholder=" 必填">@(Model?.Introduce)</textarea>
+            </div>
+
+            <div class="field-item " data-required="true">
+                <span>主营业务</span>
+                <textarea type="text" name="MainBusiness" placeholder=" 必填">@(Model?.MainBusiness)</textarea>
+            </div>
+            <div class="field-item " data-required="true">
+                <span>拟对外合作内容</span>
+                <textarea type="text" name="CooperationContent" placeholder=" 必填">@(Model?.CooperationContent)</textarea>
+            </div>
+            <div class="field-item " data-required="true">
+                <span>联系方式</span>
+                <textarea type="text" name="Contact" placeholder=" 必填">@(Model?.Contact)</textarea>
+            </div>
+            <div class="field-item ">
+                <span>显示</span>
+                <select name="Show">
+                    <option value="1" @(Model?.Show == true ? "selected=\"selected\"" : "")>
+                        是
+                    </option>
+                    <option value="0" @(Model?.Show == false ? "selected=\"selected\"" : "")>
+                        否
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="field-item " data-required="true">
+                <span>排序</span>
+                <input type="number" name="Sort" value="@(Model?.Sort)" />
+            </div>
+            <div class="field-item choice">
+                <span>企业分类</span>
+
+                <div class="cb">
+                    @{
+                        foreach (var type in types)
+                        {
+                            <div class="cb-item">
+                                <input name="CompanyTypeId" id="rd_@(type.Id)" type="radio" value="@(type.Id)" @(type.Id == Model?.CompanyTypeId ? "checked=\"checked\"" : "")> <label for="rd_@(type.Id)">@(type.Name)</label>
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+
+
+        </fieldset>
+    </div>
+
+</form>
+
+<div class="btn-box">
+    <input type="button" class="btn-save" value="保存" />
+</div>
+
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            $(".btn-save").req("#form_data", "/api/company/editCompanyNews", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                } else {
+                    alert("保存成功");
+                }
+
+            });
+
+               $("#btnUpload").uploadImg(function (r, target) {
+                if (r.code == 0) {
+                    var name = target.attr("data-name");
+                    var preview = target.attr("data-preview");
+                    $("[name='" + name + "']").val(r.data);
+                     $(preview).attr("src",r.data);
+                } else {
+                    alert(r.message);
+                }
+            });
+        });
+
+
+
+
+
+    </script>
+
+}

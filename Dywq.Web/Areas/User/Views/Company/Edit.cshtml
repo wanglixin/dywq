@@ -97,7 +97,7 @@
                                     <div class="cb">
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
-                                            <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" @(field.Value.Contains(v.Value) ? "checked=\"checked\" " : "") /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
+                                            <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" @(field?.Value?.Contains(v.Value)==true ? "checked=\"checked\" " : "") /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
                                         }
                                     </div>
                                 }

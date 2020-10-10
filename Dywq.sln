@@ -11,15 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{62A7788D-4042-4E4E-9C00-5762E9A59A48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dywq.Web", "Dywq.Web\Dywq.Web.csproj", "{97B38651-5BEC-44E0-BEEF-9AB3B28CA464}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dywq.Web", "Dywq.Web\Dywq.Web.csproj", "{97B38651-5BEC-44E0-BEEF-9AB3B28CA464}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dywq.Infrastructure.Core", "Dywq.Infrastructure.Core\Dywq.Infrastructure.Core.csproj", "{9DB80E2E-C17D-42FE-A774-02A6806F7553}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dywq.Infrastructure.Core", "Dywq.Infrastructure.Core\Dywq.Infrastructure.Core.csproj", "{9DB80E2E-C17D-42FE-A774-02A6806F7553}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dywq.Domain.Abstractions", "Dywq.Domain.Abstractions\Dywq.Domain.Abstractions.csproj", "{42663B61-EA31-4A84-B666-4F6095BF771A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dywq.Domain.Abstractions", "Dywq.Domain.Abstractions\Dywq.Domain.Abstractions.csproj", "{42663B61-EA31-4A84-B666-4F6095BF771A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dywq.Domain", "Dywq.Domain\Dywq.Domain.csproj", "{ECCAEC79-D00A-4E1F-8812-C2C775D433A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dywq.Domain", "Dywq.Domain\Dywq.Domain.csproj", "{ECCAEC79-D00A-4E1F-8812-C2C775D433A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dywq.Infrastructure", "Dywq.Infrastructure\Dywq.Infrastructure.csproj", "{AA70BE0D-9AE9-4CA0-9FAE-835D03B33B83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dywq.Infrastructure", "Dywq.Infrastructure\Dywq.Infrastructure.csproj", "{AA70BE0D-9AE9-4CA0-9FAE-835D03B33B83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -114,4 +114,25 @@ namespace Dywq.Infrastructure.EntityConfigurations
     }
 
 
+    class CompanyNewsConfiguration : BaseEntityTypeConfiguration<CompanyNews, int>
+    {
+        public override void Configure(EntityTypeBuilder<CompanyNews> builder)
+        {
+            base.Configure(builder);
+            builder.ToTable("CompanyNews");
+            builder.Property(p => p.CompanyId);
+            builder.Property(p => p.CompanyTypeId);
+            builder.Property(p => p.Title).HasMaxLength(150); ;
+            builder.Property(p => p.Contact);
+            builder.Property(p => p.CooperationContent);
+            builder.Property(p => p.Introduce);
+            builder.Property(p => p.IntroduceImage).HasMaxLength(200);
+            builder.Property(p => p.MainBusiness);
+            builder.Property(p => p.Sort);
+            builder.Property(p => p.Show);
+            builder.Property(p => p.Status);
+        }
+    }
+
+
 }

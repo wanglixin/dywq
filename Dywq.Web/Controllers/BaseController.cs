@@ -61,6 +61,8 @@ namespace Dywq.Web.Controllers
 
             model.CompanyName = claimsIdentity.Claims.FirstOrDefault(x => x.Type == CompanyFieldAlias.CompanyName)?.Value;
 
+            model.Logo = claimsIdentity.Claims.FirstOrDefault(x => x.Type == "Logo")?.Value;
+
             return model;
 
         }

@@ -54,7 +54,9 @@ namespace Dywq.Infrastructure
 
             modelBuilder.ApplyConfiguration(new MessageEntityTypeConfiguration());
 
-            
+            modelBuilder.ApplyConfiguration(new CompanyNewsConfiguration());
+
+
             #endregion
             base.OnModelCreating(modelBuilder);
         }

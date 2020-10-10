@@ -51,7 +51,8 @@ namespace Dywq.Web.Controllers.Api
                 new Claim(ClaimTypes.Role,user.Role),
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                 new Claim(CompanyFieldAlias.CompanyName, user.CompanyName),
-                new Claim("CompanyId", user.CompanyId.ToString())
+                new Claim("CompanyId", user.CompanyId.ToString()),
+                new Claim("Logo", string.IsNullOrWhiteSpace(user.Logo)?"":user.Logo)
              };
 
             var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, "User"));
@@ -63,7 +64,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-           /// <summary>
+        /// <summary>
         /// 请求登陆
         /// </summary>
         /// <param name="cmd"></param>

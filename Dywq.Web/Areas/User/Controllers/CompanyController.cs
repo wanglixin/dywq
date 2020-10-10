@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dywq.Web.Application.Commands;
+using Dywq.Web.Application.Commands.CompanyNews;
 using Dywq.Web.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -121,6 +122,58 @@ namespace Dywq.Web.Areas.User.Controllers
             return PartialView(result);
         }
 
+        [Authorize(Roles = Common.Role.User)]
+        public async Task<IActionResult> EditCompanyNewsC(int? Id)
+        {
+            var types = await _mediator.Send(new GetCompanyTypesCommand(), HttpContext.RequestAborted);
+            ViewBag.types = types;
+            if (Id.HasValue)
+            { //修改
+
+                var result = await _mediator.Send(new GetCompanyNewsCommand()
+                {
+                    Id = Id.Value,
+                    CompanyId = this.CurrentUser.CompanyId
+                }, HttpContext.RequestAborted);
+                return View(result?.Data?.FirstOrDefault());
+            }
+            return View();
+        }
+
+
+        [Authorize(Roles = Common.Role.User)]
+        public async Task<IActionResult> CompanyNewsListC(GetCompanyNewsCommand cmd)
+        {
+            cmd.CompanyId = this.CurrentUser.CompanyId;
+            cmd.LinkUrl = $"/user/company/companynewslistC/?PageIndex=__id__&PageSize={cmd.PageSize}";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return View(result);
+        }
+
+
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> CompanyNewsList(GetCompanyNewsCommand cmd)
+        {
+            cmd.LinkUrl = $"/user/company/companynewslist/?PageIndex=__id__&PageSize={cmd.PageSize}";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return View(result);
+        }
+
+
+
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<IActionResult> EditCompanyNews(int Id)
+        {
+            var types = await _mediator.Send(new GetCompanyTypesCommand(), HttpContext.RequestAborted);
+            ViewBag.types = types;
+
+            var result = await _mediator.Send(new GetCompanyNewsCommand()
+            {
+                Id = Id
+            }, HttpContext.RequestAborted);
+            return View(result?.Data?.FirstOrDefault());
+        }
 
     }
 }

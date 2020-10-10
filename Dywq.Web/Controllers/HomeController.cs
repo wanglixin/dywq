@@ -17,6 +17,7 @@ using Dywq.Web.Application.Commands.Cooperation;
 using Dywq.Web.Application.Commands.Financing;
 using Dywq.Web.Application.Commands.Purchase;
 using Dywq.Web.Application.Commands.News;
+using Dywq.Web.Application.Commands.CompanyNews;
 
 namespace Dywq.Web.Controllers
 {
@@ -36,11 +37,13 @@ namespace Dywq.Web.Controllers
             var types = await _mediator.Send(new GetCompanyTypesCommand(), HttpContext.RequestAborted);
             ViewBag.types = types;
             var type = types.FirstOrDefault()?.Id ?? 0;
-            var companyInfos = await _mediator.Send(new GetCompanyInfosByTypeCommand()
+            var companyInfos = await _mediator.Send(new GetCompanyNewsCommand()
             {
+                Show = true,
+                Status = 1,
                 PageIndex = 1,
                 PageSize = 10,
-                TypeId = type,
+                CompanyTypeId = type.ToString(),
                 LinkUrl = "javascript:getCompanyInfos(" + type + ",__id__,10)"
 
             }, HttpContext.RequestAborted);

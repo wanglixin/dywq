@@ -1,4 +1,4 @@
-﻿@model Dywq.Web.Dto.Commpany.CompanyInfoDTO
+﻿@model Dywq.Web.Dto.Commpany.CompanyNewsDto
 @section head{
     <link href="~/css/index8.css" rel="stylesheet" />
 
@@ -10,7 +10,7 @@
             <span class="home">首页</span>/<span class="activething">企业动态</span>
         </div>
         <div class="main_con">
-            <h3>@(Model.CompanyName)</h3>
+            <h3>@(Model.Title)</h3>
             <div class="comp_img">
                 <img src="@(Model.IntroduceImage)" alt="">
             </div>

@@ -28,6 +28,7 @@ namespace Dywq.Web.Application.Commands.Message
         readonly IBaseRepository<Domain.CooperationAggregate.CooperationInfo> _cooperationInfoRepository;
         readonly IBaseRepository<Domain.Purchase.Purchase> _purchaseRepository;
         readonly IBaseRepository<PolicyArticle> _policyRepository;
+        readonly IBaseRepository<Domain.CompanyAggregate.CompanyNews> _companyNewsRepository;
         // readonly IBaseRepository<Domain.CompanyAggregate.Message> _messageRepository;
 
 
@@ -38,8 +39,8 @@ namespace Dywq.Web.Application.Commands.Message
             IBaseRepository<Domain.CompanyAggregate.Company> companyRepository,
             IBaseRepository<Domain.CooperationAggregate.CooperationInfo> cooperationInfoRepository,
             IBaseRepository<Domain.Purchase.Purchase> purchaseRepository,
-            IBaseRepository<PolicyArticle> policyRepository
-            //  IBaseRepository<Domain.CompanyAggregate.Message> messageRepository
+            IBaseRepository<PolicyArticle> policyRepository,
+           IBaseRepository<Domain.CompanyAggregate.CompanyNews> companyNewsRepository
             ) : base(capPublisher, logger)
         {
             _companyRepository = companyRepository;
@@ -47,7 +48,7 @@ namespace Dywq.Web.Application.Commands.Message
             _cooperationInfoRepository = cooperationInfoRepository;
             _purchaseRepository = purchaseRepository;
             _policyRepository = policyRepository;
-            // _messageRepository = messageRepository;
+            _companyNewsRepository = companyNewsRepository;
         }
 
         public override async Task<StatisticInfoDto> Handle(GetTodoInfoCommand request, CancellationToken cancellationToken)
@@ -55,12 +56,12 @@ namespace Dywq.Web.Application.Commands.Message
             var info = new StatisticInfoDto
             {
                 FinancingCount = await _financingRepository.Set().CountAsync(x => x.CompanyId == request.CompanyId && (x.Status == 0 || x.Status == -1)),
-                CompanyInfoCount = await _companyRepository.Set().CountAsync(x => x.Id == request.CompanyId && (x.Status == 1 || x.Status == -1)),
+                CompanyInfoCount = await _companyNewsRepository.Set().CountAsync(x => x.CompanyId == request.CompanyId && (x.Status == 0 || x.Status == -1)),
                 CooperationInfoCount = await _cooperationInfoRepository.Set().CountAsync(x => x.CompanyId == request.CompanyId && (x.Status == 0 || x.Status == -1))
                 ,
                 PurchaseCount0 = await _purchaseRepository.Set().CountAsync(x => x.CompanyId == request.CompanyId && (x.Status == 0 || x.Status == -1) & x.Type == 0),
                 PurchaseCount1 = await _purchaseRepository.Set().CountAsync(x => x.CompanyId == request.CompanyId && (x.Status == 0 || x.Status == -1) & x.Type == 1)
-               
+
 
             };
 

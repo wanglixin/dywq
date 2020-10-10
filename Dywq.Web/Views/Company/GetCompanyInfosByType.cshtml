@@ -1,4 +1,4 @@
-﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyInfoDTO>
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyNewsDto>
 <section class="companyul">
     <div class="line"></div>
 
@@ -7,7 +7,7 @@
         {
             foreach (var item in Model.Data)
             {
-                <div class="companylist"><a href="/company/detail/@(item.CompanyId)">@(item.CompanyName)</a></div>
+                <div class="companylist"><a href="/company/detail/@(item.Id)">@(item.Title)</a></div>
             }
         }
 

@@ -2,7 +2,7 @@
 @{
     var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
     var types = ViewBag.types as IEnumerable<Dywq.Web.Dto.Commpany.CompanyTypeDTO>;
-    var banners = ViewBag.banners as IEnumerable<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
+    var banners = ViewBag.banners as IEnumerable<Dywq.Web.Dto.Commpany.CompanyNewsDto>;
 
     var policys = ViewBag.policyArticles as IEnumerable<Dywq.Web.Dto.Article.PolicyArticleDTO>;
     var cooperationInfos = ViewBag.cooperationInfos as IEnumerable<Dywq.Web.Dto.Cooperation.CooperationInfoDTO>;
@@ -15,7 +15,7 @@
     var news = ViewBag.news as IEnumerable<Dywq.Web.Dto.News.NoticeNewsDTO>;
     var policyss = ViewBag.policys as IEnumerable<Dywq.Web.Dto.Article.PolicyArticleDTO>;
 
-    var companyInfos = ViewBag.companyInfos as Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyInfoDTO>;
+    var companyInfos = ViewBag.companyInfos as Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyNewsDto>;
 
 
     var login = user != null;
@@ -75,22 +75,12 @@
                                 foreach (var item in banners)
                                 {
                                     <div class="swiper-slide">
-                                        <a href="/company/detail/@(item.CompanyId)"><img src="@(item.IntroduceImage)" alt=""></a>
+                                        <a href="/company/detail/@(item.Id)"><img title="@(item.Title)" src="@(item.IntroduceImage)" alt=""></a>
                                     </div>
                                 }
 
                             }
 
-
-                            <div class="swiper-slide">
-                                <img src="/img/banner.png" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="/img/banner.png" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="/img/banner.png" alt="">
-                            </div>
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
@@ -192,7 +182,7 @@
                                         {
                                             foreach (var item in companyInfos.Data)
                                             {
-                                                <div class="companylist"><a href="/company/detail/@(item.CompanyId)">@(item.CompanyName)</a></div>
+                                                <div class="companylist"><a href="/company/detail/@(item.Id)">@(item.Title)</a></div>
                                             }
                                         }
                                         else
@@ -276,7 +266,7 @@
                     </div>
 
 
-                    <div class="active_con_rights_sec">
+                    <div class="active_con_rights_sec " style="display:none;">
                         <section>
                             @{
                                 active = false;
@@ -624,6 +614,15 @@
                 //alert(type);
 
             });
+
+
+            $(".choose_tip_li").click(function () {
+                let index = $(this).index();
+                $(".choose_tip_li").removeClass("actived_tip");
+                $(this).addClass("actived_tip");
+                $(".active_con_rights_sec").hide().eq(index).show();
+            })
+
 
         });
 

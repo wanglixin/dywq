@@ -1,0 +1,320 @@
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyNewsDto>
+@section head{
+    <link href="~/css/index10.css" rel="stylesheet" />
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+    </style>
+}
+
+
+<h2>企业动态</h2>
+<div class="tools">
+    <div class="left_btns">
+        @*<div class="addbtn">
+                <div class="add_left">+</div>
+                <span class="add_txt"><a href="/user/company/add">新增</a></span>
+            </div>*@
+        @*<button class="btn-push higer_search" onclick="push();">批量推送</button>*@
+    </div>
+
+    <div class="right_btn">
+        <form action="/user/company/companyinfolist">
+            <div class="work_input">
+
+                @*<div class="input-group search_con">
+                        <input type="text" class="form-control" value="@(Context.Request.Query["key"])" name="key" placeholder="请输入企业名称">
+                    </div>
+                    <button class="btn btn-primary " type="submit">搜索</button>*@
+
+                @*<button class="btn btn-primary higer_search" type="button"><a href="./index11.html" style="color: #fff;">高级搜索</a></button>*@
+            </div>
+        </form>
+    </div>
+</div>
+<!-- table -->
+<table id="table_con">
+    <tr class="head">
+        <th>Id</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+      
+        <th>主营业务</th>
+        <th>联系方式</th>
+
+        <th>是否显示</th>
+
+        <th>状态</th>
+        <th>操作</th>
+
+    </tr>
+    @{
+        if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+        <tr>
+            <td>
+                @(item.Id)
+            </td>
+            <td>
+                @(item.CreatedTime)
+            </td>
+            <td>
+                @(item.UpdatedTime)
+            </td>
+           
+            <td>
+                @(item.MainBusiness)
+            </td>
+            <td>
+                @(item.Contact)
+            </td>
+
+            <td>
+                @(item.Show ? "是" : "否")
+            </td>
+           
+
+            <td>
+                @{
+                    if (item.Status == -1)
+                    {
+                        <font style="color:red;">@(item.StatusStr)</font>
+                    }
+                    else
+                    {
+                        @(item.StatusStr)
+                    }
+                }
+            </td>
+
+            <td class="editbtn">
+                <a href="/user/company/editCompanyNewsC?id=@(item.Id)">查看</a>
+
+
+            </td>
+
+        </tr>
+            }
+        }
+
+    }
+
+
+</table>
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>
+
+
+<!-- pop -->
+<div class="popbox">
+    <div class="search_top">
+        <h3>选择推送内容</h3>
+        <div class="right_btn">
+            <div class="work_select">
+                <span>主要业务</span>
+                <select name="" id="" class="select_con">
+                    <option value="0">全部</option>
+                    <option value="1">中国</option>
+                    <option value="2">外国</option>
+                </select>
+            </div>
+            <div class="work_input" style="margin-left: 20px;">
+                <div class="input-group search_con">
+                    <input type="text" class="form-control" placeholder="请输入">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary " type="button"><img src="img/white_search.png" alt="" class="search_img"></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="popbox_table">
+        <tr class="pop_head">
+            <th><input type="checkbox"></th>
+            <th>企业名称</th>
+            <th>行业</th>
+            <th>企业性质</th>
+            <th>党建情况</th>
+            <th>发布时间</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox">
+            </td>
+            <td>
+                x x企业
+            </td>
+            <td>
+                x x行业
+            </td>
+            <td>
+                央企
+            </td>
+            <td>
+                有党支部
+            </td>
+            <td>
+                2020-07-12
+            </td>
+            <td class="editbtn">
+                <a href="">编辑</a> | <a href="">删除</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox">
+            </td>
+            <td>
+                x x企业
+            </td>
+            <td>
+                x x行业
+            </td>
+            <td>
+                央企
+            </td>
+            <td>
+                有党支部
+            </td>
+            <td>
+                2020-07-12
+            </td>
+            <td class="editbtn">
+                <a href="">编辑</a> | <a href="">删除</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox">
+            </td>
+            <td>
+                x x企业
+            </td>
+            <td>
+                x x行业
+            </td>
+            <td>
+                央企
+            </td>
+            <td>
+                有党支部
+            </td>
+            <td>
+                2020-07-12
+            </td>
+            <td class="editbtn">
+                <a href="">编辑</a> | <a href="">删除</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox">
+            </td>
+            <td>
+                x x企业
+            </td>
+            <td>
+                x x行业
+            </td>
+            <td>
+                央企
+            </td>
+            <td>
+                有党支部
+            </td>
+            <td>
+                2020-07-12
+            </td>
+            <td class="editbtn">
+                <a href="">编辑</a> | <a href="">删除</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox">
+            </td>
+            <td>
+                x x企业
+            </td>
+            <td>
+                x x行业
+            </td>
+            <td>
+                央企
+            </td>
+            <td>
+                有党支部
+            </td>
+            <td>
+                2020-07-12
+            </td>
+            <td class="editbtn">
+                <a href="/">编辑</a> | <a href="">删除</a>
+            </td>
+        </tr>
+    </table>
+    <section class="paginabox">
+        <span class="right_mar">共有120条</span>
+        <select name="" id="" class="page_select">
+            <option value="">10 条/页</option>
+            <option value="">20 条/页</option>
+            <option value="">30 条/页</option>
+        </select>
+        <a href="#" class="page_btn"><</a>
+        <a href="#" class="page_btn choose">1</a>
+        <a href="#" class="page_btn">2</a>
+        <a href="#" class="page_btn">3</a>
+        <a href="#" class="page_btn">4</a>
+        <a href="#" class="page_btn">5</a>
+        <a href="#" class="page_btn">6</a>
+        <a href="#" class="page_btn">7</a>
+        <a href="#" class="page_btn">8</a>
+        <a href="#" class="page_btn">></a>
+        <span class="right_mar leftmar">跳至</span>
+        <input type="text" class="page_input right_mar">
+        <span>页</span>
+    </section>
+
+    <!-- 底部推送 -->
+    <div class="push_btns">
+        <button class="push_btn_per btn push_btn_cancel">取消</button>
+        <button class="push_btn_per btn push_btn_confirm">推送</button>
+    </div>
+
+</div>
+
+
+@section js{
+    <script type="text/javascript">
+        var check = function (id, status, obj) {
+            var tip = status == 2 ? "确认审核通过?" : "确认审核失败?";
+            if (!confirm(tip))
+                return;
+            $.ajax({
+                url: '/api/company/checkcompanyinfo',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ CompanyId: id, Status: status }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("操作成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+
+        }
+    </script>
+
+}

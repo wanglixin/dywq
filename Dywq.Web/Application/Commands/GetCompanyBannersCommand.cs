@@ -14,26 +14,28 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Application.Commands
 {
-    public class GetCompanyBannersCommand : IRequest<IEnumerable<CompanyInfoDTO>>
+    public class GetCompanyBannersCommand : IRequest<IEnumerable<CompanyNewsDto>>
     {
 
         public int Count { get; set; } = 10;
 
     }
 
-    public class GetCompanyBannersCommandHandler : IRequestHandler<GetCompanyBannersCommand, IEnumerable<CompanyInfoDTO>>
+    public class GetCompanyBannersCommandHandler : IRequestHandler<GetCompanyBannersCommand, IEnumerable<CompanyNewsDto>>
     {
 
         readonly ICapPublisher _capPublisher;
         readonly ILogger<GetCompanyBannersCommandHandler> _logger;
 
         readonly IBaseRepository<Company> _companyRepository;
+        readonly IBaseRepository<Dywq.Domain.CompanyAggregate.CompanyNews> _companyNewsRepository;
 
 
         public GetCompanyBannersCommandHandler(
             ICapPublisher capPublisher,
             ILogger<GetCompanyBannersCommandHandler> logger,
-            IBaseRepository<Company> companyRepository
+            IBaseRepository<Company> companyRepository,
+            IBaseRepository<Dywq.Domain.CompanyAggregate.CompanyNews> companyNewsRepository
 
             )
         {
@@ -41,21 +43,22 @@ namespace Dywq.Web.Application.Commands
             _logger = logger;
 
             _companyRepository = companyRepository;
+            _companyNewsRepository = companyNewsRepository;
 
         }
 
 
-        public async Task<IEnumerable<CompanyInfoDTO>> Handle(GetCompanyBannersCommand request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<CompanyNewsDto>> Handle(GetCompanyBannersCommand request, CancellationToken cancellationToken)
         {
 
 
-            var data = await _companyRepository.Set().OrderByDescending(x => x.CreatedTime).Where(x => !string.IsNullOrWhiteSpace(x.IntroduceImage)  && x.Show && x.Status == 2).Take(request.Count).ToListAsync();
+            var data = await _companyNewsRepository.Set().OrderByDescending(x => x.CreatedTime).Where(x => !string.IsNullOrWhiteSpace(x.IntroduceImage)  && x.Show && x.Status ==1).Take(request.Count).ToListAsync();
 
-            var _data = new List<CompanyInfoDTO>();
+            var _data = new List<CompanyNewsDto>();
 
             data.ForEach(x =>
             {
-                var dto = new CompanyInfoDTO
+                var dto = new CompanyNewsDto
                 {
 
                     //Status = x.Status,
@@ -69,7 +72,7 @@ namespace Dywq.Web.Application.Commands
                     //Show = x.Show,
                     //Sort = x.Sort,
                     //UpdatedTime = x.UpdatedTime,
-                    CompanyName = x.Name
+                    Title = x.Title
                 };
 
                 _data.Add(dto);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Dywq.Web.Application.Commands;
+using Dywq.Web.Application.Commands.CompanyNews;
 using Dywq.Web.Application.Commands.Cooperation;
 using Dywq.Web.Application.Commands.Expert;
 using Dywq.Web.Application.Commands.Financing;
@@ -41,9 +42,9 @@ namespace Dywq.Web.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-            var result = await _mediator.Send(new GetCompanyInfoCommand() { CompanyId = id }, HttpContext.RequestAborted);
+            var result = await _mediator.Send(new GetCompanyNewsCommand() { Id = id, Status = 1, Show = true }, HttpContext.RequestAborted);
 
-            return View(result);
+            return View(result?.Data?.FirstOrDefault());
         }
 
 
@@ -51,7 +52,7 @@ namespace Dywq.Web.Controllers
 
         public async Task<IActionResult> GetCompanyInfosByType(int type, int pageIndex = 1, int pageSize = 10, string linkUrl = "")
         {
-            var result = await _mediator.Send(new GetCompanyInfosByTypeCommand() { TypeId = type, LinkUrl = linkUrl, PageIndex = pageIndex, PageSize = pageSize }, HttpContext.RequestAborted);
+            var result = await _mediator.Send(new GetCompanyNewsCommand() { CompanyTypeId = type.ToString(), LinkUrl = linkUrl, PageIndex = pageIndex, PageSize = pageSize, Show = true, Status = 1 }, HttpContext.RequestAborted);
             return PartialView(result);
         }
 
