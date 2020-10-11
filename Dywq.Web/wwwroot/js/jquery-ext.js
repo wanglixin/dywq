@@ -131,3 +131,16 @@ var formatDate = function (date) {
     d = d < 10 ? ('0' + d) : d;
     return y + '-' + m + '-' + d;
 }
+
+
+/**
+ * 返回上一页并刷新
+ * */
+var backAndRefresh = function () {
+    if (document.referrer == null) {
+        history.back();
+    } else {
+        window.location.replace(document.referrer);
+    }
+    
+}
