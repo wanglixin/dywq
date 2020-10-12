@@ -9,59 +9,21 @@
         <div class="main_title">
             <span class="home">首页</span>/<span class="activething">企业党建</span>
         </div>
-        <div class="main_con">
-           
-            <div class="comp_img">
-                <img src="@(Model.Pic)" alt="">
-            </div>
-        </div>
 
-        <!-- ul -->
-        <ul class="con_ul">
-            <li>
-                <div class="li_top">
-                    <div class="ti">
-                        <img src="img/search.png" alt="">
-                    </div>
-                    <h4>党建主题</h4>
-                    <h5>Enterprise profile</h5>
-                </div>
-                <p>@(Model.ThemeTitle)</p>
-            </li>
-            <li>
-                <div class="li_top">
-                    <div class="ti">
-                        <img src="img/search.png" alt="">
-                    </div>
-                    <h4>副标题</h4>
-                    <h5>Enterprise profile</h5>
-                </div>
-                <p>@(Model.Subtitle)</p>
-            </li>
-            <li>
-                <div class="li_top">
-                    <div class="ti">
-                        <img src="img/search.png" alt="">
-                    </div>
-                    <h4>来源</h4>
-                    <h5>Enterprise profile</h5>
-                </div>
-                <p>@(Model.Source)</p>
-            </li>
-            <li>
-                <div class="li_top">
-                    <div class="ti">
-                        <img src="img/search.png" alt="">
-                    </div>
-                    <h4>党建内容</h4>
-                    <h5>Enterprise profile</h5>
-                </div>
-                <p>@(Html.Raw(Model.Content)) [@(Model.CreatedTime)]</p>
-            </li>
-        </ul>
+        <div style="text-align:center;"><h3>@(Model.ThemeTitle)</h3></div>
+        <div style="text-align:center; margin-top:20px;">@(Model.CreatedTime)</div>
+        <hr />
+        <div style="line-height:2;font-size:16px; text-align:center;">
+            @(Html.Raw(Model.Subtitle))
+        </div>
+        <div style="line-height:2;font-size:16px; text-align:center;">
+            <img  style="max-width:80%;" src="@(Model.Pic)"/>
+        </div>
+        <div style="line-height:2;font-size:16px;">
+            @(Html.Raw(Model.Content))
+        </div>
     </div>
 </div>
-
 
 
 
