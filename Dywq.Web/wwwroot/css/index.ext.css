@@ -66,3 +66,9 @@
     margin:20px;
 
 }
+
+.header_company, .header_company:hover {
+    text-decoration: none;
+    color: white;
+}
+

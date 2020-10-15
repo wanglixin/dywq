@@ -28,5 +28,20 @@ namespace Dywq.Web.Dto.User
             }
         }
 
+        /// <summary>
+        /// 展示名称
+        /// </summary>
+        public string ShowName
+        {
+            get
+            {
+                if (this.Type == 0) return CompanyName;
+                else if (this.Type == 1) return "管理员";
+                else return "";
+            }
+        }
+
+
+
     }
 }

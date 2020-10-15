@@ -75,7 +75,14 @@ namespace Dywq.Web.Controllers.Api
                 ".gif",
                 ".bmp"
             };
+
             if (!list.Contains(ext)) return Result<string>.Failure("图片格式不正确");
+
+            var max = 1 * 1024 * 1024;
+            var size = file.Length;
+            if (size > max) return Result<string>.Failure("图片上传不能超过1M");
+
+
 
             return await Upload(file, "logo");
 

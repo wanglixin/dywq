@@ -110,6 +110,24 @@ namespace Dywq.Web.Controllers
             return View(pageData);
         }
 
+
+        [Route("/Company/Financing/Detail/{id}")]
+        public async Task<IActionResult> FinancingDetail(int id)
+        {
+            var pageData = await _mediator.Send(new GetFinancingsCommand()
+            {
+                PageIndex = 1,
+                PageSize = 1,
+                Show = true,
+                Status = 1,
+                Id = id
+            }, HttpContext.RequestAborted);
+            return View(pageData?.Data?.FirstOrDefault());
+        }
+
+
+
+
         public async Task<IActionResult> Expert()
         {
             var data = await _mediator.Send(new GetAllExpertsCommand()
