@@ -29,35 +29,36 @@
             <div class="col-md-3 col-sm-10 col-xs-12"></div>
             <div class="col-md-3 col-sm-10 col-xs-12"></div>
             <div class="col-md-6 col-sm-10 col-xs-12 login_con">
-                <div class="tip">您好，@Html.Raw(user!=null?"<a class='header_company' href='/user/'>"+user.ShowName+"</a>"+",":"")欢迎来到大亚湾区数字惠企平台！</div>
-                <div class="col-xs-4 col-md-1">
-                    <div class="tab">☲</div>
-                </div>
-                @{
-                    if (user != null)
-                    { <div>
+                <div class="tip">
+                    您好，@Html.Raw(user != null ? "<a class='header_company' href='/user/'>" + user.ShowName + "</a>" + "," : "")欢迎来到大亚湾区数字惠企平台！
+                    @*<div class="col-xs-4 col-md-1">
+                            <div class="tab">☲</div>
+                        </div>*@
+                    @{
+                        if (user != null)
+                        {
                             <div class="login_sec">
                                 <img src="/img/user2.png" alt="" class="userimg">
                                 <div class="login_txt"><a href="/home/logout">退出</a></div>
                             </div>
-                        </div>
 
-                    }
-                    else
-                    {
-                        <div>
+
+                        }
+                        else
+                        {
+
                             <div class="apply">
                                 <img src="img/apply2.png" alt="" class="applyimg">
                                 <div class="apply_txt">申请入驻</div>
                             </div>
-                        </div>
+
+                        }
                     }
-                }
 
 
 
+                </div>
             </div>
-        </div>
     </header>
 
 

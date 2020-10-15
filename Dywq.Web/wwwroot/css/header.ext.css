@@ -1,10 +1,38 @@
 ﻿.login_con .tip, .login_con .apply_txt {
     color: white;
+ 
 }
+
+.login_con {
+    display: initial;
+    align-items:initial;
+    text-align:right;
+}
+
+    .login_con .tip {
+        color: white;
+        margin-right: initial;
+        float: right;
+        line-height: 2;
+    }
 
 .login_txt a {
     color: white;
     padding-left:10px;
     text-decoration:none;
 }
+
+.apply_txt, .apply_txt:hover{
+    text-decoration: none;
+}
+
+.login_con .login_sec {
+    float: right;
+   
+}
+
+.login_con .apply {
+    float: right;
+}
+
 
