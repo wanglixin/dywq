@@ -477,7 +477,7 @@
                                         <li>
                                             <ul class="tabel_con_ul">
                                                 <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
-                                                <li>@(item.CompanyName)</li>
+                                                <li>@(item.CompanyName.Cut(9))</li>
                                                 <li>@(item.Contacts)</li>
                                                 <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
                                             </ul>
@@ -531,7 +531,7 @@
                                         <li>
                                             <ul class="tabel_con_ul">
                                                 <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
-                                                <li>@(item.CompanyName)</li>
+                                                <li>@(item.CompanyName.Cut(9))</li>
                                                 <li>@(item.Contacts)</li>
                                                 <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
                                             </ul>

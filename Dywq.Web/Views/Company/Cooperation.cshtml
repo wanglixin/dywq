@@ -25,73 +25,68 @@
         .sec_tab li.tab_active a {
             color: white;
         }
-        .sec_con li a{
-            color:black;
-           
-}
+
+        .sec_con li a {
+            color: black;
         }
     </style>
-
-    }
-
-    <div class="container">
-        <div id="banner">
-            <img src="" alt="">
-            <h4>企业对接</h4>
-        </div>
+}
+<div class="container">
+    <div id="banner">
+        <img src="" alt="">
+        <h4> 企业对接</h4>
     </div>
-    <!-- sec -->
-    <div class="container">
-        <ul class="sec">
-
-            @{
-                foreach (var type in Model)
-                {
-                    <li class="sec_li">
-                        <div class="sec_title">
-                            <h5>@(type.Name)</h5>
-                            <h6><a href="cooperation/@(type.Id)">查看更多</a>></h6>
-                        </div>
-                        <section class="sec_con" data-typeid="@(type.Id)">
-                            <ul>
-                                <li>加载中...</li>
-                            </ul>
-                        </section>
-                    </li>
-                }
+</div>
+<!-- sec -->
+<div class="container">
+    <ul class="sec">
+        @{
+            foreach (var type in Model)
+            {
+                <li class="sec_li">
+                    <div class="sec_title">
+                        <h5>@(type.Name) </h5>
+                        <h6> <a href="cooperation/@(type.Id)"> 查看更多</a> > </h6>
+                    </div>
+                    <section class="sec_con" data-typeid="@(type.Id)">
+                        <ul>
+                            <li> 加载中...</li>
+                        </ul>
+                    </section>
+                </li>
             }
-        </ul>
-    </div>
-
-    @section js{
-        <script type="text/javascript">
-            $(function () {
-                $(".sec_con").each(function (index, item) {
-                    var typeId = $(item).data("typeid");
-                    //alert(typeId);
-                    var target = $(this);
-                    getlist(typeId, function (r) {
-                        if (r.data != null) {
-                            var html = "";
-                            for (var i = 0; i < r.data.length; i++) {
-                                var item = r.data[i];
-                                html += "<li><div class='left_sec'><div class='ling'></div><p><a href='/Company/Cooperation/Detail/" + item.id + "'>" + item.title + "</a></p></div><div class='date'>" + formatDate(item.createdTime) + "</div></li>";
-                            }
-                            target.find("ul").html(html);
-                        } else {
-                            target.find("ul").html("<li>无数据.</li>");
+        }
+    </ul>
+</div>
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            $(".sec_con").each(function (index, item) {
+                var typeId = $(item).data("typeid");
+                //alert(typeId);
+                var target = $(this);
+                getlist(typeId, function (r) {
+                    if (r.data != null) {
+                        var html = "";
+                        for (var i = 0; i < r.data.length; i++) {
+                            var item = r.data[i];
+                            html += "<li><div class='left_sec'><div class='ling'></div><p><a href='/Company/Cooperation/Detail/" + item.id + "'>" + item.title + "</a></p></div><div class='date'>" + formatDate(item.createdTime) + "</div></li>";
                         }
-                    });
+                        target.find("ul").html(html);
+                    } else {
+                        target.find("ul").html("<li>无数据.</li>");
+                    }
                 });
             });
+        });
 
 
-            var getlist = function (type, callback) {
-                reqPost("/api/Cooperation/list", { TypeId: type + "" }, function (r) {
-                    console.log(r);
-                    callback(r);
-                })
-            }
+        var getlist = function (type, callback) {
+            reqPost("/api/Cooperation/list", { TypeId: type + "" }, function (r) {
+                console.log(r);
+                callback(r);
+            })
+        }
 
-        </script>
-    }
+    </script>
+}

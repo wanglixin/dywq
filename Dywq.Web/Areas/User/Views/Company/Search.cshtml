@@ -26,13 +26,16 @@
 <h2>企业搜索</h2>
 <div class="tools">
     <div class="left_btns">
+        <div class="addbtn">
 
+            <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+        </div>
     </div>
 
 </div>
 
 <form id="form_data">
-    @{
+    @{ var companyName = false;
         foreach (var group in Model.Groups)
         {
             <div class="field-group">
@@ -40,10 +43,15 @@
                     <legend>@group.Name</legend>
 
                     @{
-                        <div class="field-item">
-                            <span>企业名称</span>
-                            <input type="text" data-type="-1" name="-1" placeholder="必填 企业名称" />
-                        </div>
+                        if (!companyName)
+                        {
+                            companyName = true;
+                            <div class="field-item">
+                                <span>企业名称</span>
+                                <input type="text" data-type="-1" name="-1" placeholder="企业名称" />
+                            </div>
+                        }
+
 
                     }
                     @{
@@ -56,23 +64,23 @@
 
                                 @if (field.Type == 0)
                                 {
-                                    <input type="text" name="@(field.Id)" data-type="@(field.Type)" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" placeholder="@(field.Required?" 必填":"")" />
+                                    <input type="text" name="@(field.Id)" data-type="@(field.Type)" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" />
                                 }
                                 else if (field.Type == 1)
                                 {
-                                    <input type="number" name="@(field.Id)" data-type="@(field.Type)" placeholder="填写数字@(field.Required?" 必填":"")" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" />
+                                    <input type="number" name="@(field.Id)" data-type="@(field.Type)" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" />
                                 }
                                 else if (field.Type == 2)
                                 {
-                                    <input type="date" name="@(field.Id)" data-type="@(field.Type)" placeholder="选择日期@(field.Required?" 必填":"")" data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" />
+                                    <input type="date" name="@(field.Id)" data-type="@(field.Type)"  data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-title="@(field.Name)" />
                                 }
                                 else if (field.Type == 3)
                                 {
 
                                     <div class="cb">
                                         @*<div class="cb-item">
-                                            <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="radio" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
-                                        </div>*@
+                                                <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="radio" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
+                                            </div>*@
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
                                             <div class="cb-item">
@@ -86,8 +94,8 @@
 
                                     <div class="cb">
                                         @*<div class="cb-item">
-                                            <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="checkbox" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
-                                        </div>*@
+                                                <input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="rd_@(field.Id)_0" type="checkbox" value="" checked="checked" /> <label for="rd_@(field.Id)_0">无</label>
+                                            </div>*@
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
                                             <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
@@ -98,7 +106,7 @@
                                 else if (field.Type == 5)
                                 {
                                     <select data-alias="@(field.Alias)" data-required="@(field.Required.ToString().ToLower())" data-type="@(field.Type)" name="@(field.Id)" data-title="@(field.Name)">
-                                        <option value="">
+                                        <option value="" selected="selected">
                                             不选择
                                         </option>
                                         @foreach (var v in field.CompanyFieldDefaultValues)
