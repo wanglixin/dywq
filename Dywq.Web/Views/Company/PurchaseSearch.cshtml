@@ -13,8 +13,8 @@
             {
                 <li>
                     <ul class="tabel_con_ul">
-                        <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
-                        <li>@(item.CompanyName)</li>
+                        <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName.Cut(7))</a></li>
+                        <li>@(item.CompanyName.Cut(7))</li>
                         <li>@(item.Contacts)</li>
                         <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
                     </ul>

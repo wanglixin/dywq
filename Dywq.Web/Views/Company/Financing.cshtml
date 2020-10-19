@@ -75,7 +75,7 @@
                             <h4>@(item.Bank)</h4>
                             <div class="sec_content">@(item.Title)</div>
                             <p>@(item.Content)</p>
-                            <h6>发布日期：@(item.CreatedTime.ToShortDateString())</h6>
+                            <h6>发布日期：@(item.CreatedTime.ToString("yyyy-MM-dd"))</h6>
                         </a>
                     </li>
                 }

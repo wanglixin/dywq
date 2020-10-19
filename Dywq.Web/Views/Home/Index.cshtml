@@ -242,7 +242,7 @@
                                                 <span></span>
                                                 <p><a href="/news/detail/@(item.Id)">@(item.Title.Cut(11))</a></p>
                                             </div>
-                                            <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                            <div class="date">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                                         </div>
                                         active = true;
                                     }
@@ -279,7 +279,7 @@
                                                 <span></span>
                                                 <p><a href="/article/policyDetail/@(item.Id)">@(item.ThemeTitle.Cut(11))</a></p>
                                             </div>
-                                            <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                            <div class="date">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                                         </div>
                                         active = true;
                                     }
@@ -338,7 +338,7 @@
                                         <span></span>
                                         <p><a href="/article/policyDetail/@(item.Id)">@(item.ThemeTitle.Cut(15))</a></p>
                                     </div>
-                                    <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                    <div class="date">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                                 </div>
                             }
                         }
@@ -375,7 +375,7 @@
                                         <span></span>
                                         <p><a href="/Company/Financing">@(item.Title.Cut(15))</a></p>
                                     </div>
-                                    <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                    <div class="date">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                                 </div>
 
                             }
@@ -412,7 +412,7 @@
                                         <span></span>
                                         <p><a href="/Company/Cooperation/Detail/@(item.Id)">@(item.Title.Cut(15))</a></p>
                                     </div>
-                                    <div class="date">@(item.CreatedTime.ToShortDateString())</div>
+                                    <div class="date">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                                 </div>
 
                             }
@@ -476,7 +476,7 @@
                                     {
                                         <li>
                                             <ul class="tabel_con_ul">
-                                                <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
+                                                <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName.Cut(7))</a></li>
                                                 <li>@(item.CompanyName.Cut(7))</li>
                                                 <li>@(item.Contacts)</li>
                                                 <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
@@ -530,7 +530,7 @@
                                     {
                                         <li>
                                             <ul class="tabel_con_ul">
-                                                <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName)</a></li>
+                                                <li><a href="/company/purchase/detail/@(item.Id)">@(item.ProductName.Cut(7))</a></li>
                                                 <li>@(item.CompanyName.Cut(7))</li>
                                                 <li>@(item.Contacts)</li>
                                                 <li>@(login ? item.Mobile : item.EncryptedMobile)</li>
@@ -621,7 +621,14 @@
                 $(".choose_tip_li").removeClass("actived_tip");
                 $(this).addClass("actived_tip");
                 $(".active_con_rights_sec").hide().eq(index).show();
-            })
+            });
+
+
+            $('input[name="Password"]').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    $(".submitbtn").trigger("click");
+                }
+            });
 
 
         });

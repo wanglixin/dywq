@@ -140,7 +140,7 @@ namespace Dywq.Web.Application.Commands.Purchase
                     Content = request.Content,
                     Mobile = request.Mobile,
                     ProductName = request.ProductName,
-                    Show = false,
+                    Show = true,
                     Sort = 0,
                     Status = 0,
                     Type = type
