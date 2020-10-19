@@ -135,7 +135,7 @@ namespace Dywq.Web.Application.Commands.Cooperation
                 var item = new CooperationInfo()
                 {
                     Content = request.Content,
-                    Show = false,
+                    Show = true,
                     Sort = 0,
                     CooperationTypeId = typeId,
                     Title = request.Title,

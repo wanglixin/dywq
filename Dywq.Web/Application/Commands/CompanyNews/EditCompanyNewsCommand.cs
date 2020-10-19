@@ -168,7 +168,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     Introduce = request.Introduce,
                     IntroduceImage = request.IntroduceImage,
                     MainBusiness = request.MainBusiness,
-                    Show = false,
+                    Show = true,
                     Sort = sort,
                     Status = 0,
                     Title = request.Title

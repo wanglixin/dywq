@@ -123,7 +123,7 @@ namespace Dywq.Web.Application.Commands.Financing
                 var item = new Domain.FinancingAggregate.Financing()
                 {
                     Content = request.Content,
-                    Show = false,
+                    Show = true,
                     Sort = 0,
                     Bank = request.Bank,
                     Pic = request.Pic,
