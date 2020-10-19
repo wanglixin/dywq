@@ -40,7 +40,7 @@
                     <div class="sec_right">
                         <h4 class="title_sec"><a href="/article/PartyBuildingDetail/@(item.Id)">@(item.ThemeTitle.Cut(40))</a></h4>
                         <p class="con_sec">@(item.Content.Cut(300))</p>
-                        <div class="time_sec">@(item.CreatedTime)</div>
+                        <div class="time_sec">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                     </div>
 
                 </div>

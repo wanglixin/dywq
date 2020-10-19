@@ -10,7 +10,7 @@
             <span class="home">首页</span>/<span class="activething">企业融资</span>
         </div>
         <div style="text-align:center;"><h3>@(Model.Title)</h3></div>
-        <div style="text-align:center; margin-top:20px;">@(Model.CreatedTime)</div>
+        <div style="text-align:center; margin-top:20px;">@(Model.CreatedTime.ToString("yyyy-MM-dd"))</div>
         <hr />
         <div style="line-height:2;font-size:16px; text-align:center;">
             <img src="@(Model.Pic)" />

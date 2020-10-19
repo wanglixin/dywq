@@ -53,7 +53,7 @@
                                     <div class="ling"></div>
                                     <h2><a href="/Company/Cooperation/Detail/@(item.Id)">@(item.Title.Cut(40))</a></h2>
                                 </div>
-                                <div class="title_right">发布日期：@(item.CreatedTime)</div>
+                                <div class="title_right">发布日期：@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                             </div>
                             <p>@(item.Content.Cut(300))</p>
                         </li>
