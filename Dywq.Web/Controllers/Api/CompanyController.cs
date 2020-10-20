@@ -91,13 +91,13 @@ namespace Dywq.Web.Controllers.Api
         }
 
         [HttpPost]
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.User)]
         public async Task<Result> EditCompanyNewsC(EditCompanyNewsCommand cmd)
         {
             var user = this.GetCurrentUser();
             cmd.CompanyId = user.CompanyId.ToString();
             cmd.UserId = user.Id;
-           
+
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
         }

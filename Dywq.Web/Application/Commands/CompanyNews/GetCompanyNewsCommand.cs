@@ -126,7 +126,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     Status = x.Status,
                     Title = x.Title,
                     CreatedTime = x.CreatedTime,
-                      UpdatedTime=x.UpdatedTime
+                    UpdatedTime = x.UpdatedTime
                 }
             ); ;
 

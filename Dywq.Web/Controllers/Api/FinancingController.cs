@@ -52,7 +52,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
         [HttpPost]
         public async Task<Result> EditC([FromBody]EditFinancingCommand cmd)
         {

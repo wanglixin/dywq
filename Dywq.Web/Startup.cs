@@ -54,7 +54,7 @@ namespace Dywq.Web
                        {
                            Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
                                      "OnRedirectToAccessDenied", context.HttpContext.User.Identity.Name);
-                           context.Response.ContentType = "application/json";
+                           context.Response.ContentType = "application/json;charset=utf-8";
                            context.Response.StatusCode = StatusCodes.Status200OK;
                            context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("没有权限")));
                            return Task.CompletedTask;
@@ -66,7 +66,7 @@ namespace Dywq.Web
                            if ((context.Request.Headers.ContainsKey("x-requested-with") && context.Request.Headers["x-requested-with"] == "XMLHttpRequest")||
                            (context.Request.Headers.ContainsKey("content-type") && context.Request.Headers["content-type"] == "application/json"))
                            {
-                               context.Response.ContentType = "application/json";
+                               context.Response.ContentType = "application/json;charset=utf-8";
                                context.Response.StatusCode = StatusCodes.Status200OK;
                                context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("没有权限")));
                                return Task.CompletedTask;

@@ -122,7 +122,7 @@ namespace Dywq.Web.Areas.User.Controllers
             return PartialView(result);
         }
 
-        [Authorize(Roles = Common.Role.User)]
+        //[Authorize(Roles = Common.Role.User)]
         public async Task<IActionResult> EditCompanyNewsC(int? Id)
         {
             var types = await _mediator.Send(new GetCompanyTypesCommand(), HttpContext.RequestAborted);

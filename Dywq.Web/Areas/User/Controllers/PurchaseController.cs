@@ -21,7 +21,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
         public async Task<IActionResult> EditC(int? Id, int type = 0)
         {
             ViewBag.type = type;

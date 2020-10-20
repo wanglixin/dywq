@@ -24,7 +24,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
         [Range(0, int.MaxValue, ErrorMessage = "id错误")]
         public string Id { get; set; }
 
-      
+
         public string CompanyId { get; set; }
 
 
@@ -149,19 +149,9 @@ namespace Dywq.Web.Application.Commands.CompanyNews
 
             if (id <= 0) //新增
             {
-                if (user.Type != 0)
-                {
-                    return Result.Failure($"只能企业用户添加");
-                }
-                var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
-                if (company_user == null)
-                {
-                    return Result.Failure($"您还未绑定企业");
-                }
-
                 var item = new Domain.CompanyAggregate.CompanyNews()
                 {
-                    CompanyId = company_user.CompanyId,
+                    // CompanyId = company_user.CompanyId,
                     CompanyTypeId = typeId,
                     Contact = request.Contact,
                     CooperationContent = request.CooperationContent,
@@ -173,6 +163,26 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     Status = 0,
                     Title = request.Title
                 };
+                //if (user.Type != 0)
+                //{
+                //    return Result.Failure($"只能企业用户添加");
+                //}
+                if (user.Type == 0)
+                {
+                    var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
+                    if (company_user == null)
+                    {
+                        return Result.Failure($"您还未绑定企业");
+                    }
+                    item.CompanyId = company_user.CompanyId;
+                }
+                else
+                {
+                    item.Status = 1;
+                }
+
+
+
                 await _companyNewsRepository.AddAsync(item);
             }
             else
@@ -198,7 +208,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     item.MainBusiness = request.MainBusiness;
                     //item.Show = show;
                     //item.Sort = sort;
-                    item.Status =0;
+                    item.Status = 0;
                     item.Title = request.Title;
                 }
                 else if (user.Type == 1) //管理员修改

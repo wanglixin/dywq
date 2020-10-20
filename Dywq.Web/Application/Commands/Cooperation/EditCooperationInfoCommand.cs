@@ -121,17 +121,10 @@ namespace Dywq.Web.Application.Commands.Cooperation
 
             if (id <= 0) //新增
             {
-                if (user.Type != 0)
-                {
-                    return Result.Failure($"只有企业才可以添加");
-                }
-
-                var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
-                if (company_user == null)
-                {
-                    return Result.Failure($"您还未绑定企业");
-                }
-
+                //if (user.Type != 0)
+                //{
+                //    return Result.Failure($"只有企业才可以添加");
+                //}
                 var item = new CooperationInfo()
                 {
                     Content = request.Content,
@@ -139,9 +132,25 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     Sort = 0,
                     CooperationTypeId = typeId,
                     Title = request.Title,
-                    CompanyId = company_user.CompanyId,
                     Status = 0
                 };
+                if (user.Type == 0)
+                {
+                    var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
+                    if (company_user == null)
+                    {
+                        return Result.Failure($"您还未绑定企业");
+                    }
+
+                    item.CompanyId = company_user.CompanyId;
+                }
+                else
+                {
+                    item.Status = 1;
+                }
+               
+
+             
                 await _cooperationInfoRepository.AddAsync(item);
             }
             else

@@ -122,20 +122,14 @@ namespace Dywq.Web.Application.Commands.Purchase
 
             if (id <= 0) //新增
             {
-                if (user.Type != 0)
-                {
-                    return Result.Failure($"只有企业才可以添加");
-                }
-
-                var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
-                if (company_user == null)
-                {
-                    return Result.Failure($"您还未绑定企业");
-                }
+                //if (user.Type != 0)
+                //{
+                //    return Result.Failure($"只有企业才可以添加");
+                //}
 
                 var item = new Domain.Purchase.Purchase()
                 {
-                    CompanyId = company_user.CompanyId,
+                   
                     Contacts = request.Contacts,
                     Content = request.Content,
                     Mobile = request.Mobile,
@@ -145,6 +139,24 @@ namespace Dywq.Web.Application.Commands.Purchase
                     Status = 0,
                     Type = type
                 };
+
+                if (user.Type == 0)
+                {
+                    var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
+                    if (company_user == null)
+                    {
+                        return Result.Failure($"您还未绑定企业");
+                    }
+
+                    item.CompanyId = company_user.CompanyId;
+                }
+                else
+                {
+                    item.Status = 1;
+                }
+                
+
+               
                 await _purchaseRepository.AddAsync(item);
             }
             else

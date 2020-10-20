@@ -38,7 +38,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User+","+Common.Role.Admin)]
         public async Task<IActionResult> EditC(int? Id)
         {
             var types = await _mediator.Send(new GetCooperationTypesCommand() { }, HttpContext.RequestAborted);
