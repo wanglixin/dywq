@@ -54,9 +54,9 @@ namespace Dywq.Web
                        {
                            Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
                                      "OnRedirectToAccessDenied", context.HttpContext.User.Identity.Name);
-                           context.Response.ContentType = "text/plain; charset=utf-8";
+                           context.Response.ContentType = "application/json; charset=utf-8";
                            context.Response.StatusCode = StatusCodes.Status200OK;
-                           context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("没有权限")), System.Text.Encoding.Default);
+                           context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("no permissions")), System.Text.Encoding.Default);
                            return Task.CompletedTask;
                        },
                        OnRedirectToLogin = context =>
@@ -67,9 +67,9 @@ namespace Dywq.Web
                            (context.Request.Headers.ContainsKey("content-type") && context.Request.Headers["content-type"] == "application/json"))
                            {
                                //context.Response.ContentType = "application/json; charset=utf-8";
-                               context.Response.ContentType = "text/plain; charset=utf-8";
+                               context.Response.ContentType = "application/json; charset=utf-8";
                                context.Response.StatusCode = StatusCodes.Status200OK;
-                               context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("没有权限")),System.Text.Encoding.Default);
+                               context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("no permissions")),System.Text.Encoding.Default);
                                return Task.CompletedTask;
                            }
                            context.Response.Redirect($"{context.RedirectUri}");

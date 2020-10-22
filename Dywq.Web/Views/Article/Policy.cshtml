@@ -130,7 +130,7 @@
         $(function () {
             $(".submitbtn").req(".ques", "/api/guestbook/AddGuestbook", function (res) {
                 if (res.code != 0) {
-                    if (res.message == "没有权限") {
+                    if (res.message == "no permissions") {
                         alert("请先登陆账号");
                     } else {
                          alert(res.message);
