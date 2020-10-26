@@ -50,7 +50,9 @@
             width: 880.5px;
             height: 393.3px;
         }
-
+        .swiper-wrapper div.swiper-slide{
+            width:100%;
+        }
         .swiper-slide img {
             height: 393.3px;
         }
@@ -75,7 +77,7 @@
                                 foreach (var item in banners)
                                 {
                                     <div class="swiper-slide">
-                                        <a href="/company/detail/@(item.Id)"><img title="@(item.Title)" src="@(item.IntroduceImage)" alt=""></a>
+                                       <img title="@(item.Title)" src="@(item.IntroduceImage)" alt="">
                                     </div>
                                 }
 
@@ -371,7 +373,8 @@
                             foreach (var item in financings)
                             {
                                 <div class="policy_li">
-                                    <div style="display: flex;align-items: center;">
+                                    <div style="        display: flex;
+        align-items: center;">
                                         <span></span>
                                         <p><a href="/Company/Financing">@(item.Title.Cut(15))</a></p>
                                     </div>
@@ -576,7 +579,7 @@
                     el: '.swiper-pagination',
                 },
                 autoplay: {
-                    delay: 3000,
+                    delay: 3000000,
                 }
             })
 

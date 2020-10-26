@@ -3,7 +3,7 @@
 #banner{margin-top: 30px;}
 .bannner_con{width: 100%;}
 .banner_content{display: flex;align-items: center;}
-.swiper-slide{width: 100% !important;}
+.swiper-slide{width: 100%;}
 .swiper-slide img {width: 100%;}
 .swiper-pagination{text-align: right;padding-right: 20px;}
 .swiper-pagination-bullet{background: #fff;}
@@ -24,8 +24,14 @@
 .active_con_left{width: 100%;}
 .active_con_right{width: 100%;height: 376px;border:1px solid rgba(240,240,240,1);position: relative;}
 .active_con_left .subject_ul{display: flex;align-items: center;margin-bottom: 0;}
-.active_con_left .subject_ul li{cursor:pointer;text-align:center;width: 14.2%;height: 44px;line-height: 44px;background: #F0F0F0;color: #999999;font-size: 16px;margin-right: 0.2%;}
-.active_con_left .subject_ul li.active_coned{background: #2261BC;color: #fff;}
+.active_con_left .subject_ul li{cursor:pointer;text-align:center;width: 11.111111%;height: 44px;line-height: 44px;background: #F0F0F0;color: #999999;font-size: 16px;border-right:1px solid white;}
+    .active_con_left .subject_ul li:last-child{
+        border:none;
+    }
+    .active_con_left .subject_ul li.active_coned {
+        background: #2261BC;
+        color: #fff;
+    }
 .company_box{position: relative;}
 .company{padding: 18px;border:1px solid rgba(240,240,240,1);position: absolute;top: 0;left: 0;width: 100%;}
 .company .company_title{font-size: 24px;color: #333333;margin-bottom: 20px;}
