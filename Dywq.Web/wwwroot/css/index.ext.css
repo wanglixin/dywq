@@ -72,3 +72,15 @@
     color: white;
 }
 
+.company .companyul {
+    overflow: hidden;
+    
+}
+
+.tabel_con_ul li {
+    line-height: 40px;
+}
+
+.buy_morebtn{
+    bottom:4px;
+}

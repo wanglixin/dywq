@@ -1,4 +1,5 @@
 ﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyNewsDto>
+@using Dywq.Infrastructure.Core.Extensions;
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -57,54 +58,54 @@
         {
             foreach (var item in Model.Data)
             {
-        <tr>
-            <td>
-                @(item.Id)
-            </td>
-            <td>
-                @(item.CreatedTime)
-            </td>
+                <tr>
+                    <td>
+                        @(item.Id)
+                    </td>
+                    <td>
+                        @(item.CreatedTime)
+                    </td>
 
-            <td>
-                @(item.Title)
-            </td>
-            <td>
-                @(item.MainBusiness)
-            </td>
-            <td>
-                @(item.Contact)
-            </td>
+                    <td>
+                        @(item.Title.Cut(15))
+                    </td>
+                    <td>
+                        @(item.MainBusiness.Cut(15))
+                    </td>
+                    <td>
+                        @(item.Contact.Cut(15))
+                    </td>
 
-            <td>
-                @(item.Show ? "是" : "否")
-            </td>
+                    <td>
+                        @(item.Show ? "是" : "否")
+                    </td>
 
-            <td>
-                @(item.Sort)
-            </td>
-            <td>
-                @(item.UpdatedTime)
-            </td>
-            <td>
-                @{
-                    if (item.Status == -1)
-                    {
-                        <font style="color:red;">@(item.StatusStr)</font>
-                    }
-                    else
-                    {
-                        @(item.StatusStr)
-                    }
-                }
-            </td>
+                    <td>
+                        @(item.Sort)
+                    </td>
+                    <td>
+                        @(item.UpdatedTime)
+                    </td>
+                    <td>
+                        @{
+                            if (item.Status == -1)
+                            {
+                                <font style="color:red;">@(item.StatusStr)</font>
+                            }
+                            else
+                            {
+                                @(item.StatusStr)
+                            }
+                        }
+                    </td>
 
-            <td class="editbtn">
-                <a href="/user/company/editCompanyNews?id=@(item.Id)">审核</a>
+                    <td class="editbtn">
+                        <a href="/user/company/editCompanyNews?id=@(item.Id)">审核</a>
 
 
-            </td>
+                    </td>
 
-        </tr>
+                </tr>
             }
         }
 

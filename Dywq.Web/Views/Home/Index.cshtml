@@ -77,7 +77,7 @@
                                 foreach (var item in banners)
                                 {
                                     <div class="swiper-slide">
-                                       <img title="@(item.Title)" src="@(item.IntroduceImage)" alt="">
+                                         <a href="/company/detail/@(item.CompanyId)"><img src="@(item.IntroduceImage)" alt=""></a>
                                     </div>
                                 }
 
