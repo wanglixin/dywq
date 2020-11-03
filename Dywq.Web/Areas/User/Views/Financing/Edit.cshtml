@@ -56,7 +56,7 @@
 <form id="form_data">
 
     <input type="hidden" name="Id" value="@(Model?.Id)" />
-    @*<input type="hidden" name="Content" value="@(Model?.Content)" />*@
+    <input type="hidden" name="Content" value="@(Model?.Content)" />
     <div class="field-group">
         <fieldset>
             <legend>信息展示</legend>
@@ -118,10 +118,10 @@
 
             <div class="field-item ">
                 <span>描述</span>
-                <textarea name="Content">@(Model?.Content)</textarea>
-                @*<div id="editor" style="width: 51%;">
+             
+                <div id="editor" style="width: 51%;">
                     <p>@(Html.Raw(Model?.Content))</p>
-                </div>*@
+                </div>
             </div>
 
 

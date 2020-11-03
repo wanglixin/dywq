@@ -71,10 +71,17 @@
                 {
                     <li>
                         <a href="/Company/Financing/Detail/@(item.Id)">
+                            @{
+                                if (string.IsNullOrWhiteSpace(item.Pic))
+                                {
+                                    <div style="width: 68px;
+    height: 68px;margin-bottom: -2px;"></div>
+                                }
+                            }
                             <img src="@(item.Pic)" alt="" class="backimg">
                             <h4>@(item.Bank)</h4>
                             <div class="sec_content">@(item.Title)</div>
-                            <p>@(item.Content)</p>
+                            <p>@(item.Content.Cut(300))</p>
                             <h6>发布日期：@(item.CreatedTime.ToString("yyyy-MM-dd"))</h6>
                         </a>
                     </li>

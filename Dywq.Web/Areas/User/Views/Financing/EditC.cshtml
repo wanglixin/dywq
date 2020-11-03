@@ -58,7 +58,7 @@
 <form id="form_data">
 
     <input type="hidden" name="Id" value="@(Model?.Id)" />
-    @*<input type="hidden" name="Content" value="@(Model?.Content)" />*@
+    <input type="hidden" name="Content" value="@(Model?.Content)" />
     <input type="hidden" name="Status" value="@(Model==null?0:Model?.Status)" />
     <div class="field-group">
         <fieldset>
@@ -73,9 +73,9 @@
                 }
             }
             @*<div class="field-item">
-                <span>发布单位</span>
-                <input type="text" id="CompanyName" value="@(user.CompanyName)" disabled="disabled" />
-            </div>*@
+                    <span>发布单位</span>
+                    <input type="text" id="CompanyName" value="@(user.CompanyName)" disabled="disabled" />
+                </div>*@
 
             <div class="field-item">
                 <span>银行</span>
@@ -104,8 +104,11 @@
 
             <div class="field-item ">
                 <span>内容</span>
-                <textarea name="Content" >@Model?.Content</textarea>
-               
+                
+                <div id="editor" style="width: 51%;">
+                    <p>@(Html.Raw(Model?.Content))</p>
+                </div>
+
             </div>
 
             @{
@@ -161,12 +164,12 @@
 
             });
 
-           $("#btnUpload").uploadImg(function (r, target) {
+            $("#btnUpload").uploadImg(function (r, target) {
                 if (r.code == 0) {
                     var name = target.attr("data-name");
                     var preview = target.attr("data-preview");
                     $("[name='" + name + "']").val(r.data);
-                     $(preview).attr("src",r.data);
+                    $(preview).attr("src", r.data);
                 } else {
                     alert(r.message);
                 }
