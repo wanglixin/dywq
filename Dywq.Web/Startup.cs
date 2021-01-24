@@ -24,6 +24,8 @@ namespace Dywq.Web
     {
         public Startup(IConfiguration configuration)
         {
+            Console.WriteLine("SqlServerSql:" + configuration.GetValue<string>("SqlServerSql"));
+
             Configuration = configuration;
         }
 
@@ -38,7 +40,7 @@ namespace Dywq.Web
                 mvcOptions.Filters.Add<ActionFilter>();
             }).AddJsonOptions(jsonoptions =>
             {
-                jsonoptions.JsonSerializerOptions.Encoder =System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                jsonoptions.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             });
             services.AddSession();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -63,13 +65,13 @@ namespace Dywq.Web
                        {
                            Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
                                     "OnRedirectToLogin", context.HttpContext.User.Identity.Name);
-                           if ((context.Request.Headers.ContainsKey("x-requested-with") && context.Request.Headers["x-requested-with"] == "XMLHttpRequest")||
+                           if ((context.Request.Headers.ContainsKey("x-requested-with") && context.Request.Headers["x-requested-with"] == "XMLHttpRequest") ||
                            (context.Request.Headers.ContainsKey("content-type") && context.Request.Headers["content-type"] == "application/json"))
                            {
                                //context.Response.ContentType = "application/json; charset=utf-8";
                                context.Response.ContentType = "application/json; charset=utf-8";
                                context.Response.StatusCode = StatusCodes.Status200OK;
-                               context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("no permissions")),System.Text.Encoding.Default);
+                               context.Response.WriteAsync(JsonConvert.SerializeObject(Result.Failure("no permissions")), System.Text.Encoding.Default);
                                return Task.CompletedTask;
                            }
                            context.Response.Redirect($"{context.RedirectUri}");
@@ -83,7 +85,7 @@ namespace Dywq.Web
 
 
 
-        
+
 
 
 
@@ -105,9 +107,6 @@ namespace Dywq.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-           
-
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dc = scope.ServiceProvider.GetService<DomainContext>();

@@ -83,3 +83,8 @@ header{height: 80px;background: rgba(34, 97, 188, 1);line-height: 80px;display: 
 .push_btn_per{margin-left: 20px;padding: 10px 20px;outline: none;}
 .push_btn_cancel{background: #fff;border: 1px solid rgba(22, 119, 255, 1);}
 .push_btn_confirm{background: rgba(22, 119, 255, 1);color: #fff;}
+.user_defaultimg img {
+    border-radius: 50%;
+    margin-top: -43px;
+    display: initial;
+}

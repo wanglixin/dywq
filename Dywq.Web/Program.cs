@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,8 @@ namespace Dywq.Web
     {
         public static void Main(string[] args)
         {
+            //var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            // builder.Build()
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -22,5 +25,9 @@ namespace Dywq.Web
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        //.ConfigureAppConfiguration((a, b) =>
+        //{
+        //    b.AddJsonFile("appsettings.json");
+        //});
     }
 }

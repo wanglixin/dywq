@@ -44,7 +44,7 @@
 <form id="form_data">
 
     <input type="hidden" name="Id" value="@(Model?.Id)" />
-    <input  type="hidden" name="Content" value="@(Model?.Content)"/>
+    <input type="hidden" name="Content" value="@(Model?.Content)" />
     <div class="field-group">
         <fieldset>
             <legend>填写信息</legend>
@@ -108,7 +108,7 @@
 
             <div class="field-item ">
                 <span>排序</span>
-                <input type="number" name="Sort" value="@(Model?.Sort)" />
+                <input type="number" name="Sort" value="@(Model==null?0:Model?.Sort)" />
             </div>
 
 
@@ -136,7 +136,7 @@
                     return;
                 } else {
                     alert("保存成功");
-                     backAndRefresh();
+                    backAndRefresh();
                 }
 
             });
@@ -157,7 +157,7 @@
             var editor = new E('#editor');
             editor.customConfig.uploadImgServer = '/api/baseapi/EditorUploadImg';
             editor.customConfig.uploadFileName = 'file';
-              editor.customConfig.onchange = function (html) {
+            editor.customConfig.onchange = function (html) {
                 // 监控变化，同步更新到 textarea
                 console.log(html);
                 $("input[name='Content']").val(html);
@@ -165,7 +165,7 @@
             editor.create();
             E.fullscreen.init('#editor');
 
-          
+
 
 
         });
