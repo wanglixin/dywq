@@ -50,10 +50,10 @@
             width: 880.5px;
             height: 393.3px;
         }*/
-        .swiper-wrapper div.swiper-slide{
-            width:100%;
+        .swiper-wrapper div.swiper-slide {
+            width: 100%;
         }
-       
+
 
         .tabel_con_ul li a, .active_con_rights_sec a, .sec_common a {
             color: black;
@@ -75,7 +75,7 @@
                                 foreach (var item in banners)
                                 {
                                     <div class="swiper-slide">
-                                         <a href="/company/detail/@(item.CompanyId)"><img src="@(item.IntroduceImage)" alt=""></a>
+                                        <a href="/company/detail/@(item.CompanyId)"><img src="@(item.IntroduceImage)" alt=""></a>
                                     </div>
                                 }
 
@@ -104,7 +104,8 @@
                         </form>
                         <div class="tip_con">
                             <span class="nocount">没有账号？</span>
-                            <a href="#" class="apply_ru">申请入驻</a>
+                            <a style="display:none;" href="#" class="apply_ru">申请入驻</a>
+                            <a href="tencent://message/?uin=1642487217&Site=&Menu=yes" title="联系客服" class="apply_ru"><img style="width:20px;" src="~/img/QQ.png" />联系客服</a>
                         </div>
 
                     </div>
@@ -586,7 +587,12 @@
                     alert(res.message);
                     return;
                 }
-                window.location.reload();
+                 var return_url = '@(Context.Request.Query["ReturnUrl"])';
+                if (return_url.length > 0) {
+                    window.location.href = return_url;
+                } else {
+                   window.location.reload();
+                }
             });
 
             $(".btn_logout").req("#none", "/api/user/logout", function (res) {
@@ -594,7 +600,9 @@
                     alert(res.message);
                     return;
                 }
-                window.location.reload();
+                 window.location.reload();
+               
+
             });
 
 
@@ -632,6 +640,9 @@
             });
 
 
+
+            checkIsLogin();
+
         });
 
         var getCompanyInfos = function (type, pageIndex, pageSize) {
@@ -655,6 +666,15 @@
                 console.log(r);
                 $(".table_con_" + type).html(r);
             });
+        }
+
+
+        var checkIsLogin = function () {
+            var return_url ='@(Context.Request.Query["ReturnUrl"])';
+            if (return_url.length > 0) {
+                alert('请先登录！');
+            }
+
         }
 
     </script>

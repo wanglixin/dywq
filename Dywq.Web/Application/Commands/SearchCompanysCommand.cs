@@ -69,6 +69,12 @@ namespace Dywq.Web.Application.Commands
                     name = item.Value;
                     //condition.Add($"( t.Name like '%{item.Value}%' )");
                 }
+                else if (item.Type == 4) //复选框
+                {
+                    var id_arr = item.Value.Split(',');
+                    var str_arr = id_arr.Select(x => $"d.Value like '%{x}%'");
+                    condition.Add($"( d.FieldId={item.FieldId} and ({string.Join(" or ", str_arr)}) )");
+                }
                 else
                 {
                     condition.Add($"( d.FieldId={item.FieldId} and d.Value='{item.Value}' )");
@@ -93,7 +99,7 @@ namespace Dywq.Web.Application.Commands
 
 
 
-             var sql = @$" select count(*) from (
+            var sql = @$" select count(*) from (
    select c.id,count(c.id) c from Company as c left join CompanyFieldData as d on d.CompanyId=c.id  {where} group by c.id 
    ) as t {where2}";
             var count = await _companyRepository.SqlCountAsync(sql);

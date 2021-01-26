@@ -34,8 +34,6 @@ namespace Dywq.Web.Controllers
 
         public IActionResult Test()
         {
-
-
             return Content("test");
         }
 
@@ -127,7 +125,7 @@ namespace Dywq.Web.Controllers
 
 
 
-
+        [Authorize]
         public async Task<IActionResult> Expert()
         {
             var data = await _mediator.Send(new GetAllExpertsCommand()
@@ -137,6 +135,7 @@ namespace Dywq.Web.Controllers
             return View(data);
         }
 
+        [Authorize]
         [Route("/Company/Expert/{id}")]
         public async Task<IActionResult> ExpertDetail(int id)
         {
