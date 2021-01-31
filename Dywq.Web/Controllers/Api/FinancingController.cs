@@ -43,7 +43,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor)]
         public async Task<Result> DeleteC(DeleteFinancingCommand cmd)
         {
             cmd.UserId = this.GetCurrentUser().Id;
@@ -52,7 +52,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor + "," + Common.Role.Admin)]
         [HttpPost]
         public async Task<Result> EditC([FromBody]EditFinancingCommand cmd)
         {
@@ -78,6 +78,20 @@ namespace Dywq.Web.Controllers.Api
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
         }
+
+
+
+        [HttpPost]
+        [Authorize(Roles = Common.Role.Editor)]
+        public async Task<Result> SubmitCheck(SubmitCheckFinancingCommand cmd)
+        {
+            var user = this.GetCurrentUser();
+            cmd.UserId = user.Id;
+
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
 
     }
 }

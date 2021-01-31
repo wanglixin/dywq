@@ -29,6 +29,9 @@ namespace Dywq.Web.Application.Commands.Purchase
 
         public int CompanyId { get; set; } = 0;
 
+        /// <summary>
+        /// -888 管理员后台搜索
+        /// </summary>
         public int Status { get; set; } = -999;
 
         public int Type { get; set; } = -999;
@@ -73,7 +76,15 @@ namespace Dywq.Web.Application.Commands.Purchase
 
             if (request.Status != -999)
             {
-                sb.Add($"Status = " + request.Status);
+                if (request.Status == -888)
+                {
+                    sb.Add($"Status in (1,2,-1)");
+                }
+                else
+                {
+                    sb.Add($"Status = " + request.Status);
+                }
+                
             }
 
             if (request.CompanyId != 0)

@@ -25,7 +25,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            if(this.CurrentUser.Role == Common.Role.User)
+            if(this.CurrentUser.Role == Common.Role.User|| this.CurrentUser.Role == Common.Role.Editor)
             {
                 var companyId = this.CurrentUser.CompanyId;
                 var obj = await _mediator.Send(new GetTodoInfoCommand() { CompanyId = companyId }, HttpContext.RequestAborted);

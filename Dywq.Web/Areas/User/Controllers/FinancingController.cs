@@ -34,7 +34,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor + "," + Common.Role.Admin)]
         public async Task<IActionResult> EditC(int? Id)
         {
             if (Id.HasValue)
@@ -57,7 +57,7 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User+","+ Common.Role.Editor)]
         public async Task<IActionResult> ListC(GetFinancingsCommand cmd)
         {
             var user = this.CurrentUser;

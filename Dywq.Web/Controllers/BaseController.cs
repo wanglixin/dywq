@@ -27,7 +27,7 @@ namespace Dywq.Web.Controllers
             _mediator = mediator;
             _logger = logger;
 
-            
+
 
         }
 
@@ -51,7 +51,7 @@ namespace Dywq.Web.Controllers
             model.UserName = claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
             var role = claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-            model.Type = role == Role.User ? 0 : 1;
+            model.Type = role == Role.User ? 0 : (role == Role.Editor ? 2 : 1);
 
             int.TryParse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out int id);
             model.Id = id;

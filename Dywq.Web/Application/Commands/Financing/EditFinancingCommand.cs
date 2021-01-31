@@ -59,7 +59,7 @@ namespace Dywq.Web.Application.Commands.Financing
 
 
         [Required(ErrorMessage = "请选择审核状态")]
-        [Range(-1, 1, ErrorMessage = "请选择审核状态")]
+        [Range(-1, 2, ErrorMessage = "请选择审核状态")]
         /// <summary>
         /// 2:通过 -1：失败
         /// </summary>
@@ -126,7 +126,7 @@ namespace Dywq.Web.Application.Commands.Financing
                     Status = 0
                 };
 
-                if (user.Type == 0)
+                if (user.Type == 0 || user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
@@ -135,12 +135,11 @@ namespace Dywq.Web.Application.Commands.Financing
                     }
                     item.CompanyId = company_user.CompanyId;
                 }
-                else
+                else if (user.Type == 1)
                 {
+                    item.Status = 2;
                     item.Show = true;
-                    item.Status = 1;
                 }
-
 
                 await _financingRepository.AddAsync(item);
             }
@@ -152,13 +151,8 @@ namespace Dywq.Web.Application.Commands.Financing
                 {
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
-
-                if (user.Type == 0) //用户修改的情况
+                if (user.Type == 0 || user.Type == 2)
                 {
-                    if (item.Status != -1)
-                    {
-                        return Result.Failure($"当前状态不能修改");
-                    }
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
                     {
@@ -170,6 +164,26 @@ namespace Dywq.Web.Application.Commands.Financing
                         return Result.Failure($"您绑定的企业不符合");
                     }
 
+                }
+                if (user.Type == 0) //用户修改的情况
+                {
+                    if (item.Status != -1)
+                    {
+                        return Result.Failure($"当前状态不能修改");
+                    }
+
+                    item.Content = request.Content;
+                    item.Title = request.Title;
+                    item.Pic = request.Pic;
+                    item.Bank = request.Bank;
+                    item.Status = 0;
+                }
+                else if (user.Type == 2) //编辑
+                {
+                    if (item.Status != -1 && item.Status != 0)
+                    {
+                        return Result.Failure($"当前状态不能修改");
+                    }
                     item.Content = request.Content;
                     item.Title = request.Title;
                     item.Pic = request.Pic;
@@ -178,7 +192,6 @@ namespace Dywq.Web.Application.Commands.Financing
                 }
                 else if (user.Type == 1) //管理员修改
                 {
-
                     if (string.IsNullOrWhiteSpace(request.Status))
                     {
                         return Result.Failure($"请选择审核状态");
@@ -193,6 +206,7 @@ namespace Dywq.Web.Application.Commands.Financing
                     item.Bank = request.Bank;
                     item.Status = status;
                 }
+
                 else
                 {
                     return Result.Failure($"用户类型错误");

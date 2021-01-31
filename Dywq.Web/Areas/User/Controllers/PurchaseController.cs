@@ -21,7 +21,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor + "," + Common.Role.Admin)]
         public async Task<IActionResult> EditC(int? Id, int type = 0)
         {
             ViewBag.type = type;
@@ -40,7 +40,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor)]
         public async Task<IActionResult> ListC(GetPurchasesCommand cmd, int type = 0)
         {
             ViewBag.type = type;
@@ -58,6 +58,7 @@ namespace Dywq.Web.Areas.User.Controllers
         public async Task<IActionResult> List(GetPurchasesCommand cmd, int type = 0)
         {
             ViewBag.type = type;
+            cmd.Status = -888;
             cmd.LinkUrl = $"/user/purchase/list?PageIndex=__id__&PageSize={cmd.PageSize}&type={type}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);

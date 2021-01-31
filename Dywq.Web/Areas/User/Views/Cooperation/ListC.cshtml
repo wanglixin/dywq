@@ -1,5 +1,8 @@
 ﻿@using Dywq.Infrastructure.Core.Extensions;
 @model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Cooperation.CooperationInfoDTO>
+@{
+    var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
+}
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -49,7 +52,7 @@
         <th>标题</th>
         <th>状态</th>
         <th>是否显示</th>
-        
+
         <th>添加时间</th>
         <th>操作</th>
     </tr>
@@ -58,42 +61,48 @@
         {
             foreach (var item in Model.Data)
             {
-        <tr>
+                <tr>
 
-            <td>
-                @(item.Id)
-            </td>
-            <td>
-                @(item.CooperationTypeName)
-            </td>
-            <td>
-                @(item.Title.Cut(20))
-            </td>
-            <td>
-                @{
-                    if (item.Status == -1)
-                    {
-                        <font style="color:red;">审核失败</font>
-                    }
-                    else
-                    {
-                        @(item.StatusStr)
-                    }
-                }
+                    <td>
+                        @(item.Id)
+                    </td>
+                    <td>
+                        @(item.CooperationTypeName)
+                    </td>
+                    <td>
+                        @(item.Title.Cut(20))
+                    </td>
+                    <td>
+                        @{
+                            if (item.Status == -1)
+                            {
+                                <font style="color:red;">审核失败</font>
+                            }
+                            else
+                            {
+                                @(item.StatusStr)
+                            }
+                        }
 
-            </td>
-            <td>
-                @(item.Show ? "是" : "否")
-            </td>
-          
-            <td>
-                @(item.CreatedTime)
-            </td>
-            <td class="editbtn">
-                <a href="/user/cooperation/editC/@(item.Id)">编辑</a> |
-                <a href="javascript:del(@(item.Id))">删除</a>
-            </td>
-        </tr>
+                    </td>
+                    <td>
+                        @(item.Show ? "是" : "否")
+                    </td>
+
+                    <td>
+                        @(item.CreatedTime)
+                    </td>
+                    <td class="editbtn">
+                        @{
+                            if (user.Type == 2 && (item.Status == 0 || item.Status == -1))
+                            {
+                                <a href="javascript:submitCheck(@(item.Id));">提交审核</a> @Html.Raw("|")
+                            }
+                        }
+                        <a href="/user/cooperation/editC/@(item.Id)">编辑</a> |
+                        <a href="javascript:del(@(item.Id))">删除</a>
+                    </td>
+                </tr>
             }
         }
 
@@ -149,6 +158,28 @@
                 }
             })
 
+        }
+
+
+           var submitCheck = function (id) {
+            if (!confirm("确定提交审核？"))
+                return;
+               $.ajax({
+                url: '/api/cooperation/SubmitCheck',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ Id: id}),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("操作成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
         }
 
 

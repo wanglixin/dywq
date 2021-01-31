@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dywq.Infrastructure.Core;
 using Dywq.Web.Application.Commands;
 using Dywq.Web.Application.Commands.CompanyNews;
+using Dywq.Web.Application.Commands.Financing;
 using Dywq.Web.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -91,7 +92,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
         [HttpPost]
-        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.User)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor + "," + Common.Role.Admin)]
         public async Task<Result> EditCompanyNewsC(EditCompanyNewsCommand cmd)
         {
             var user = this.GetCurrentUser();
@@ -106,6 +107,20 @@ namespace Dywq.Web.Controllers.Api
         [HttpPost]
         [Authorize(Roles = Common.Role.Admin)]
         public async Task<Result> EditCompanyNews(EditCompanyNewsCommand cmd)
+        {
+            var user = this.GetCurrentUser();
+            cmd.UserId = user.Id;
+
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
+
+
+
+        [HttpPost]
+        [Authorize(Roles = Common.Role.Editor)]
+        public async Task<Result> SubmitCheck(SubmitCheckFinancingCommand cmd)
         {
             var user = this.GetCurrentUser();
             cmd.UserId = user.Id;

@@ -24,6 +24,7 @@ namespace Dywq.Web.Dto.User
             {
                 if (this.Type == 0) return Dywq.Web.Common.Role.User;
                 else if (this.Type == 1) return Dywq.Web.Common.Role.Admin;
+                else if (this.Type == 2) return Dywq.Web.Common.Role.Editor;
                 else return Dywq.Web.Common.Role.User;
             }
         }
@@ -35,7 +36,7 @@ namespace Dywq.Web.Dto.User
         {
             get
             {
-                if (this.Type == 0) return CompanyName;
+                if (this.Type == 0 || this.Type == 2) return CompanyName;
                 else if (this.Type == 1) return "管理员";
                 else return "";
             }

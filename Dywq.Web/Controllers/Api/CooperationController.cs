@@ -43,7 +43,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor)]
         public async Task<Result> DeleteC(DeleteCooperationInfoCommand cmd)
         {
             cmd.UserId = this.GetCurrentUser().Id;
@@ -52,7 +52,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
-        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
+         [Authorize(Roles = Common.Role.User+","+Common.Role.Editor + "," + Common.Role.Admin)]
         [HttpPost]
         public async Task<Result> EditC([FromBody]EditCooperationInfoCommand cmd)
         {
@@ -72,9 +72,22 @@ namespace Dywq.Web.Controllers.Api
         {
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
             cmd.Show = true;
-            cmd.Status = 1;
+            cmd.Status = 2;
             cmd.PageSize = 5;
             cmd.PageIndex = 1;
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
+
+
+        [HttpPost]
+        [Authorize(Roles = Common.Role.Editor)]
+        public async Task<Result> SubmitCheck(SubmitCheckCooperationCommand cmd)
+        {
+            var user = this.GetCurrentUser();
+            cmd.UserId = user.Id;
+
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
         }

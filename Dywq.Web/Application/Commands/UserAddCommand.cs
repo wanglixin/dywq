@@ -19,7 +19,7 @@ namespace Dywq.Web.Application.Commands
         [Required(ErrorMessage = "用户名不能为空")]
         public string UserName { get; set; }
 
-        [RegularExpression("[0|1]", ErrorMessage = "类型不正确")]
+        [RegularExpression("[0|1|2]", ErrorMessage = "类型不正确")]
         public string Type { get; set; }
 
         [Required(ErrorMessage = "密码不能为空")]
@@ -74,7 +74,7 @@ namespace Dywq.Web.Application.Commands
                 Type = type
             };
 
-            if (type == 0)
+            if (type == 0 || type == 2)
             {
                 user.RealName = request.RealName;
                 user.IDCard = request.IDCard;

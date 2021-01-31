@@ -141,7 +141,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor)]
         public async Task<IActionResult> CompanyNewsListC(GetCompanyNewsCommand cmd)
         {
             cmd.CompanyId = this.CurrentUser.CompanyId;

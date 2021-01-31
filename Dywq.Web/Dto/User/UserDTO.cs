@@ -13,6 +13,22 @@ namespace Dywq.Web.Dto.User
 
         public int Type { get; set; }
 
+
+        public string TypeStr
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case 0: return "用户";
+                    case 1: return "管理员";
+                    case 2: return "编辑";
+                    default: return "";
+                }
+            }
+        }
+
+
         public string CompanyName { get; set; }
 
         public int CompanyId { get; set; }

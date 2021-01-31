@@ -22,7 +22,7 @@ namespace Dywq.Domain.UserAggregate
         public string Password { get; set; }
 
         /// <summary>
-        /// 用户类型 0：企业用户  1：管理员
+        /// 用户类型 0：企业用户  1：管理员 2：编辑
         /// </summary>
         public int Type { get; set; }
 

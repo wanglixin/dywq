@@ -39,10 +39,15 @@
 
                 <div class="cb">
                     <div class="cb-item">
-                        <input disabled="disabled"  id="rd_4" type="radio" value="0" @(Model?.Type == 0 ? "checked=\"checked\"" : "")> <label for="rd_4">企业用户</label>
+                        <input disabled="disabled" id="rd_4" type="radio" value="0" @(Model?.Type == 0 ? "checked=\"checked\"" : "")> <label for="rd_4">企业用户</label>
                     </div>
+
                     <div class="cb-item">
-                        <input  disabled="disabled" id="rd_6" type="radio" value="1" @(Model?.Type == 1 ? "checked=\"checked\"" : "")> <label for="rd_6">管理员</label>
+                        <input name="Type" id="rd_5" type="radio" value="2" @(Model?.Type == 2 ? "checked=\"checked\"" : "")> <label for="rd_5">企业编辑</label>
+                    </div>
+
+                    <div class="cb-item">
+                        <input disabled="disabled" id="rd_6" type="radio" value="1" @(Model?.Type == 1 ? "checked=\"checked\"" : "")> <label for="rd_6">管理员</label>
                     </div>
                 </div>
             </div>
@@ -50,11 +55,11 @@
 
             <div class="field-item ">
                 <span>用户名</span>
-                <input type="text" name="UserName" placeholder=" 必填" value="@(Model?.UserName)">
+                <input type="text" name="UserName" placeholder=" 必填" value="@(Model?.UserName)" AUTOCOMPLETE="off">
             </div>
             <div class="field-item ">
                 <span>密码</span>
-                <input type="password" name="Password" placeholder=" 必填">
+                <input type="password" name="Password" placeholder=" 必填" autocomplete="new-password" AUTOCOMPLETE="off">
 
             </div>
 
