@@ -3,6 +3,7 @@ using Dywq.Domain.CompanyAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Commpany;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -24,6 +25,9 @@ namespace Dywq.Web.Application.Commands
         public string Name { get; set; }
 
         public IEnumerable<FieldDataItemDto> FieldDataItems { get; set; }
+
+        public LoginUserDTO LoginUser { get; set; }
+
     }
 
     public class AddCompanyCommandHandler : IRequestHandler<AddCompanyCommand, Result>
@@ -86,8 +90,14 @@ namespace Dywq.Web.Application.Commands
             {
                 Logo = request.Logo,
                 Name = request.Name,
-                Status = 0
+                Status = 1
             };
+
+            if (request.LoginUser.Type == 2)
+            {
+                company.Status = 0;
+            }
+
             await _companyRepository.AddAsync(company, cancellationToken);
 
             var ret = await _companyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

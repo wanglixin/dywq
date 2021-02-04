@@ -9,6 +9,10 @@ namespace Dywq.Web.Dto.User
     {
         public int Id { get; set; }
         public string UserName { get; set; }
+
+        /// <summary>
+        /// 0 普通用户 1管理员 2编辑
+        /// </summary>
         public int Type { get; set; }
 
         public int CompanyId { get; set; }

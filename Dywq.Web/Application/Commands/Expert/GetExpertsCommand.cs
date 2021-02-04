@@ -28,6 +28,8 @@ namespace Dywq.Web.Application.Commands.Expert
         /// </summary>
         public string TypeId { get; set; } = "";
         public bool? Show { get; set; } = true;
+
+        public int? Status { get; set; } = null;
     }
 
 
@@ -67,6 +69,13 @@ namespace Dywq.Web.Application.Commands.Expert
             {
                 sb.Add($"ExpertTypeId = " + request.TypeId);
             }
+
+            if (request.Status.HasValue)
+            {
+                sb.Add($"Status = " + request.Status.Value);
+            }
+
+
             var where = string.Join(" and ", sb);
 
 
@@ -100,7 +109,8 @@ namespace Dywq.Web.Application.Commands.Expert
                     Sort = x.Sort,
                     Title = x.Title,
                     CreatedTime = x.CreatedTime,
-                    UpdatedTime = x.UpdatedTime
+                    UpdatedTime = x.UpdatedTime,
+                    Status = x.Status
                 }
             );
 

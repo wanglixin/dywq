@@ -28,7 +28,8 @@ namespace Dywq.Web.Controllers
             {
                 PageIndex = 1,
                 PageSize = 100,
-                Show = true
+                Show = true,
+                Status = 1
             };
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result.Data);
@@ -41,7 +42,8 @@ namespace Dywq.Web.Controllers
                 Id = Id,
                 PageIndex = 1,
                 PageSize = 1,
-                Show = true
+                Show = true,
+                Status=1
             }, HttpContext.RequestAborted);
             return View(pageData?.Data?.FirstOrDefault());
         }

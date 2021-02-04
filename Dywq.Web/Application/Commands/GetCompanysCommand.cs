@@ -78,7 +78,7 @@ SELECT CompanyId,ROW_NUMBER() over(order by CompanyId desc) Rowid  FROM [Company
 ;");*/
 
             var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(@$"select * from (
-SELECT Id as CompanyId,Name,Logo,CreatedTime,ROW_NUMBER() over(order by Id desc) Rowid 
+SELECT Id as CompanyId,Name,Logo,CreatedTime,Status,ROW_NUMBER() over(order by Id desc) Rowid 
   FROM [Company] {where}
 ) as c where c.Rowid>{start} and c.Rowid<={end}");
 

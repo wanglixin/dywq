@@ -49,6 +49,7 @@
         <th>是否显示</th>
         <th>排序</th>
         <th>添加时间</th>
+        <th>状态</th>
         <th>操作</th>
     </tr>
     @{
@@ -56,29 +57,41 @@
         {
             foreach (var item in Model.Data)
             {
-                <tr>
+        <tr>
 
-                    <td>
-                        @(item.Id)
-                    </td>
-                    <td>
-                        @(item.Title)
-                    </td>
+            <td>
+                @(item.Id)
+            </td>
+            <td>
+                @(item.Title)
+            </td>
 
-                    <td>
-                        @(item.Show ? "是" : "否")
-                    </td>
-                    <td>
-                        @(item.Sort)
-                    </td>
-                    <td>
-                        @(item.CreatedTime)
-                    </td>
-                    <td class="editbtn">
-                        <a href="/user/aboutus/edit/@(item.Id)">编辑</a> |
-                        <a href="javascript:del(@(item.Id))">删除</a>
-                    </td>
-                </tr>
+            <td>
+                @(item.Show ? "是" : "否")
+            </td>
+            <td>
+                @(item.Sort)
+            </td>
+            <td>
+                @(item.CreatedTime)
+            </td>
+            <td>
+                @{
+                    if (item.Status == -1)
+                    {
+                        <font style="color:red;">审核失败</font>
+                    }
+                    else
+                    {
+                        @(item.StatusStr)
+                    }
+                }
+            </td>
+            <td class="editbtn">
+                <a href="/user/aboutus/edit/@(item.Id)">编辑</a> |
+                <a href="javascript:del(@(item.Id))">删除</a>
+            </td>
+        </tr>
             }
         }
 

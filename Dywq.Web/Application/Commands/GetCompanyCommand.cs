@@ -67,6 +67,7 @@ namespace Dywq.Web.Application.Commands
             company.CompanyId = _company.Id;
             company.Logo = _company.Logo;
             company.Name = _company.Name;
+            company.Status = _company.Status;
 
             var groups = await _companyFieldGroupRepository.Set().OrderBy(x => x.Sort).ToListAsync();
             var fields = await _companyFieldRepository.Set().OrderBy(x => x.Sort).ToListAsync();

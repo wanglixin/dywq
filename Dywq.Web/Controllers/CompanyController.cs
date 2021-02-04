@@ -8,6 +8,7 @@ using Dywq.Web.Application.Commands.CompanyNews;
 using Dywq.Web.Application.Commands.Cooperation;
 using Dywq.Web.Application.Commands.Expert;
 using Dywq.Web.Application.Commands.Financing;
+using Dywq.Web.Application.Commands.Investment;
 using Dywq.Web.Application.Commands.Purchase;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -40,7 +41,7 @@ namespace Dywq.Web.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-            var result = await _mediator.Send(new GetCompanyNewsCommand() { Id = id, Status = 2, Show = true }, HttpContext.RequestAborted);
+            var result = await _mediator.Send(new GetCompanyNewsCommand() { Id = id, Status = 1, Show = true }, HttpContext.RequestAborted);
 
             return View(result?.Data?.FirstOrDefault());
         }
@@ -71,7 +72,7 @@ namespace Dywq.Web.Controllers
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 Show = true,
-                Status = 2,
+                Status = 1,
                 TypeId = Id.ToString()
             }, HttpContext.RequestAborted);
             return View("CooperationList", pageData);
@@ -87,10 +88,49 @@ namespace Dywq.Web.Controllers
                 PageIndex = 1,
                 PageSize = 1,
                 Show = true,
-                Status = 2
+                Status = 1
             }, HttpContext.RequestAborted);
             return View(pageData?.Data?.FirstOrDefault());
         }
+
+
+
+
+        public async Task<IActionResult> Investment(int? Id, int pageIndex = 1, int pageSize = 10)
+        {
+            if (!Id.HasValue)
+            {
+                var result = await _mediator.Send(new GetInvestmentTypesCommand() { }, HttpContext.RequestAborted);
+                return View(result);
+            }
+
+            var pageData = await _mediator.Send(new GetInvestmentInfosCommand()
+            {
+                LinkUrl = $"/Company/Investment/{Id}?PageIndex=__id__&PageSize={pageSize}",
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Show = true,
+                Status = 1,
+                TypeId = Id.ToString()
+            }, HttpContext.RequestAborted);
+            return View("InvestmentList", pageData);
+        }
+
+
+        [Route("/Company/Investment/Detail/{id}")]
+        public async Task<IActionResult> InvestmentDetail(int Id)
+        {
+            var pageData = await _mediator.Send(new GetInvestmentInfosCommand()
+            {
+                Id = Id,
+                PageIndex = 1,
+                PageSize = 1,
+                Show = true,
+                Status = 1
+            }, HttpContext.RequestAborted);
+            return View(pageData?.Data?.FirstOrDefault());
+        }
+
 
 
 
@@ -103,7 +143,7 @@ namespace Dywq.Web.Controllers
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 Show = true,
-                Status = 2,
+                Status = 1,
             }, HttpContext.RequestAborted);
             return View(pageData);
         }
@@ -117,7 +157,7 @@ namespace Dywq.Web.Controllers
                 PageIndex = 1,
                 PageSize = 1,
                 Show = true,
-                Status = 2,
+                Status = 1,
                 Id = id
             }, HttpContext.RequestAborted);
             return View(pageData?.Data?.FirstOrDefault());
@@ -130,7 +170,7 @@ namespace Dywq.Web.Controllers
         {
             var data = await _mediator.Send(new GetAllExpertsCommand()
             {
-
+                Status = 1
             }, HttpContext.RequestAborted);
             return View(data);
         }
@@ -144,7 +184,8 @@ namespace Dywq.Web.Controllers
                 Id = id,
                 PageIndex = 1,
                 PageSize = 1,
-                Show = true
+                Show = true,
+                Status = 1
 
             }, HttpContext.RequestAborted);
             return View("ExpertDetail", data?.Data?.FirstOrDefault());
@@ -160,7 +201,7 @@ namespace Dywq.Web.Controllers
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 Show = true,
-                Status = 2,
+                Status = 1,
                 Type = type
             }, HttpContext.RequestAborted);
             return View(pageData);
@@ -176,7 +217,7 @@ namespace Dywq.Web.Controllers
                 PageIndex = 1,
                 PageSize = 1,
                 Show = true,
-                Status = 2
+                Status = 1
             }, HttpContext.RequestAborted);
             return View(pageData?.Data?.FirstOrDefault());
         }

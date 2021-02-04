@@ -19,19 +19,19 @@ namespace Dywq.Web.Areas.User.Controllers
         {
 
         }
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> Edit(int? Id)
         {
             if (Id.HasValue)
             { //修改
                 var result = await _mediator.Send(new GetNoticeNewsCommand() { Id = Id.Value }, HttpContext.RequestAborted);
-                return View(result?.Data?.FirstOrDefault()); 
+                return View(result?.Data?.FirstOrDefault());
             }
             return View();
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> List(GetNoticeNewsCommand cmd)
         {
             cmd.LinkUrl = $"/user/news/list?PageIndex=__id__&PageSize={cmd.PageSize}";

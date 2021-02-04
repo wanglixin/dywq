@@ -71,6 +71,7 @@ namespace Dywq.Web.Application.Commands
 
 
             user.LoginCount++;
+            user.LastLoginTime = DateTime.Now;
             await _userRepository.UpdateAsync(user);
 
             var dto = new LoginUserDTO();

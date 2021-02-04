@@ -93,12 +93,7 @@
                         @(item.CreatedTime)
                     </td>
                     <td class="editbtn">
-                        @{
-                            if (user.Type == 2 && (item.Status == 0 || item.Status == -1))
-                            {
-                                <a href="javascript:submitCheck(@(item.Id));">提交审核</a> @Html.Raw("|")
-                            }
-                        }
+                      
                         <a href="/user/financing/editC/@(item.Id)">编辑</a>
                         |
                         <a href="javascript:del(@(item.Id))">删除</a>

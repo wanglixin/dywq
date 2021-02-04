@@ -20,7 +20,7 @@ namespace Dywq.Web.Areas.User.Controllers
         {
 
         }
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> Edit(int? Id)
         {
             if (Id.HasValue)
@@ -32,7 +32,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin+","+ Common.Role.Editor)]
         public async Task<IActionResult> List(GetAboutUsCommand cmd)
         {
             cmd.LinkUrl = $"/aboutus/news/list?PageIndex=__id__&PageSize={cmd.PageSize}";

@@ -23,7 +23,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> Add(GetCompanyFieldsCommand cmd)
         {
             var fields = await _mediator.Send(cmd, HttpContext.RequestAborted);
@@ -32,7 +32,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin+","+ Common.Role.Editor)]
         public async Task<IActionResult> List(GetCompanysCommand cmd)
         {
             cmd.LinkUrl = $"/user/company/list/?PageIndex=__id__&PageSize={cmd.PageSize}&key={cmd.Key}";
@@ -42,7 +42,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> Edit(GetCompanyCommand cmd)
         {
 

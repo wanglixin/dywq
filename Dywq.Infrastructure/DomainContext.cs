@@ -57,6 +57,10 @@ namespace Dywq.Infrastructure
             modelBuilder.ApplyConfiguration(new CompanyNewsConfiguration());
 
 
+            modelBuilder.ApplyConfiguration(new InvestmentInfoEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new InvestmentTypeEntityTypeConfiguration());
+
+
             #endregion
             base.OnModelCreating(modelBuilder);
         }

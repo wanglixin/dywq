@@ -76,15 +76,16 @@ namespace Dywq.Web.Application.Commands.Purchase
 
             if (request.Status != -999)
             {
-                if (request.Status == -888)
-                {
-                    sb.Add($"Status in (1,2,-1)");
-                }
-                else
-                {
-                    sb.Add($"Status = " + request.Status);
-                }
-                
+                //if (request.Status == -888)
+                //{
+                //    sb.Add($"Status in (1,2,-1)");
+                //}
+                //else
+                //{
+                //    sb.Add($"Status = " + request.Status);
+                //}
+                sb.Add($"Status = " + request.Status);
+
             }
 
             if (request.CompanyId != 0)

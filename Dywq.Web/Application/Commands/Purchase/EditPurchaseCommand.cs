@@ -41,7 +41,7 @@ namespace Dywq.Web.Application.Commands.Purchase
 
 
         [Required(ErrorMessage = "手机号不能为空")]
-        [RegularExpression(@"^1\d{10}$",ErrorMessage ="手机号码格式不正确")]
+        [RegularExpression(@"^1\d{10}$", ErrorMessage = "手机号码格式不正确")]
         /// <summary>
         /// 手机号
         /// </summary>
@@ -64,7 +64,7 @@ namespace Dywq.Web.Application.Commands.Purchase
 
 
         [Required(ErrorMessage = "请选择审核状态")]
-        [Range(-1, 2, ErrorMessage = "请选择审核状态")]
+        [Range(-1, 1, ErrorMessage = "请选择审核状态")]
         /// <summary>
         /// 0:提交信息审核，待审核 1：审核通过 -1：审核失败
         /// </summary>
@@ -129,7 +129,7 @@ namespace Dywq.Web.Application.Commands.Purchase
 
                 var item = new Domain.Purchase.Purchase()
                 {
-                   
+
                     Contacts = request.Contacts,
                     Content = request.Content,
                     Mobile = request.Mobile,
@@ -140,7 +140,7 @@ namespace Dywq.Web.Application.Commands.Purchase
                     Type = type
                 };
 
-                if (user.Type == 0 || user.Type == 2)
+                if (user.Type == 0)//|| user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
@@ -152,11 +152,11 @@ namespace Dywq.Web.Application.Commands.Purchase
                 }
                 else
                 {
-                    item.Status = 2;
+                    item.Status = 1;
                 }
-                
 
-               
+
+
                 await _purchaseRepository.AddAsync(item);
             }
             else
@@ -168,7 +168,7 @@ namespace Dywq.Web.Application.Commands.Purchase
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
 
-                if (user.Type == 0 || user.Type == 2)
+                if (user.Type == 0)//|| user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
@@ -189,8 +189,8 @@ namespace Dywq.Web.Application.Commands.Purchase
                     {
                         return Result.Failure($"当前状态不能修改");
                     }
-             
-                   // item.CompanyId = company_user.CompanyId;
+
+                    // item.CompanyId = company_user.CompanyId;
                     item.Contacts = request.Contacts;
                     item.Content = request.Content;
                     item.Mobile = request.Mobile;
@@ -199,20 +199,20 @@ namespace Dywq.Web.Application.Commands.Purchase
                     item.Status = 0;
                     item.Type = type;
                 }
-                else if (user.Type == 2) //编辑
-                {
-                    if (item.Status != -1 && item.Status != 0)
-                    {
-                        return Result.Failure($"当前状态不能修改");
-                    }
-                    item.Contacts = request.Contacts;
-                    item.Content = request.Content;
-                    item.Mobile = request.Mobile;
-                    item.ProductName = request.ProductName;
-                    item.Show = false;
-                    item.Status = 0;
-                    item.Type = type;
-                }
+                //else if (user.Type == 2) //编辑
+                //{
+                //    if (item.Status != -1 && item.Status != 0)
+                //    {
+                //        return Result.Failure($"当前状态不能修改");
+                //    }
+                //    item.Contacts = request.Contacts;
+                //    item.Content = request.Content;
+                //    item.Mobile = request.Mobile;
+                //    item.ProductName = request.ProductName;
+                //    item.Show = false;
+                //    item.Status = 0;
+                //    item.Type = type;
+                //}
                 else if (user.Type == 1) //管理员修改
                 {
 

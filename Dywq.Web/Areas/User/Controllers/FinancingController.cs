@@ -57,7 +57,7 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = Common.Role.User+","+ Common.Role.Editor)]
+        [Authorize(Roles = Common.Role.User)]
         public async Task<IActionResult> ListC(GetFinancingsCommand cmd)
         {
             var user = this.CurrentUser;

@@ -3,6 +3,7 @@ using Dywq.Domain.CompanyAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Commpany;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -27,6 +28,8 @@ namespace Dywq.Web.Application.Commands
         public string Name { get; set; }
 
         public IEnumerable<FieldDataItemDto> FieldDataItems { get; set; }
+
+        public LoginUserDTO LoginUser { get; set; }
     }
 
 
@@ -81,13 +84,24 @@ namespace Dywq.Web.Application.Commands
             //    if (exist) return Result.Failure("企业名称重复");
             //}
 
-            if (await _companyRepository.AnyAsync(x => x.Name == request.Name&& x.Id != request.CompanyId)) return Result.Failure("企业名称重复");
+            if (await _companyRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.CompanyId)) return Result.Failure("企业名称重复");
 
 
             var company = await _companyRepository.Set().FindAsync(request.CompanyId);
             company.Logo = request.Logo;
             company.Name = request.Name;
 
+            if (request.LoginUser.Type == 2 && company.Status != -1)
+            {
+                return Result.Failure("当前状态不能编辑");
+
+            }
+
+            if (request.LoginUser.Type == 2)
+            {
+                company.Status = 0;
+
+            }
             await _companyRepository.UpdateAsync(company, cancellationToken);
 
             var ret = await _companyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

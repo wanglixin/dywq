@@ -4,6 +4,7 @@ using Dywq.Domain.News;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -50,6 +51,14 @@ namespace Dywq.Web.Application.Commands.Site
         [RegularExpression("^[0|1]+$", ErrorMessage = "显示值错误")]
         public string Show { get; set; } = "1";
 
+        /// <summary>
+        ///  0:默认 待审核 1：审核成功 -1：审核失败
+        /// </summary>
+        [Range(-1, 1, ErrorMessage = "审核状态错误")]
+        public string Status { get; set; } = "0";
+
+        public LoginUserDTO LoginUser { get; set; }
+
     }
 
 
@@ -83,8 +92,13 @@ namespace Dywq.Web.Application.Commands.Site
                     Show = show,
                     Sort = sort,
                     Title = request.Title,
-                    Pic = request.Pic
+                    Pic = request.Pic,
+                    Status = 0
                 };
+                if (request.LoginUser.Type == 1)
+                {
+                    item.Status = 1;
+                }
                 await _aboutUsRepository.AddAsync(item);
             }
             else
@@ -101,6 +115,18 @@ namespace Dywq.Web.Application.Commands.Site
                 item.Sort = sort;
                 item.Title = request.Title;
                 item.Pic = request.Pic;
+
+
+
+                if (request.LoginUser.Type == 1)
+                {
+                    item.Status = Convert.ToInt32(request.Status);
+                }
+                else
+                {
+                    item.Status = 0;
+                }
+
                 await _aboutUsRepository.UpdateAsync(item);
 
             }

@@ -1,0 +1,82 @@
+﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Investment.InvestmentInfoDTO>
+@using Dywq.Infrastructure.Core.Extensions;
+
+@section head{
+    <link href="~/css/index3.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .paginabox .count {
+            padding: 5px;
+            margin: 5px;
+            display: inline-block;
+            min-width: 32px;
+            height: 32px;
+            text-align: center;
+            color: rgba(102, 102, 102, 1);
+            font-size: 14px;
+            background: #fff;
+            border-radius: 6px;
+        }
+
+        .sec_tab a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .sec_tab li.tab_active a {
+            color: white;
+        }
+    </style>
+
+}
+<div class="container">
+    <div id="banner">
+        <img src="" alt="">
+        <h4>招建安环</h4>
+    </div>
+</div>
+<!-- sec -->
+<section class="content_sec">
+
+
+    <div class="container">
+        <ul class="tab_con">
+            @{
+                if (Model.Data != null)
+                {
+                    foreach (var item in Model.Data)
+                    {
+                        <li>
+                            <div class="tab_title">
+                                <div class="title_left">
+                                    <div class="ling"></div>
+                                    <h2><a href="/Company/Investment/Detail/@(item.Id)">@(item.Title.Cut(40))</a></h2>
+                                </div>
+                                <div class="title_right">发布日期：@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
+                            </div>
+                            <p>@(item.Content.Cut(300))</p>
+                        </li>
+                    }
+                }
+            }
+
+
+        </ul>
+
+
+    </div>
+
+</section>
+
+<section class="paginabox">
+    @Html.Raw(Model?.Pager)
+</section>
+
+
+
+
+@section js{
+
+
+}

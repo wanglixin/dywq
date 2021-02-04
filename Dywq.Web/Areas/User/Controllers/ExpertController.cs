@@ -23,7 +23,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> EditType(int? Id)
         {
             if (Id.HasValue)
@@ -35,7 +35,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> TypeList(GetExpertTypesCommand cmd)
         {
             cmd.LinkUrl = $"/user/expert/typeList?PageIndex=__id__&PageSize={cmd.PageSize}";
@@ -44,11 +44,11 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> Edit(int? Id)
         {
 
-            var types = await _mediator.Send(new GetExpertTypesCommand() {  PageSize=int.MaxValue }, HttpContext.RequestAborted);
+            var types = await _mediator.Send(new GetExpertTypesCommand() { PageSize = int.MaxValue }, HttpContext.RequestAborted);
 
             ViewBag.types = types.Data;
 
@@ -63,7 +63,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> List(GetExpertsCommand cmd)
         {
             cmd.LinkUrl = $"/user/expert/list?PageIndex=__id__&PageSize={cmd.PageSize}";

@@ -1,0 +1,163 @@
+﻿@using Dywq.Infrastructure.Core.Extensions;
+@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Investment.InvestmentInfoDTO>
+@section head{
+    <link href="~/css/index10.css" rel="stylesheet" />
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .popbox .list {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+}
+
+
+<h2>招建安环</h2>
+<div class="tools">
+    <div class="left_btns">
+        <div class="addbtn">
+            <div class="add_left">+</div>
+            <span class="add_txt"><a href="/user/investment/edit">新增</a></span>
+        </div>
+        @*<button class="btn-push higer_search" onclick="push();">批量推送</button>*@
+    </div>
+
+    <div class="right_btn">
+        <form action="/user/user/list">
+            <div class="work_input">
+
+                @*<div class="input-group search_con">
+                        <input type="text" class="form-control" value="@(Context.Request.Query["key"])" name="key" placeholder="请输入用户名">
+                    </div>
+                    <button class="btn btn-primary " type="submit">搜索</button>*@
+
+                @*<button class="btn btn-primary higer_search" type="button"><a href="./index11.html" style="color: #fff;">高级搜索</a></button>*@
+            </div>
+        </form>
+    </div>
+</div>
+<!-- table -->
+<table id="table_con">
+    <tr class="head">
+        <th>Id</th>
+
+        <th>类型</th>
+        <th>标题</th>
+
+        <th>是否显示</th>
+        <th>排序</th>
+        <th>添加时间</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    @{
+        if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+        <tr>
+
+            <td>
+                @(item.Id)
+            </td>
+
+            <td>
+                @(item.InvestmentTypeName)
+            </td>
+            <td>
+                @(item.Title.Cut(20))
+            </td>
+
+            <td>
+                @(item.Show ? "是" : "否")
+            </td>
+            <td>
+                @(item.Sort)
+            </td>
+            <td>
+                @(item.CreatedTime)
+            </td>
+            <td>
+                @{
+                    if (item.Status == -1)
+                    {
+                        <font style="color:red;">审核失败</font>
+                    }
+                    else
+                    {
+                        @(item.StatusStr)
+                    }
+                }
+
+            </td>
+            <td class="editbtn">
+                <a href="/user/investment/edit/@(item.Id)">审核</a> |
+                <a href="javascript:del(@(item.Id))">删除</a>
+            </td>
+        </tr>
+            }
+        }
+
+    }
+
+
+</table>
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>
+
+
+<!-- pop -->
+<div class="popbox">
+    <div class="list">
+
+    </div>
+
+    <!-- 底部推送 -->
+    <div class="push_btns">
+        <button class="push_btn_per btn push_btn_cancel">取消</button>
+        @*<button class="push_btn_per btn push_btn_confirm">推送</button>*@
+    </div>
+
+</div>
+
+
+@section js{
+    <script type="text/javascript">
+        var config = {
+            UserId: 0,
+            CompanyId: 0
+        };
+
+        var del = function (id, obj) {
+
+            if (!confirm("确定删除"))
+                return;
+            $.ajax({
+                url: '/api/investment/delete',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ Id: id }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("删除成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+
+        }
+
+
+    </script>
+
+}

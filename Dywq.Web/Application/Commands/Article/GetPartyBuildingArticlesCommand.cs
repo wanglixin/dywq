@@ -24,6 +24,8 @@ namespace Dywq.Web.Application.Commands.Article
 
 
         public bool? Show { get; set; } = null;
+
+        public int? Status { get; set; } = null;
     }
 
 
@@ -58,6 +60,12 @@ namespace Dywq.Web.Application.Commands.Article
                 sb.Add($"Show = " + (request.Show.Value ? 1 : 0));
             }
 
+            if (request.Status.HasValue)
+            {
+                sb.Add($"Status = " + request.Status.Value);
+            }
+
+
             var where = string.Join(" and ", sb);
 
 
@@ -83,7 +91,8 @@ namespace Dywq.Web.Application.Commands.Article
                 Source = x.Source,
                 Subtitle = x.Subtitle,
                 ThemeTitle = x.ThemeTitle,
-                UpdatedTime = x.UpdatedTime
+                UpdatedTime = x.UpdatedTime,
+                Status = x.Status
             });
             return PageResult<PartyBuildingArticleDTO>.Success(data, count, request.PageIndex, request.PageSize, request.LinkUrl);
 

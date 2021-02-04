@@ -24,7 +24,7 @@ namespace Dywq.Web.Controllers.Api
 
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin+","+ Common.Role.Editor)]
         [HttpPost]
         public async Task<Result> EditExpertType(EditExpertTypeCommand cmd)
         {
@@ -40,10 +40,11 @@ namespace Dywq.Web.Controllers.Api
             return result;
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         [HttpPost]
         public async Task<Result> Edit(EditExpertCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
         }

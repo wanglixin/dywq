@@ -51,5 +51,25 @@ namespace Dywq.Web.Dto.Article
         /// 来源
         /// </summary>
         public string Source { get; set; }
+
+        /// <summary>
+        ///  0:默认 待审核 1：审核成功 -1：审核失败
+        /// </summary>
+        public int Status { get; set; }
+
+
+        public string StatusStr
+        {
+            get
+            {
+                return Status switch
+                {
+                    0 => "待审核",
+                    1 => "审核通过",
+                    -1 => "审核失败",
+                    _ => "未知状态",
+                };
+            }
+        }
     }
 }

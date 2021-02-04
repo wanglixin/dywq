@@ -46,6 +46,9 @@ namespace Dywq.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Subtitle")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
@@ -92,6 +95,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<string>("Source")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("ThemeTitle")
                         .HasColumnType("nvarchar(200)")
@@ -581,6 +587,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -715,6 +724,81 @@ namespace Dywq.Infrastructure.Migrations
                     b.ToTable("Guestbook");
                 });
 
+            modelBuilder.Entity("Dywq.Domain.InvestmentAggregate.InvestmentInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InvestmentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Show")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvestmentInfo");
+                });
+
+            modelBuilder.Entity("Dywq.Domain.InvestmentAggregate.InvestmentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvestmentType");
+                });
+
             modelBuilder.Entity("Dywq.Domain.News.NoticeNews", b =>
                 {
                     b.Property<int>("Id")
@@ -741,6 +825,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<string>("Source")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(50)")
@@ -833,6 +920,9 @@ namespace Dywq.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -929,6 +1019,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<string>("IDCard")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<DateTime?>("LastLoginTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("LoginCount")
                         .HasColumnType("int");

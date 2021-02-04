@@ -55,6 +55,7 @@
         <th>类型</th>
         <th>企业</th>
         <th>创建时间</th>
+        <th>最后登录时间</th>
         <th>登陆次数</th>
         <th>操作</th>
     </tr>
@@ -63,36 +64,39 @@
         {
             foreach (var item in Model.Data)
             {
-                <tr>
+        <tr>
 
-                    <td>
-                        @(item.Id)
-                    </td>
-                    <td>
-                        @(item.UserName)
-                    </td>
-                    <td>
-                        @(item.TypeStr)
-                    </td>
-                    <td>
-                        @((item.Type == 0 || item.Type == 2) ? item.CompanyName : "--")
-                    </td>
-                    <td>
-                        @(item.CreatedTime)
-                    </td>
-                    <td>
-                        @(item.LoginCount)
-                    </td>
-                    <td class="editbtn">
-                        @{
-                            if (item.Type == 0 || item.Type == 2)
-                            {
-                                <a href="javascript:push(@(item.Id),@(item.CompanyId))">@(item.CompanyId == 0 ? "绑定企业" : "换绑企业")</a> @Html.Raw("|")
-                            }
-                        }
-                        <a href="/user/user/edit?id=@(item.Id)">编辑</a> | <a href="javascript:del(@(item.Id),this)">删除</a>
-                    </td>
-                </tr>
+            <td>
+                @(item.Id)
+            </td>
+            <td>
+                @(item.UserName)
+            </td>
+            <td>
+                @(item.TypeStr)
+            </td>
+            <td>
+                @((item.Type == 0 || item.Type == 2) ? item.CompanyName : "--")
+            </td>
+            <td>
+                @(item.CreatedTime)
+            </td>
+            <td>
+                @(item.LastLoginTime)
+            </td>
+            <td>
+                @(item.LoginCount)
+            </td>
+            <td class="editbtn">
+                @{
+                    if (item.Type == 0)
+                    {
+                        <a href="javascript:push(@(item.Id),@(item.CompanyId))">@(item.CompanyId == 0 ? "绑定企业" : "换绑企业")</a> @Html.Raw("|")
+                    }
+                }
+                <a href="/user/user/edit?id=@(item.Id)">编辑</a> | <a href="javascript:del(@(item.Id),this)">删除</a>
+            </td>
+        </tr>
             }
         }
 

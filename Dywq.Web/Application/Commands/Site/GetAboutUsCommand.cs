@@ -27,6 +27,7 @@ namespace Dywq.Web.Application.Commands.Site
         public string LinkUrl { get; set; }
 
         public bool? Show { get; set; } = null;
+        public int? Status { get; set; } = null;
     }
 
 
@@ -59,6 +60,11 @@ namespace Dywq.Web.Application.Commands.Site
                 sb.Add($"Show = " + (request.Show.Value ? 1 : 0));
             }
 
+            if (request.Status.HasValue)
+            {
+                sb.Add($"Status = " + request.Status.Value);
+            }
+
             var where = string.Join(" and ", sb);
 
 
@@ -86,7 +92,8 @@ namespace Dywq.Web.Application.Commands.Site
                 Sort = x.Sort,
                 Pic = x.Pic,
                 Title = x.Title,
-                UpdatedTime = x.UpdatedTime
+                UpdatedTime = x.UpdatedTime,
+                Status = x.Status
             }
             );
 

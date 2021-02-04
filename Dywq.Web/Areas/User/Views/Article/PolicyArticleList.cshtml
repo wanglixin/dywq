@@ -51,6 +51,7 @@
         <th>是否显示</th>
         <th>排序</th>
         <th>发布时间</th>
+        <th>状态</th>
         <th>操作</th>
     </tr>
     @{
@@ -80,6 +81,18 @@
             </td>
             <td>
                 @(item.CreatedTime)
+            </td>
+            <td>
+                @{
+                    if (item.Status == -1)
+                    {
+                        <font style="color:red;">审核失败</font>
+                    }
+                    else
+                    {
+                        @(item.StatusStr)
+                    }
+                }
             </td>
             <td class="editbtn">
                 <a href="/user/article/EditPolicyArticle/@(item.Id)">编辑</a> |

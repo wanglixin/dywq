@@ -45,6 +45,7 @@ namespace Dywq.Web.Controllers
 
             cmd.TypeId = typeId;
             cmd.Show = true;
+            cmd.Status = 1;
             cmd.LinkUrl = $"/article/policy?typeId={typeId}&PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
 
@@ -58,7 +59,7 @@ namespace Dywq.Web.Controllers
 
         public async Task<IActionResult> PolicyDetail(int id, string _source = "")
         {
-            var result = await _mediator.Send(new GetPolicyArticlesCommand() { Id = id }, HttpContext.RequestAborted);
+            var result = await _mediator.Send(new GetPolicyArticlesCommand() { Id = id, Status = 1 }, HttpContext.RequestAborted);
 
             if ("user" == _source && this.CurrentUser != null)
             {

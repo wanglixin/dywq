@@ -74,9 +74,9 @@ namespace Dywq.Web.Application.Commands.Guestbook
             var replyId = string.IsNullOrWhiteSpace(request.ReplyId) ? 0 : Convert.ToInt32(request.ReplyId);
             if (replyId > 0)  //回复
             {
-                if (user.Type != 1)
+                if (user.Type != 1 && user.Type != 2)
                 {
-                    return Result.Failure($"只能管理员才能回复");
+                    return Result.Failure($"只能管理员和编辑才能回复");
                 }
 
 

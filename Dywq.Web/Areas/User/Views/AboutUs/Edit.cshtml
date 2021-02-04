@@ -1,6 +1,6 @@
 ﻿@model Dywq.Web.Dto.Site.AboutUsDTO
 @{
-
+    var user = ViewBag.CurrentUser as Dywq.Web.Dto.User.LoginUserDTO;
 }
 @section head{
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -51,7 +51,36 @@
     <div class="field-group">
         <fieldset>
             <legend>填写信息</legend>
+            @{
+                if (Model != null)
+                {
+                    <div class="field-item " data-required="true">
+                        <span>当前状态</span>
+                        <div class="tips">@(Model?.StatusStr)</div>
+                    </div>
 
+
+                    if (user.Type == 1)
+                    {
+                        <div class="field-item choice">
+                            <span>审核</span>
+
+                            <div class="cb">
+                                <div class="cb-item">
+                                    <input name="Status" id="rd_-1" type="radio" value="-1" @(-1 == Model?.Status ? "checked=\"checked\"" : "")> <label for="rd_-1">不通过</label>
+                                </div>
+                                <div class="cb-item">
+                                    <input name="Status" id="rd_1" type="radio" value="1" @(1 == Model?.Status ? "checked=\"checked\"" : "")> <label for="rd_1">通过</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+
+
+                }
+            }
             <div class="field-item ">
                 <span>标题</span>
                 <input type="text" name="Title" value="@(Model?.Title)" placeholder=" 必填">
@@ -85,26 +114,29 @@
                     </div>
                 }
             }
+            @{
+                if (user.Type == 1)
+                {
+                    <div class="field-item ">
+                        <span>显示</span>
+                        <select name="Show">
+                            <option value="1" @(Model?.Show == true ? "selected=\"selected\"" : "")>
+                                是
+                            </option>
+                            <option value="0" @(Model?.Show == false ? "selected=\"selected\"" : "")>
+                                否
+                            </option>
+                        </select>
 
-            <div class="field-item ">
-                <span>显示</span>
-                <select name="Show">
-                    <option value="1" @(Model?.Show == true ? "selected=\"selected\"" : "")>
-                        是
-                    </option>
-                    <option value="0" @(Model?.Show == false ? "selected=\"selected\"" : "")>
-                        否
-                    </option>
-                </select>
+                    </div>
 
-            </div>
+                    <div class="field-item ">
+                        <span>排序</span>
+                        <input type="number" name="Sort" value="@(Model==null?0:Model?.Sort)" />
+                    </div>
 
-            <div class="field-item ">
-                <span>排序</span>
-                <input type="number" name="Sort" value="@(Model==null?0:Model?.Sort)" />
-            </div>
-
-
+                }
+            }
 
 
 
@@ -129,13 +161,13 @@
                     return;
                 } else {
                     alert("保存成功");
-                     backAndRefresh();
+                    backAndRefresh();
                 }
 
             });
 
 
-             $("#btnUpload").uploadImg(function (r, target) {
+            $("#btnUpload").uploadImg(function (r, target) {
                 if (r.code == 0) {
                     var name = target.attr("data-name");
                     var preview = target.attr("data-preview");

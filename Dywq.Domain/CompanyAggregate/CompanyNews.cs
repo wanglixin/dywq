@@ -54,7 +54,7 @@ namespace Dywq.Domain.CompanyAggregate
         public bool Show { get; set; }
 
         /// <summary>
-        /// 审核状态，0：企业用户新增给编辑审核，失败后可以编辑  1：编辑提交给管理员待审核，失败后可以编辑，2：审核通过   -1：审核失败
+        /// 审核状态，0：企业用户新增给编辑审核，失败后可以编辑  1：审核通过   -1：审核失败
         /// </summary>
         public int Status { get; set; }
 

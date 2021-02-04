@@ -22,12 +22,12 @@ namespace Dywq.Web.Controllers.Api
         { }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         [HttpPost]
         public async Task<Result> Edit([FromBody]EditNoticeNewsCommand cmd)
         {
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
-
+            cmd.LoginUser = this.GetCurrentUser();
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
         }

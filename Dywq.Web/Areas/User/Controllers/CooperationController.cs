@@ -58,13 +58,13 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Admin)]
         public async Task<IActionResult> List(GetCooperationInfosCommand cmd)
         {
-            cmd.Status = -888;
+            //cmd.Status = -888;
             cmd.LinkUrl = $"/user/cooperation/list?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);
         }
 
-        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor)]
+        [Authorize(Roles = Common.Role.User)]
         public async Task<IActionResult> ListC(GetCooperationInfosCommand cmd)
         {
             var user = this.CurrentUser;

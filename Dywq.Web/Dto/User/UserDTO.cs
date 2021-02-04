@@ -39,5 +39,9 @@ namespace Dywq.Web.Dto.User
         public string Mobile { get; set; }
 
         public int LoginCount { get; set; }
+        /// <summary>
+        /// 最后登录时间
+        /// </summary>
+        public DateTime? LastLoginTime { get; set; }
     }
 }

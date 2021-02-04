@@ -32,7 +32,8 @@ namespace Dywq.Web.Controllers
                 Id = Id,
                 PageIndex = 1,
                 PageSize = 1,
-                Show = true
+                Show = true,
+                Status = 1
             }, HttpContext.RequestAborted);
             return View(pageData?.Data?.FirstOrDefault());
         }

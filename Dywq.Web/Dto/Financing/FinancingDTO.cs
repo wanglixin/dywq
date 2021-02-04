@@ -20,7 +20,7 @@ namespace Dywq.Web.Dto.Financing
 
         public string CompanyName { get; set; }
 
-    
+
 
 
         /// <summary>
@@ -57,9 +57,10 @@ namespace Dywq.Web.Dto.Financing
             {
                 return Status switch
                 {
-                    0 => "等待编辑审核",
-                    1 => "等待管理员审核",
-                    2 => "审核通过",
+                    0 => "等待审核",
+                    1 => "审核通过",
+                    //1 => "等待管理员审核",
+                    //2 => "审核通过",
                     -1 => "审核失败",
                     _ => "未知状态",
                 };

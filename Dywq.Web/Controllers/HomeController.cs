@@ -40,7 +40,7 @@ namespace Dywq.Web.Controllers
             var companyInfos = await _mediator.Send(new GetCompanyNewsCommand()
             {
                 Show = true,
-                Status = 2,
+                Status = 1,
                 PageIndex = 1,
                 PageSize = 10,
                 CompanyTypeId = type.ToString(),
@@ -54,24 +54,24 @@ namespace Dywq.Web.Controllers
 
             //惠企政策 展示惠企政策的“民企类”信息 根据实际情况写 typeid
 
-            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6, TypeId = "8" }, HttpContext.RequestAborted);
+            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6, TypeId = "8", Status = 1 }, HttpContext.RequestAborted);
             ViewBag.policyArticles = policyArticles.Data;
 
             //企业对接
-            var cooperationInfos = await _mediator.Send(new GetCooperationInfosCommand() { Show = true, PageSize = 6, Status = 2 }, HttpContext.RequestAborted);
+            var cooperationInfos = await _mediator.Send(new GetCooperationInfosCommand() { Show = true, PageSize = 6, Status = 1 }, HttpContext.RequestAborted);
             ViewBag.cooperationInfos = cooperationInfos.Data;
 
 
             //企业对接
-            var financings = await _mediator.Send(new GetFinancingsCommand() { Show = true, PageSize = 6, Status = 2 }, HttpContext.RequestAborted);
+            var financings = await _mediator.Send(new GetFinancingsCommand() { Show = true, PageSize = 6, Status = 1 }, HttpContext.RequestAborted);
             ViewBag.financings = financings.Data;
 
 
             //企业采购信息
-            var purchase0 = await _mediator.Send(new GetPurchasesCommand() { Show = true, PageSize = 8, Status = 2, PageIndex = 1, Type = 0 }, HttpContext.RequestAborted);
+            var purchase0 = await _mediator.Send(new GetPurchasesCommand() { Show = true, PageSize = 8, Status = 1, PageIndex = 1, Type = 0 }, HttpContext.RequestAborted);
             ViewBag.purchase0 = purchase0.Data;
 
-            var purchase1 = await _mediator.Send(new GetPurchasesCommand() { Show = true, PageSize = 8, Status = 2, PageIndex = 1, Type = 1 }, HttpContext.RequestAborted);
+            var purchase1 = await _mediator.Send(new GetPurchasesCommand() { Show = true, PageSize = 8, Status = 1, PageIndex = 1, Type = 1 }, HttpContext.RequestAborted);
             ViewBag.purchase1 = purchase1.Data;
 
 
@@ -80,7 +80,8 @@ namespace Dywq.Web.Controllers
             {
                 PageIndex = 1,
                 PageSize = 7,
-                Show = true
+                Show = true,
+                Status = 1
             }, HttpContext.RequestAborted);
 
             ViewBag.news = news.Data;

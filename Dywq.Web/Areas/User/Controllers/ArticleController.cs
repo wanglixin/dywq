@@ -20,7 +20,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> EditPartyBuildingArticle(int? Id)
         {
             if (Id.HasValue)
@@ -32,7 +32,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> PartyBuildingArticleList(GetPartyBuildingArticlesCommand cmd)
         {
             cmd.LinkUrl = $"/user/article/PartyBuildingArticleList?PageIndex=__id__&PageSize={cmd.PageSize}";
@@ -40,7 +40,7 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> EditPolicyArticle(int? Id)
         {
 
@@ -57,7 +57,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> PolicyArticleList(GetPolicyArticlesCommand cmd)
         {
             cmd.LinkUrl = $"/user/article/PolicyArticleList?PageIndex=__id__&PageSize={cmd.PageSize}";
@@ -75,7 +75,7 @@ namespace Dywq.Web.Areas.User.Controllers
             ViewBag.types = types;
 
             cmd.Show = true;
-            
+
             cmd.LinkUrl = $"javascript:getPolicyList(__id__)";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return PartialView(result);

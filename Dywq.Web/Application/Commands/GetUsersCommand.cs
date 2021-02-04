@@ -115,7 +115,8 @@ namespace Dywq.Web.Application.Commands
                     Type = x.Type,
                     UserName = x.UserName,
                     LoginCount = x.LoginCount,
-                    Mobile = x.Mobile
+                    Mobile = x.Mobile,
+                    LastLoginTime = x.LastLoginTime
                 };
                 var user_company = user_company_arr.FirstOrDefault(y => y.UserId == x.Id);
                 if (user_company == null)

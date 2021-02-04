@@ -27,20 +27,28 @@ namespace Dywq.Web.Controllers.Api
         }
 
         [HttpPost]
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<Result> Add([FromBody]AddCompanyCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
+
+
+
+
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
 
         }
 
         [HttpPost]
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin+","+Common.Role.Editor)]
         public async Task<Result> Edit([FromBody]EditCompanyCommand cmd)
         {
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
+
+            cmd.LoginUser = this.GetCurrentUser();
+
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
 
@@ -92,7 +100,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
         [HttpPost]
-        [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor + "," + Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
         public async Task<Result> EditCompanyNewsC(EditCompanyNewsCommand cmd)
         {
             var user = this.GetCurrentUser();
@@ -125,6 +133,19 @@ namespace Dywq.Web.Controllers.Api
             var user = this.GetCurrentUser();
             cmd.UserId = user.Id;
 
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return result;
+        }
+
+
+
+
+
+        [HttpPost]
+        [Authorize(Roles = Common.Role.Admin)]
+        public async Task<Result> CheckStatus(CheckStatusCommand cmd)
+        {
+            var user = this.GetCurrentUser();
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
         }

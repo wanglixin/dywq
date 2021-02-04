@@ -20,7 +20,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> List(GetGuestbooksCommand cmd)
         {
             cmd.LinkUrl = $"/user/guestbook/list?PageIndex=__id__&PageSize={cmd.PageSize}";
@@ -28,7 +28,7 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> Reply(int Id)
         {
             ViewBag.id = Id;

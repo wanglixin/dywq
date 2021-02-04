@@ -3,6 +3,7 @@ using Dywq.Domain.ArticleAggregate;
 using Dywq.Domain.News;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -55,6 +56,14 @@ namespace Dywq.Web.Application.Commands.News
         /// 来源
         /// </summary>
         public string Source { get; set; }
+
+        /// <summary>
+        ///  0:默认 待审核 1：审核成功 -1：审核失败
+        /// </summary>
+        [Range(-1, 1, ErrorMessage = "审核状态错误")]
+        public string Status { get; set; } = "0";
+
+        public LoginUserDTO LoginUser { get; set; }
     }
 
 
@@ -89,8 +98,13 @@ namespace Dywq.Web.Application.Commands.News
                     Sort = sort,
                     Title = request.Title,
                     Source = request.Source,
-                    Pic = request.Pic
+                    Pic = request.Pic,
+                    Status = 0
                 };
+                if (request.LoginUser.Type == 1)
+                {
+                    article.Status = 1;
+                }
                 await _noticeNewsRepository.AddAsync(article);
             }
             else
@@ -108,6 +122,17 @@ namespace Dywq.Web.Application.Commands.News
                 item.Title = request.Title;
                 item.Pic = request.Pic;
                 item.Source = request.Source;
+
+                if (request.LoginUser.Type == 1)
+                {
+                    item.Status = Convert.ToInt32(request.Status);
+                }
+                else
+                {
+                    item.Status = 0;
+                }
+
+
                 await _noticeNewsRepository.UpdateAsync(item);
 
             }

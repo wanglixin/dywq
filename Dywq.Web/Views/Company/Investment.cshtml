@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Dywq.Web.Dto.Investment.InvestmentTypeDTO>
+@section head{
+    <link href="~/css/index5.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .paginabox .count {
+            padding: 5px;
+            margin: 5px;
+            display: inline-block;
+            min-width: 32px;
+            height: 32px;
+            text-align: center;
+            color: rgba(102, 102, 102, 1);
+            font-size: 14px;
+            background: #fff;
+            border-radius: 6px;
+        }
+
+        .sec_tab a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .sec_tab li.tab_active a {
+            color: white;
+        }
+
+        .sec_con li a {
+            color: black;
+        }
+
+        .sec_title{
+            border-bottom: 1px solid #F2F2F2;
+        }
+        .ling{
+            border-radius: 14px;
+        }
+    </style>
+}
+<div class="container">
+    <div id="banner">
+        <img src="" alt="">
+        <h4> 招建安环</h4>
+    </div>
+</div>
+<!-- sec -->
+<div class="container">
+    <ul class="sec">
+        @{
+            foreach (var type in Model)
+            {
+                <li class="sec_li">
+                    <div class="sec_title">
+                                <h5>▎@(type.Name) </h5>
+                        <h6> <a href="investment/@(type.Id)"> 查看更多</a> > </h6>
+                    </div>
+                    <section class="sec_con" data-typeid="@(type.Id)">
+                        <ul>
+                            <li> 加载中...</li>
+                        </ul>
+                    </section>
+                </li>
+            }
+        }
+    </ul>
+</div>
+@section js{
+    <script type="text/javascript">
+        $(function () {
+            $(".sec_con").each(function (index, item) {
+                var typeId = $(item).data("typeid");
+                //alert(typeId);
+                var target = $(this);
+                getlist(typeId, function (r) {
+                    if (r.data != null) {
+                        var html = "";
+                        for (var i = 0; i < r.data.length; i++) {
+                            var item = r.data[i];
+                            html += "<li><div class='left_sec'><div class='ling'></div><p><a href='/Company/Investment/Detail/" + item.id + "'>" + item.title + "</a></p></div><div class='date'>" + formatDate(item.createdTime) + "</div></li>";
+                        }
+                        target.find("ul").html(html);
+                    } else {
+                        target.find("ul").html("<li>无数据.</li>");
+                    }
+                });
+            });
+        });
+
+
+        var getlist = function (type, callback) {
+            reqPost("/api/Investment/list", { TypeId: type + "" }, function (r) {
+                console.log(r);
+                callback(r);
+            })
+        }
+
+    </script>
+}

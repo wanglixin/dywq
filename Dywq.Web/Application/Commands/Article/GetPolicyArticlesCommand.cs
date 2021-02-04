@@ -29,6 +29,8 @@ namespace Dywq.Web.Application.Commands.Article
         public bool? Show { get; set; } = null;
 
         public string Key { get; set; }
+
+        public int? Status { get; set; } = null;
     }
 
 
@@ -73,6 +75,14 @@ namespace Dywq.Web.Application.Commands.Article
             {
                 sb.Add($"PolicyTypeId = " + request.TypeId);
             }
+
+            if (request.Status.HasValue)
+            {
+                sb.Add($"Status = " + request.Status.Value);
+            }
+
+
+
             var where = string.Join(" and ", sb);
 
 
@@ -103,7 +113,8 @@ namespace Dywq.Web.Application.Commands.Article
                     UpdatedTime = x.UpdatedTime,
                     PolicyTypeId = x.PolicyTypeId,
                     PolicyTypeName = types.FirstOrDefault(t => t.Id == x.PolicyTypeId)?.Name,
-                    Source = x.Source
+                    Source = x.Source,
+                    Status = x.Status
                 }
             );
 

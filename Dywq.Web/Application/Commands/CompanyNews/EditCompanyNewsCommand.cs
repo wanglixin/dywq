@@ -88,7 +88,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
 
 
         [Required(ErrorMessage = "请选择审核状态")]
-        [Range(-1, 2, ErrorMessage = "请选择审核状态")]
+        [Range(-1, 1, ErrorMessage = "请选择审核状态")]
         /// <summary>
         /// 审核状态，0 提交信息审核，待审核 1：审核通过 -1：审核失败
         /// </summary>
@@ -167,7 +167,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                 //{
                 //    return Result.Failure($"只能企业用户添加");
                 //}
-                if (user.Type == 0 || user.Type == 2)
+                if (user.Type == 0)//|| user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
@@ -178,7 +178,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                 }
                 else if (user.Type == 1)
                 {
-                    item.Status = 2;
+                    item.Status = 1;
                 }
                 await _companyNewsRepository.AddAsync(item);
             }
@@ -208,23 +208,23 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     item.Status = 0;
                     item.Title = request.Title;
                 }
-                else if (user.Type == 2) //编辑
-                {
-                    if (item.Status != -1 && item.Status != 0)
-                    {
-                        return Result.Failure($"当前状态不能修改");
-                    }
-                    item.CompanyTypeId = typeId;
-                    item.Contact = request.Contact;
-                    item.CooperationContent = request.CooperationContent;
-                    item.Introduce = request.Introduce;
-                    item.IntroduceImage = request.IntroduceImage;
-                    item.MainBusiness = request.MainBusiness;
-                    //item.Show = show;
-                    //item.Sort = sort;
-                    item.Status = 0;
-                    item.Title = request.Title;
-                }
+                //else if (user.Type == 2) //编辑
+                //{
+                //    if (item.Status != -1 && item.Status != 0)
+                //    {
+                //        return Result.Failure($"当前状态不能修改");
+                //    }
+                //    item.CompanyTypeId = typeId;
+                //    item.Contact = request.Contact;
+                //    item.CooperationContent = request.CooperationContent;
+                //    item.Introduce = request.Introduce;
+                //    item.IntroduceImage = request.IntroduceImage;
+                //    item.MainBusiness = request.MainBusiness;
+                //    //item.Show = show;
+                //    //item.Sort = sort;
+                //    item.Status = 0;
+                //    item.Title = request.Title;
+                //}
                 else if (user.Type == 1) //管理员修改
                 {
                     if (string.IsNullOrWhiteSpace(request.Status))

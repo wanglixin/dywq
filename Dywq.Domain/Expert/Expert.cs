@@ -39,6 +39,11 @@ namespace Dywq.Domain.Expert
 
         public int ExpertTypeId { get; set; }
 
+        /// <summary>
+        /// 0:默认 待审核 1：审核成功 -1：审核失败
+        /// </summary>
+        public int Status { get; set; }
+
 
     }
 }

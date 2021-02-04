@@ -1,4 +1,5 @@
 ﻿using Dywq.Domain.CooperationAggregate;
+using Dywq.Domain.InvestmentAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -33,4 +34,35 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.CompanyId);
         }
     }
+
+
+
+
+    class InvestmentTypeEntityTypeConfiguration : BaseEntityTypeConfiguration<InvestmentType, int>
+    {
+        public override void Configure(EntityTypeBuilder<InvestmentType> builder)
+        {
+            base.Configure(builder);
+            builder.ToTable("InvestmentType");
+            builder.Property(p => p.Name).HasMaxLength(50);
+            builder.Property(p => p.Sort);
+        }
+    }
+
+
+    class InvestmentInfoEntityConfiguration : BaseEntityTypeConfiguration<InvestmentInfo, int>
+    {
+        public override void Configure(EntityTypeBuilder<InvestmentInfo> builder)
+        {
+            base.Configure(builder);
+            builder.ToTable("InvestmentInfo");
+            builder.Property(p => p.InvestmentTypeId);
+            builder.Property(p => p.Title).HasMaxLength(50);
+            builder.Property(p => p.Content);
+            builder.Property(p => p.Sort);
+            builder.Property(p => p.Show);
+            builder.Property(p => p.CompanyId);
+        }
+    }
+
 }

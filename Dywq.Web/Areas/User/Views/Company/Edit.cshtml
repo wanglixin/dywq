@@ -1,4 +1,7 @@
 ﻿@model Dywq.Web.Dto.Commpany.CompanyEditDto
+@{
+    var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
+}
 @section head{
     <link href="~/css/company_add.css" rel="stylesheet" />
     <style>
@@ -9,16 +12,50 @@
         .tools {
             margin-bottom: 20px;
         }
+
+        .addbtn {
+            display: block;
+            float: left;
+            text-align: center;
+            margin-right: 10px;
+            line-height: 1.5;
+            padding-top: 5px;
+        }
+
+        .success {
+            background-color: #0094ff;
+        }
+
+        .fail {
+            background-color: #ff0000;
+        }
     </style>
 }
 
-<h2>企业信息修改</h2>
+<h2>企业信息修改 (@(Model.StatusStr))</h2>
 <div class="tools">
     <div class="left_btns">
         <div class="addbtn">
 
             <span class="add_txt"><a href="javascript:history.go(-1)">返回</a></span>
+
         </div>
+        @{
+            if (user.Type == 1)
+            {
+                <div class="addbtn success">
+
+                    <span class="add_txt "><a href="javascript:checkStatus(@Model.CompanyId,1)">审核成功</a></span>
+
+                </div>
+                <div class="addbtn fail">
+
+                    <span class="add_txt "><a href="javascript:checkStatus(@Model.CompanyId,-1)">审核失败</a></span>
+
+                </div>
+            }
+        }
+
     </div>
 
 </div>
@@ -97,7 +134,7 @@
                                     <div class="cb">
                                         @foreach (var v in field.CompanyFieldDefaultValues)
                                         {
-                                            <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" @(field?.Value?.Contains(v.Value)==true ? "checked=\"checked\" " : "") /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
+                                            <div class="cb-item"><input data-alias="@(field.Alias)" data-type="@(field.Type)" name="@(field.Id)" id="cb_@(v.Id)" type="checkbox" value="@(v.Value)" @(field?.Value?.Contains(v.Value) == true ? "checked=\"checked\" " : "") /> <label for="cb_@(v.Id)">@(v.Text)</label></div>
                                         }
                                     </div>
                                 }
@@ -291,7 +328,27 @@
         });
 
 
-
+        var checkStatus = function (id,status) {
+            var str = status == 1 ? "确定审核成功？" : "确定审核失败？";
+             if (!confirm(str))
+                return;
+               $.ajax({
+                url: '/api/Company/CheckStatus',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ CompanyId: id,Status:status}),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("操作成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+        }
 
 
     </script>

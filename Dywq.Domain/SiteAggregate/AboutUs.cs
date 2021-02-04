@@ -35,5 +35,11 @@ namespace Dywq.Domain.SiteAggregate
         /// 排序
         /// </summary>
         public int Sort { get; set; }
+
+        /// <summary>
+        /// 0:默认 待审核 1：审核成功 -1：审核失败
+        /// </summary>
+        public int Status { get; set; }
+
     }
 }

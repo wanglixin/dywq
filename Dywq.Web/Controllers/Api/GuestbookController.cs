@@ -25,7 +25,7 @@ namespace Dywq.Web.Controllers.Api
 
         }
 
-        [Authorize(Roles = Role.User + "," + Role.Admin)]
+        [Authorize(Roles = Role.User + "," + Role.Admin + "," + Role.Editor)]
         [HttpPost]
         public async Task<Result> AddGuestbook([FromBody]AddGuestbookCommand cmd)
         {
@@ -38,7 +38,7 @@ namespace Dywq.Web.Controllers.Api
 
 
 
-        [Authorize(Roles =Role.Admin)]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<Result> Delete([FromBody]DeleteGuestbookCommand cmd)
         {

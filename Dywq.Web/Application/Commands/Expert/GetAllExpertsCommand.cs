@@ -13,6 +13,7 @@ namespace Dywq.Web.Application.Commands.Expert
 {
     public class GetAllExpertsCommand : IRequest<IEnumerable<ExpertGroupDTO>>
     {
+        public int? Status { get; set; }
     }
 
 
@@ -35,8 +36,16 @@ namespace Dywq.Web.Application.Commands.Expert
 
         public override async Task<IEnumerable<ExpertGroupDTO>> Handle(GetAllExpertsCommand request, CancellationToken cancellationToken)
         {
-            var experts = await _expertRepository.SqlQueryAsync<ExpertDTO>(@"SELECT e.*,t.Name as 'ExpertTypeName'
-  FROM [Expert] as e left join expertType as t on e.ExpertTypeId = t.Id where e.show=1 order by t.Sort,e.Sort,e.Id desc");
+            var sb = new List<string>();
+            sb.Add($"e.show = 1");
+            if (request.Status.HasValue)
+            {
+                sb.Add($"e.Status = " + request.Status.Value);
+            }
+            var where = string.Join(" and ", sb);
+            var sql= @$"SELECT e.*,t.Name as 'ExpertTypeName'
+  FROM [Expert] as e left join expertType as t on e.ExpertTypeId = t.Id where {where} order by t.Sort,e.Sort,e.Id desc";
+            var experts = await _expertRepository.SqlQueryAsync<ExpertDTO>(sql);
 
             if (experts == null)
             {

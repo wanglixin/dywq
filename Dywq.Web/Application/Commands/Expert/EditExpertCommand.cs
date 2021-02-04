@@ -2,6 +2,7 @@
 using Dywq.Domain.ArticleAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -57,6 +58,14 @@ namespace Dywq.Web.Application.Commands.Expert
         /// 专家类型
         /// </summary>
         public string ExpertTypeId { get; set; }
+
+        /// <summary>
+        ///  0:默认 待审核 1：审核成功 -1：审核失败
+        /// </summary>
+        [Range(-1, 1, ErrorMessage = "审核状态错误")]
+        public string Status { get; set; } = "0";
+
+        public LoginUserDTO LoginUser { get; set; }
     }
 
 
@@ -101,8 +110,13 @@ namespace Dywq.Web.Application.Commands.Expert
                     Pic = request.Pic,
                     Name = request.Name,
                     Sort = sort,
-                    ExpertTypeId = expertTypeId
+                    ExpertTypeId = expertTypeId,
+                    Status = 0
                 };
+                if (request.LoginUser.Type == 1)
+                {
+                    item.Status = 1;
+                }
                 await _expertRepository.AddAsync(item);
             }
             else
@@ -121,6 +135,16 @@ namespace Dywq.Web.Application.Commands.Expert
                 item.Show = request.Show;
                 item.Title = request.Title;
                 item.Sort = sort;
+
+                if (request.LoginUser.Type == 1)
+                {
+                    item.Status = Convert.ToInt32(request.Status);
+                }
+                else
+                {
+                    item.Status = 0;
+                }
+
                 await _expertRepository.UpdateAsync(item);
             }
 

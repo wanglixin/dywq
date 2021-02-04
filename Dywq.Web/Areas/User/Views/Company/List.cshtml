@@ -44,6 +44,8 @@
         <th>企业性质</th>
         <th>党建情况</th>
         <th>发布时间</th>
+        <th>状态</th>
+
         <th>操作</th>
     </tr>
     @{
@@ -70,7 +72,12 @@
                     <td>
                         @(item.CreatedTime)
                     </td>
+                    <td>
+                        @(item.StatusStr)
+                    </td>
+ 
                     <td class="editbtn">
+                       
                         <a href="/user/company/edit?companyId=@(item.CompanyId)">编辑</a> | <a href="javascript:del(@(item.CompanyId),this)">删除</a>
                     </td>
                 </tr>

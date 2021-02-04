@@ -58,7 +58,7 @@ namespace Dywq.Web.Application.Commands.Cooperation
 
 
         [Required(ErrorMessage = "请选择审核状态")]
-        [Range(-1, 2, ErrorMessage = "请选择审核状态")]
+        [Range(-1, 1, ErrorMessage = "请选择审核状态")]
         /// <summary>
         /// 2:通过 -1：失败
         /// </summary>
@@ -134,7 +134,7 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     Title = request.Title,
                     Status = 0
                 };
-                if (user.Type == 0 || user.Type == 2)
+                if (user.Type == 0)// || user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
@@ -146,7 +146,7 @@ namespace Dywq.Web.Application.Commands.Cooperation
                 }
                 else
                 {
-                    item.Status = 2;
+                    item.Status = 1;
                 }
                 await _cooperationInfoRepository.AddAsync(item);
             }
@@ -158,7 +158,7 @@ namespace Dywq.Web.Application.Commands.Cooperation
                 {
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
-                if (user.Type == 0 || user.Type == 2)
+                if (user.Type == 0)//|| user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
@@ -183,17 +183,17 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     item.CooperationTypeId = typeId;
                     item.Status = 0;
                 }
-                else if (user.Type == 2) //编辑
-                {
-                    if (item.Status != -1 && item.Status != 0)
-                    {
-                        return Result.Failure($"当前状态不能修改");
-                    }
-                    item.Content = request.Content;
-                    item.Title = request.Title;
-                    item.CooperationTypeId = typeId;
-                    item.Status = 0;
-                }
+                //else if (user.Type == 2) //编辑
+                //{
+                //    if (item.Status != -1 && item.Status != 0)
+                //    {
+                //        return Result.Failure($"当前状态不能修改");
+                //    }
+                //    item.Content = request.Content;
+                //    item.Title = request.Title;
+                //    item.CooperationTypeId = typeId;
+                //    item.Status = 0;
+                //}
                 else if (user.Type == 1) //管理员修改
                 {
 

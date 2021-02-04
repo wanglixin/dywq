@@ -2,6 +2,7 @@
 using Dywq.Domain.ArticleAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -52,6 +53,15 @@ namespace Dywq.Web.Application.Commands.Article
         /// 来源
         /// </summary>
         public string Source { get; set; }
+
+
+        /// <summary>
+        ///  0:默认 待审核 1：审核成功 -1：审核失败
+        /// </summary>
+        [Range(-1, 1, ErrorMessage = "审核状态错误")]
+        public string Status { get; set; } = "0";
+
+        public LoginUserDTO LoginUser { get; set; }
     }
 
 
@@ -99,8 +109,13 @@ namespace Dywq.Web.Application.Commands.Article
                     Sort = sort,
                     ThemeTitle = request.ThemeTitle,
                     PolicyTypeId = typeId,
-                    Source = request.Source
+                    Source = request.Source,
+                    Status = 0
                 };
+                if (request.LoginUser.Type == 1)
+                {
+                    article.Status = 1;
+                }
                 await _policyArticleRepository.AddAsync(article);
             }
             else
@@ -118,6 +133,16 @@ namespace Dywq.Web.Application.Commands.Article
                 article.ThemeTitle = request.ThemeTitle;
                 article.PolicyTypeId = typeId;
                 article.Source = request.Source;
+
+
+                if (request.LoginUser.Type == 1)
+                {
+                    article.Status = Convert.ToInt32(request.Status);
+                }
+                else
+                {
+                    article.Status = 0;
+                }
 
                 await _policyArticleRepository.UpdateAsync(article);
 
