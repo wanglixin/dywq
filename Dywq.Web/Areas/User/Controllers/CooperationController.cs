@@ -64,7 +64,7 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = Common.Role.User)]
+        [Authorize(Roles = Common.Role.User+","+ Common.Role.Editor)]
         public async Task<IActionResult> ListC(GetCooperationInfosCommand cmd)
         {
             var user = this.CurrentUser;

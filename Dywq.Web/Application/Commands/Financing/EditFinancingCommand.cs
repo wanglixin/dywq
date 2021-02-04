@@ -151,7 +151,7 @@ namespace Dywq.Web.Application.Commands.Financing
                 {
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
-                if (user.Type == 0 )//|| user.Type == 2)
+                if (user.Type == 0)//|| user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
                     if (company_user == null)
@@ -165,7 +165,7 @@ namespace Dywq.Web.Application.Commands.Financing
                     }
 
                 }
-                if (user.Type == 0) //用户修改的情况
+                if (user.Type == 0 || user.Type == 2) //用户修改的情况
                 {
                     if (item.Status != -1)
                     {

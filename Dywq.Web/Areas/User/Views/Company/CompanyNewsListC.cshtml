@@ -97,12 +97,7 @@
 
                     <td class="editbtn">
                         <a href="/user/company/editCompanyNewsC?id=@(item.Id)">查看</a>
-                        @{
-                            if (user.Type == 2 && (item.Status == 0 || item.Status == -1))
-                            {
-                                <a href="javascript:submitCheck(@(item.Id));">提交审核</a>
-                            }
-                        }
+                       
                     </td>
 
                 </tr>

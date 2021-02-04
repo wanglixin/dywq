@@ -100,7 +100,7 @@ namespace Dywq.Web.Controllers.Api
         }
 
         [HttpPost]
-        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.User + "," + Common.Role.Admin+"," + Common.Role.Editor)]
         public async Task<Result> EditCompanyNewsC(EditCompanyNewsCommand cmd)
         {
             var user = this.GetCurrentUser();

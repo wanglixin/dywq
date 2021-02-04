@@ -144,7 +144,8 @@ namespace Dywq.Web.Application.Commands.Cooperation
 
                     item.CompanyId = company_user.CompanyId;
                 }
-                else
+
+                if (user.Type == 1)
                 {
                     item.Status = 1;
                 }
@@ -172,7 +173,7 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     }
 
                 }
-                if (user.Type == 0) //用户修改的情况
+                if (user.Type == 0 || user.Type == 2) //用户修改的情况
                 {
                     if (item.Status != -1)
                     {

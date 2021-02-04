@@ -191,7 +191,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
 
-                if (user.Type == 0) //用户修改的情况
+                if (user.Type == 0 || user.Type == 2) //用户修改的情况
                 {
                     if (item.Status != -1)
                     {
@@ -208,23 +208,6 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     item.Status = 0;
                     item.Title = request.Title;
                 }
-                //else if (user.Type == 2) //编辑
-                //{
-                //    if (item.Status != -1 && item.Status != 0)
-                //    {
-                //        return Result.Failure($"当前状态不能修改");
-                //    }
-                //    item.CompanyTypeId = typeId;
-                //    item.Contact = request.Contact;
-                //    item.CooperationContent = request.CooperationContent;
-                //    item.Introduce = request.Introduce;
-                //    item.IntroduceImage = request.IntroduceImage;
-                //    item.MainBusiness = request.MainBusiness;
-                //    //item.Show = show;
-                //    //item.Sort = sort;
-                //    item.Status = 0;
-                //    item.Title = request.Title;
-                //}
                 else if (user.Type == 1) //管理员修改
                 {
                     if (string.IsNullOrWhiteSpace(request.Status))
