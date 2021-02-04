@@ -124,6 +124,10 @@
                                     {
                                         @("管理员")
                                     }
+                                    else if (user.Type == 2)
+                                    {
+                                        @("编辑")
+                                    }
                                     else
                                     {
                                         @(user.CompanyName)
@@ -601,7 +605,7 @@
                     return;
                 }
                  window.location.reload();
-               
+
 
             });
 
