@@ -7,7 +7,7 @@
 /* sec */
 .sec_con{background:rgba(245,245,245,1);}
 .sec_tab{width: 100%;height: 50px;display: flex;align-items: center;margin: 0;flex-wrap: wrap;}
-.sec_tab li {width: 8.3%;height: 50px;line-height: 50px;text-align: center;font-size: 16px;color: rgba(51, 51, 51, 1);cursor: pointer;}
+.sec_tab li {width: 7.69%;height: 50px;line-height: 50px;text-align: center;font-size: 16px;color: rgba(51, 51, 51, 1);cursor: pointer;}
 .sec_tab li.tab_active{background: rgba(34, 97, 188, 1);color: #fff;}
 
 .tab_con{margin-top: 50px;}
