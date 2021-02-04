@@ -197,6 +197,19 @@
                 }
 
             });
+
+              $("#btnUpload").uploadImg(function (r, target) {
+                if (r.code == 0) {
+                    var name = target.attr("data-name");
+                    var preview = target.attr("data-preview");
+                    $("[name='" + name + "']").val(r.data);
+                    $(preview).attr("src", r.data);
+                } else {
+                    alert(r.message);
+                }
+            });
+
+
             var E = window.wangEditor;
             var editor = new E('#editor');
             editor.customConfig.uploadImgServer = '/api/baseapi/EditorUploadImg';
