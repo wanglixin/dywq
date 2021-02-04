@@ -76,7 +76,7 @@
                 @(item.TypeStr)
             </td>
             <td>
-                @((item.Type == 0 || item.Type == 2) ? item.CompanyName : "--")
+                @((item.Type == 0) ? item.CompanyName : "--")
             </td>
             <td>
                 @(item.CreatedTime)
