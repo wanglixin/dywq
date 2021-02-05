@@ -1,4 +1,5 @@
 ﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyNewsDto>
+@using Dywq.Infrastructure.Core.Extensions;
 @{
     var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
 }
@@ -71,10 +72,10 @@
                     </td>
 
                     <td>
-                        @(item.MainBusiness)
+                        @(item.MainBusiness.Cut(15))
                     </td>
                     <td>
-                        @(item.Contact)
+                        @(item.Contact.Cut(15))
                     </td>
 
                     <td>
@@ -97,7 +98,7 @@
 
                     <td class="editbtn">
                         <a href="/user/company/editCompanyNewsC?id=@(item.Id)">查看</a>
-                       
+
                     </td>
 
                 </tr>
@@ -317,15 +318,15 @@
             })
 
         }
-        
+
         var submitCheck = function (id) {
             if (!confirm("确定提交审核？"))
                 return;
-               $.ajax({
+            $.ajax({
                 url: '/api/Company/SubmitCheck',
                 type: 'POST',
                 dataType: "json",
-                data: JSON.stringify({ Id: id}),
+                data: JSON.stringify({ Id: id }),
                 headers: { 'Content-Type': 'application/json' },
                 success: function (r) {
                     console.log(r);

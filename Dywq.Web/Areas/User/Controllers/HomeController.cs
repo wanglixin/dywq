@@ -25,27 +25,38 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            if(this.CurrentUser.Role == Common.Role.User|| this.CurrentUser.Role == Common.Role.Editor)
+            if (this.CurrentUser.Role == Common.Role.User)
             {
                 var companyId = this.CurrentUser.CompanyId;
                 var obj = await _mediator.Send(new GetTodoInfoCommand() { CompanyId = companyId }, HttpContext.RequestAborted);
 
                 return View(obj);
             }
-            else
+            else if(this.CurrentUser.Role == Common.Role.Admin)
             {
                 return RedirectToAction("Statistic");
             }
-         
+            else if (this.CurrentUser.Role == Common.Role.Editor)
+            {
+                return RedirectToAction("StatisticForEditor");
+            }
+            return Content("角色类型不对");
         }
 
         [Authorize(Roles = Common.Role.Admin)]
         public async Task<IActionResult> Statistic()
         {
             var obj = await _mediator.Send(new GetAdminTodoInfoCommand() { }, HttpContext.RequestAborted);
-
             return View(obj);
         }
+
+        [Authorize(Roles = Common.Role.Editor)]
+        public async Task<IActionResult> StatisticForEditor()
+        {
+            var obj = await _mediator.Send(new GetEditorTodoInfoCommand() { }, HttpContext.RequestAborted);
+            return View(obj);
+        }
+
 
         [Authorize(Roles = Common.Role.Admin)]
         public async Task<IActionResult> StatisticInfo(GetAdminTodoInfoCommand cmd)

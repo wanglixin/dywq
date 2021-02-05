@@ -1,12 +1,10 @@
 ﻿using DotNetCore.CAP;
 using Dywq.Domain.ArticleAggregate;
-using Dywq.Domain.CompanyAggregate;
 using Dywq.Domain.InvestmentAggregate;
 using Dywq.Domain.News;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Commpany;
-using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,21 +16,11 @@ using System.Threading.Tasks;
 
 namespace Dywq.Web.Application.Commands.Message
 {
-    public class GetAdminTodoInfoCommand : IRequest<AdminStatisticInfoDto>
+    public class GetEditorTodoInfoCommand : IRequest<EditorStatisticInfoDto>
     {
-        public DateTime? Start { get; set; } = null;
-        public DateTime? End { get; set; } = null;
-
-
-   
-
-        /// <summary>
-        /// 只统计总数信息
-        /// </summary>
-      //  public bool IsTotal { get; set; } = false;
     }
 
-    public class GetAdminTodoInfoCommandHandler : BaseRequestHandler<GetAdminTodoInfoCommand, AdminStatisticInfoDto>
+    public class GetEditorTodoInfoCommanHandler : BaseRequestHandler<GetEditorTodoInfoCommand, EditorStatisticInfoDto>
     {
 
         readonly IBaseRepository<Domain.FinancingAggregate.Financing> _financingRepository;
@@ -55,9 +43,9 @@ namespace Dywq.Web.Application.Commands.Message
 
 
 
-        public GetAdminTodoInfoCommandHandler(
+        public GetEditorTodoInfoCommanHandler(
             ICapPublisher capPublisher,
-            ILogger<GetAdminTodoInfoCommandHandler> logger,
+            ILogger<GetEditorTodoInfoCommanHandler> logger,
             IBaseRepository<Domain.FinancingAggregate.Financing> financingRepository,
             IBaseRepository<Domain.CompanyAggregate.Company> companyRepository,
             IBaseRepository<Domain.CooperationAggregate.CooperationInfo> cooperationInfoRepository,
@@ -86,44 +74,31 @@ namespace Dywq.Web.Application.Commands.Message
             _policyArticleRepository = policyArticleRepository;
         }
 
-        public override async Task<AdminStatisticInfoDto> Handle(GetAdminTodoInfoCommand request, CancellationToken cancellationToken)
+        public override async Task<EditorStatisticInfoDto> Handle(GetEditorTodoInfoCommand request, CancellationToken cancellationToken)
         {
-            var info = new AdminStatisticInfoDto();
-            if (request.Start.HasValue && request.End.HasValue)
+            var info = new EditorStatisticInfoDto();
+
+
+            info = new EditorStatisticInfoDto
             {
-                var start = request.Start;
-                var end = request.End.Value.AddDays(1);
-
-                info.CooperationInfoTotalCount = await _cooperationInfoRepository.Set().CountAsync(x => x.Status == 1 && x.CreatedTime >= start && x.CreatedTime <= end);
-
-                info.PolicyArticleTotalCount = await _policyRepository.Set().CountAsync(x => x.CreatedTime >= start && x.CreatedTime <= end);
-
-                return info;
-            }
-
-            info = new AdminStatisticInfoDto
-            {
-                FinancingCount = await _financingRepository.Set().CountAsync(x => (x.Status == 0)),
+                FinancingCount = await _financingRepository.Set().CountAsync(x => (x.Status == 0 && x.CompanyId == 0)),
                 CompanyInfoCount = await _companyNewsRepository.Set().CountAsync(x => (x.Status == 0)),
-                CooperationInfoCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 0)),
-                PurchaseCount0 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) & x.Type == 0),
-                PurchaseCount1 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) & x.Type == 1),
-                CooperationInfoTotalCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 1)),
-                PolicyArticleTotalCount = await _policyRepository.Set().CountAsync(),
+                CooperationInfoCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 0 && x.CompanyId == 0)),
+                PurchaseCount0 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) && x.Type == 0 && x.CompanyId == 0),
+                PurchaseCount1 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) && x.Type == 1 && x.CompanyId == 0),
+                CooperationInfoTotalCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 1 && x.CompanyId == 0)),
+    
 
                 AboutusCount = await _aboutUsRepository.Set().CountAsync(x => x.Status == 0),
                 CompanyCount = await _companyRepository.Set().CountAsync(x => x.Status == 0),
                 ExpertCount = await _expertRepository.Set().CountAsync(x => x.Status == 0),
-                InvestmentCount = await _investmentInfoRepository.Set().CountAsync(x => x.Status == 0),
+                InvestmentCount = await _investmentInfoRepository.Set().CountAsync(x => x.Status == 0 && x.CompanyId == 0),
                 NewsCount = await _noticeNewsRepository.Set().CountAsync(x => x.Status == 0),
                 PartyBuildingArticleCount = await _partyBuildingArticleRepository.Set().CountAsync(x => x.Status == 0),
                 PolicyArticleCount = await _policyArticleRepository.Set().CountAsync(x => x.Status == 0)
-          
-
             };
             return info;
 
         }
     }
-
 }

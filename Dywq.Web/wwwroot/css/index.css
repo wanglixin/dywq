@@ -107,7 +107,7 @@
 .tabel_con_ul li {line-height: 48px;width: 25%;text-align: center;border-bottom:1px solid #F0F0F0}
 
 /* ad3 */
-.ad_sec_con{display: flex;justify-content: space-between;margin: 60px auto;}
+.ad_sec_con{display: flex;justify-content: space-between;margin: 30px auto;}
 .ad_sec{height: 80px;}
 .swiper-slide img {
     height: 393.3px;

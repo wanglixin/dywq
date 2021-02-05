@@ -15,11 +15,17 @@
     <script src="~/js/bootstrap.js" type="text/javascript"></script>
     @RenderSection("head", false)
 
+    <style>
+        #main-nav li:first-child{
+           
+        }
+    </style>
+
 
 </head>
 <body>
     <header>
-        <a href="/"><img src="~/img/admin_log.png" alt="" class="admin_logo"></a>
+        <a href="/"><img src="~/img/logo2.png" alt="" class="admin_logo"></a>
         <div class="right_top">
             <div class="user_defaultimg">
                 <img src="@(string.IsNullOrWhiteSpace(user.Logo)?"~/img/user_default/png":user.Logo)" alt="">
@@ -49,10 +55,10 @@
                     if (user.Type == 1)
                     {
                         <li>
-                            <a href="/user/home/Statistic" class="nav-header">
+                            <a href="/user/home/Statistic" class="nav-header" style="justify-content:initial;">
                                 <img src="~/img/icon4.png" alt="" class="icon">
                                 <span>我的首页</span>
-                                <img src="" alt="" class="arrow">
+                               
                             </a>
 
                         </li>
@@ -97,10 +103,10 @@
                     else if (user.Type == 2)
                     {
                         <li>
-                            <a href="/user/home/Statistic" class="nav-header">
+                            <a href="/user" class="nav-header" style="justify-content:initial;">
                                 <img src="~/img/icon4.png" alt="" class="icon">
                                 <span>我的首页</span>
-                                <img src="" alt="" class="arrow">
+
                             </a>
 
                         </li>
@@ -142,7 +148,7 @@
                     else
                     {
                         <li>
-                            <a href="/user/" class="nav-header">
+                            <a href="/user/" class="nav-header" style="justify-content:initial;">
                                 <img src="~/img/icon4.png" alt="" class="icon">
                                 <span>我的首页</span>
                                 <img src="" alt="" class="arrow">
@@ -180,6 +186,16 @@
     <script>
         $(function () {
             $(".nav-header").click(function () {
+                var target = $(this);
+              
+                var arrow = target.find("img.arrow");
+                var src = arrow.attr("src");
+                if (src.indexOf('arrow') > 0) {
+                    arrow.attr("src", "/img/yi.png");
+                } else {
+                     arrow.attr("src", "/img/arrow.png");
+                }
+                  console.log(arrow);
                 $(this).next().slideToggle();
             })
 
@@ -196,6 +212,7 @@
                         var index = url.indexOf(href);
                         console.log(index);
                         if (index > -1) {
+                            $(item).find("img.arrow").attr("src", "/img/yi.png");
                             $(_item).addClass("active");
                             $(_item).parents("ul").show();
                             return;
