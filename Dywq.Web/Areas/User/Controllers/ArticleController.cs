@@ -66,7 +66,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin+","+Common.Role.Editor)]
         public async Task<IActionResult> PolicyList(GetPolicyArticlesCommand cmd)
         {
 

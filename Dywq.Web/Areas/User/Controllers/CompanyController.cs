@@ -32,7 +32,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
 
 
-        [Authorize(Roles = Common.Role.Admin+","+ Common.Role.Editor)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> List(GetCompanysCommand cmd)
         {
             cmd.LinkUrl = $"/user/company/list/?PageIndex=__id__&PageSize={cmd.PageSize}&key={cmd.Key}";
@@ -105,7 +105,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> Search(GetCompanyFieldsCommand cmd)
         {
             var fields = await _mediator.Send(cmd, HttpContext.RequestAborted);
@@ -113,7 +113,7 @@ namespace Dywq.Web.Areas.User.Controllers
         }
 
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> GetSearchList([FromBody]SearchCompanysCommand cmd)
         {
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");

@@ -20,7 +20,7 @@ namespace Dywq.Web.Controllers.Api
         public MessageController(IMediator mediator, ILogger<MessageController> logger, IWebHostEnvironment webhostEnvironment) : base(mediator, logger, webhostEnvironment)
         { }
 
-        [Authorize(Roles = Common.Role.Admin)]
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<Result> Push(AddMessageCommand cmd)
         {
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);

@@ -30,7 +30,7 @@ namespace Dywq.Web.Application.Commands.News
 
 
 
-        [Required(ErrorMessage = "请上传图片")]
+       // [Required(ErrorMessage = "请上传图片")]
         /// <summary>
         /// 图片
         /// </summary>
