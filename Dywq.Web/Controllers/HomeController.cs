@@ -89,7 +89,7 @@ namespace Dywq.Web.Controllers
 
             //政策速递
 
-            var policys = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 7 }, HttpContext.RequestAborted);
+            var policys = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 7, Status = 1 }, HttpContext.RequestAborted);
             ViewBag.policys = policys.Data;
 
 
