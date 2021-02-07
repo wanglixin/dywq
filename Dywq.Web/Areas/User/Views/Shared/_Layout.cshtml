@@ -16,8 +16,7 @@
     @RenderSection("head", false)
 
     <style>
-        #main-nav li:first-child{
-           
+        #main-nav li:first-child {
         }
     </style>
 
@@ -58,7 +57,7 @@
                             <a href="/user/home/Statistic" class="nav-header" style="justify-content:initial;">
                                 <img src="~/img/icon4.png" alt="" class="icon">
                                 <span>我的首页</span>
-                               
+
                             </a>
 
                         </li>
@@ -151,7 +150,7 @@
                             <a href="/user/" class="nav-header" style="justify-content:initial;">
                                 <img src="~/img/icon4.png" alt="" class="icon">
                                 <span>我的首页</span>
-                                <img src="" alt="" class="arrow">
+                               
                             </a>
 
                         </li>
@@ -187,15 +186,15 @@
         $(function () {
             $(".nav-header").click(function () {
                 var target = $(this);
-              
+
                 var arrow = target.find("img.arrow");
                 var src = arrow.attr("src");
                 if (src.indexOf('arrow') > 0) {
                     arrow.attr("src", "/img/yi.png");
                 } else {
-                     arrow.attr("src", "/img/arrow.png");
+                    arrow.attr("src", "/img/arrow.png");
                 }
-                  console.log(arrow);
+                console.log(arrow);
                 $(this).next().slideToggle();
             })
 
