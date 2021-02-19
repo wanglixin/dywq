@@ -89,6 +89,37 @@ namespace Dywq.Web.Controllers.Api
         }
 
 
+
+        [Authorize]
+        public async Task<dynamic> EditorUpload(IFormFile file)
+        {
+            var ext = Path.GetExtension(file.FileName).ToLower();
+            var ext_str = ".png,.jpg,.jpeg,.gif,.bmp,.pdf,.txt,.zip,.rar,.7z,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.mp3,.mp4";
+            var list = ext_str.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            if (!list.Contains(ext)) return new { errno = -1, msg = $"该格式不允许上传：{ext}", data = new List<string>() };
+
+            try
+            {
+                var r = await Upload(file, "file");
+                if (r.Code == 0)
+                {
+
+                    return new { errno = 0, msg = "上传成功", data = r.Data };
+                }
+                else
+                {
+
+                    return new { errno = -1, msg = r.Message, data = "" };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { errno = -2, msg = ex.Message, data = "" };
+            }
+
+        }
+
+
         [Authorize]
         public async Task<dynamic> EditorUploadImg(IFormFile file)
         {

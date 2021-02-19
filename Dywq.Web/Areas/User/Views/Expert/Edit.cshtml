@@ -10,9 +10,6 @@
 
     <link href="~/css/pager.css" rel="stylesheet" />
 
-    <script src="~/wangEditor/wangEditor.js"></script>
-    <link href="~/wangEditor/wangEditor-fullscreen-plugin.css" rel="stylesheet" />
-    <script src="~/wangEditor/wangEditor-fullscreen-plugin.js"></script>
     <style>
         .add_txt a {
             color: white;
@@ -60,7 +57,6 @@
 <form id="form_data">
 
     <input type="hidden" name="Id" value="@(Model?.Id)" />
-    <input type="hidden" name="Introduction" value="@(Model?.Introduction)" />
     <div class="field-group">
         <fieldset>
             <legend>信息展示</legend>
@@ -142,10 +138,8 @@
 
             <div class="field-item ">
                 <span>描述</span>
-
-                <div id="editor" style="width: 51%;">
-                    <p>@(Html.Raw(Model?.Introduction))</p>
-                </div>
+                <textarea id="editor" style="width: 51%;">@(Html.Raw(Model?.Introduction))</textarea>
+     
             </div>
 
 
@@ -204,6 +198,8 @@
     <script type="text/javascript">
 
         $(function () {
+             var tinyID = 'editor';
+            editorInit(tinyID);
             $(".btn-save").req("#form_data", "/api/expert/edit", function (res) {
                 if (res.code != 0) {
                     alert(res.message);
@@ -213,6 +209,10 @@
                     backAndRefresh();
                 }
 
+            }, "post", function (data) {
+                var content = tinyMCE.editors[tinyID].getContent();
+                data.Introduction = content;
+                return data;
             });
             $("#btnUpload").uploadImg(function (r, target) {
                 if (r.code == 0) {
@@ -224,19 +224,6 @@
                     alert(r.message);
                 }
             });
-
-            var E = window.wangEditor;
-            var editor = new E('#editor');
-            editor.customConfig.uploadImgServer = '/api/baseapi/EditorUploadImg';
-            editor.customConfig.uploadFileName = 'file';
-            editor.customConfig.onchange = function (html) {
-                // 监控变化，同步更新到 textarea
-                console.log(html);
-                $("input[name='Introduction']").val(html);
-            }
-            editor.create();
-            E.fullscreen.init('#editor');
-
         });
 
     </script>

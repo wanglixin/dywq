@@ -8,10 +8,6 @@
     <link href="~/css/company_add.css" rel="stylesheet" />
 
     <link href="~/css/pager.css" rel="stylesheet" />
-
-    <script src="~/wangEditor/wangEditor.js"></script>
-    <link href="~/wangEditor/wangEditor-fullscreen-plugin.css" rel="stylesheet" />
-    <script src="~/wangEditor/wangEditor-fullscreen-plugin.js"></script>
     <style>
         .add_txt a {
             color: white;
@@ -59,7 +55,6 @@
 <form id="form_data">
     <input type="hidden" name="Type" value="@(type)" />
     <input type="hidden" name="Id" value="@(Model?.Id)" />
-    <input type="hidden" name="Content" value="@(Model?.Content)" />
     <input type="hidden" name="Status" value="@(Model==null?0:Model?.Status)" />
     <div class="field-group">
         <fieldset>
@@ -74,9 +69,9 @@
                 }
             }
             @*<div class="field-item">
-                <span>发布单位</span>
-                <input type="text" id="CompanyName" value="@(user.CompanyName)" disabled="disabled" />
-            </div>*@
+                    <span>发布单位</span>
+                    <input type="text" id="CompanyName" value="@(user.CompanyName)" disabled="disabled" />
+                </div>*@
 
             <div class="field-item">
                 <span>商品名称</span>
@@ -97,9 +92,7 @@
 
             <div class="field-item ">
                 <span>产品参数</span>
-                <div id="editor" style="width: 51%;">
-                    <p>@(Html.Raw(Model?.Content))</p>
-                </div>
+                <textarea id="editor" style="width: 51%;">@(Html.Raw(Model?.Content))</textarea>
             </div>
 
             @{
@@ -144,28 +137,23 @@
 @section js{
     <script type="text/javascript">
         $(function () {
+
+            var tinyID = 'editor';
+            editorInit(tinyID);
             $(".btn-save").req("#form_data", "/api/Purchase/editC", function (res) {
                 if (res.code != 0) {
                     alert(res.message);
                     return;
                 } else {
                     alert("保存成功");
-                     backAndRefresh();
+                    backAndRefresh();
                 }
 
+            }, "post", function (data) {
+                var content = tinyMCE.editors[tinyID].getContent();
+                data.Content = content;
+                return data;
             });
-
-            var E = window.wangEditor;
-            var editor = new E('#editor');
-            editor.customConfig.uploadImgServer = '/api/baseapi/EditorUploadImg';
-            editor.customConfig.uploadFileName = 'file';
-            editor.customConfig.onchange = function (html) {
-                // 监控变化，同步更新到 textarea
-                console.log(html);
-                $("input[name='Content']").val(html);
-            }
-            editor.create();
-            E.fullscreen.init('#editor');
 
         });
 
