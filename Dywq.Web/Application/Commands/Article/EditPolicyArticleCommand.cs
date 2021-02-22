@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Dywq.Infrastructure.Core.Extensions;
 namespace Dywq.Web.Application.Commands.Article
 {
     public class EditPolicyArticleCommand : IRequest<Result>
@@ -110,7 +110,9 @@ namespace Dywq.Web.Application.Commands.Article
                     ThemeTitle = request.ThemeTitle,
                     PolicyTypeId = typeId,
                     Source = request.Source,
-                    Status = 0
+                    Status = 0,
+                    UserId = request.LoginUser.Id,
+                    Describe = request.Content.FilterHtml().Cut(300)
                 };
                 if (request.LoginUser.Type == 1)
                 {
@@ -133,6 +135,7 @@ namespace Dywq.Web.Application.Commands.Article
                 article.ThemeTitle = request.ThemeTitle;
                 article.PolicyTypeId = typeId;
                 article.Source = request.Source;
+                article.Describe = request.Content.FilterHtml().Cut(300);
 
 
                 if (request.LoginUser.Type == 1)

@@ -44,6 +44,8 @@ namespace Dywq.Domain.Expert
         /// </summary>
         public int Status { get; set; }
 
+        public int UserId { get; set; }
+
 
     }
 }

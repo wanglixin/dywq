@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Dywq.Infrastructure.Core.Extensions;
 
 namespace Dywq.Web.Application.Commands.Financing
 {
@@ -123,7 +124,10 @@ namespace Dywq.Web.Application.Commands.Financing
                     Pic = request.Pic,
                     Title = request.Title,
                     // CompanyId = company_user.CompanyId,
-                    Status = 0
+                    Status = 0,
+                    UserId = request.UserId,
+                    Describe = request.Content.FilterHtml().Cut(300)
+
                 };
 
                 if (user.Type == 0)// || user.Type == 2)
@@ -177,6 +181,7 @@ namespace Dywq.Web.Application.Commands.Financing
                     item.Pic = request.Pic;
                     item.Bank = request.Bank;
                     item.Status = 0;
+                    item.Describe = request.Content.FilterHtml().Cut(300);
                 }
                 //else if (user.Type == 2) //编辑
                 //{
@@ -205,6 +210,7 @@ namespace Dywq.Web.Application.Commands.Financing
                     item.Pic = request.Pic;
                     item.Bank = request.Bank;
                     item.Status = status;
+                    item.Describe = request.Content.FilterHtml().Cut(300);
                 }
 
                 else

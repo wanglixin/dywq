@@ -4,6 +4,7 @@ using Dywq.Domain.CooperationAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Cooperation;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,7 @@ namespace Dywq.Web.Application.Commands.Cooperation
         /// -888 管理员后台获取
         /// </summary>
         public int Status { get; set; } = -999;
-
+        public LoginUserDTO LoginUser { get; set; }
     }
 
     public class GetCooperationInfosCommandHandler : BaseRequestHandler<GetCooperationInfosCommand, PageResult<CooperationInfoDTO>>
@@ -98,6 +99,12 @@ namespace Dywq.Web.Application.Commands.Cooperation
             {
                 sb.Add($"CooperationTypeId = " + request.TypeId);
             }
+
+            if (request.LoginUser != null && request.LoginUser.Type == 2)
+            {
+                sb.Add($"UserId = " + request.LoginUser.Id);
+            }
+
             var where = string.Join(" and ", sb);
 
 

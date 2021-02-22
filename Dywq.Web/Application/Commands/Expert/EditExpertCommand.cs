@@ -111,7 +111,8 @@ namespace Dywq.Web.Application.Commands.Expert
                     Name = request.Name,
                     Sort = sort,
                     ExpertTypeId = expertTypeId,
-                    Status = 0
+                    Status = 0,
+                    UserId = request.LoginUser.Id
                 };
                 if (request.LoginUser.Type == 1)
                 {

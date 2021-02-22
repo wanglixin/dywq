@@ -32,7 +32,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
                 return View(obj);
             }
-            else if(this.CurrentUser.Role == Common.Role.Admin)
+            else if (this.CurrentUser.Role == Common.Role.Admin)
             {
                 return RedirectToAction("Statistic");
             }
@@ -53,7 +53,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Editor)]
         public async Task<IActionResult> StatisticForEditor()
         {
-            var obj = await _mediator.Send(new GetEditorTodoInfoCommand() { }, HttpContext.RequestAborted);
+            var obj = await _mediator.Send(new GetEditorTodoInfoCommand() { LoginUser = this.GetCurrentUser() }, HttpContext.RequestAborted);
             return View(obj);
         }
 

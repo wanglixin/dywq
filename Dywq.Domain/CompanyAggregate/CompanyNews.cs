@@ -63,5 +63,7 @@ namespace Dywq.Domain.CompanyAggregate
         /// </summary>
         public int Sort { get; set; }
 
+        public int UserId { get; set; }
+
     }
 }

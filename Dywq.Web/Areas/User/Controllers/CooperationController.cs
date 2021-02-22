@@ -71,7 +71,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
             cmd.CompanyId = user.CompanyId;
             //cmd.Status = -888;
-
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/cooperation/ListC?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);

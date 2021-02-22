@@ -161,7 +161,9 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     Show = true,
                     Sort = sort,
                     Status = 0,
-                    Title = request.Title
+                    Title = request.Title,
+                    UserId = request.UserId
+
                 };
                 //if (user.Type != 0)
                 //{

@@ -71,5 +71,12 @@ namespace Dywq.Domain.CompanyAggregate
         /// 企业登陆次数，所有绑定用户的之和
         /// </summary>
         public int LoginCount { get; set; }
+
+
+        /// <summary>
+        /// 添加者的用户id
+        /// </summary>
+        public int UserId { get; set; }
+
     }
 }

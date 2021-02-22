@@ -35,6 +35,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> PartyBuildingArticleList(GetPartyBuildingArticlesCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/article/PartyBuildingArticleList?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);
@@ -60,6 +61,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> PolicyArticleList(GetPolicyArticlesCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/article/PolicyArticleList?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);

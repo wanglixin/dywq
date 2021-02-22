@@ -58,7 +58,7 @@
 <div class="container">
     <div id="banner">
         <img src="" alt="">
-        <h4>企业融资</h4>
+        <h4>银行信贷</h4>
     </div>
 </div>
 <!-- sec -->
@@ -81,7 +81,7 @@
                             <img src="@(item.Pic)" alt="" class="backimg">
                             <h4>@(item.Bank)</h4>
                             <div class="sec_content">@(item.Title)</div>
-                            <p>@(item.Content.Cut(300))</p>
+                            <p>@(item.Describe.Cut(300))</p>
                             <h6>发布日期：@(item.CreatedTime.ToString("yyyy-MM-dd"))</h6>
                         </a>
                     </li>

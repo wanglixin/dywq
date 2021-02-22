@@ -245,7 +245,7 @@
                                         <div class="policy_li @(!active?"active_policy":"")">
                                             <div style="display: flex; align-items: center;">
                                                 <span></span>
-                                                <p><a href="/news/detail/@(item.Id)">@(item.Title.Cut(11))</a></p>
+                                                <p><a href="/news/detail/@(item.Id)">@(item.Title.Cut(9))</a></p>
                                             </div>
                                             <div class="date">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                                         </div>
@@ -282,7 +282,7 @@
                                         <div class="policy_li @(!active?"active_policy":"")">
                                             <div style="display: flex; align-items: center;">
                                                 <span></span>
-                                                <p><a href="/article/policyDetail/@(item.Id)">@(item.ThemeTitle.Cut(11))</a></p>
+                                                <p><a href="/article/policyDetail/@(item.Id)">@(item.ThemeTitle.Cut(9))</a></p>
                                             </div>
                                             <div class="date">@(item.CreatedTime.ToString("yyyy-MM-dd"))</div>
                                         </div>
@@ -563,8 +563,8 @@
 </div>
 
 <!-- ad3 -->
-<div class="container" id="ad3">
-    <div class="ad_sec_con">
+<div class="container" id="ad3" style="margin-top:20px;" >
+    <div class="ad_sec_con" style="display:none;">
         <img src="/img/ad3.png" alt="" class="ad_sec">
         <img src="/img/ad3.png" alt="" class="ad_sec">
         <img src="/img/ad3.png" alt="" class="ad_sec">

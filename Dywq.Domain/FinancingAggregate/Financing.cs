@@ -49,5 +49,11 @@ namespace Dywq.Domain.FinancingAggregate
         /// 审核状态，0：企业用户新增给编辑审核，失败后可以编辑  1：审核通过   -1：审核失败
         /// </summary>
         public int Status { get; set; }
+
+        public int UserId { get; set; }
+
+
+        public string Describe { get; set; }
+
     }
 }

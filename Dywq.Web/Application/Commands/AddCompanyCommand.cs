@@ -90,7 +90,9 @@ namespace Dywq.Web.Application.Commands
             {
                 Logo = request.Logo,
                 Name = request.Name,
-                Status = 1
+                Status = 1,
+                UserId = request.LoginUser.Id
+
             };
 
             if (request.LoginUser.Type == 2)

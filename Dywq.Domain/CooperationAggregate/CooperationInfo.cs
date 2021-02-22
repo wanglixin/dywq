@@ -49,6 +49,8 @@ namespace Dywq.Domain.CooperationAggregate
         /// </summary>
         public int Status { get; set; }
 
+        public int UserId { get; set; }
+
 
 
     }

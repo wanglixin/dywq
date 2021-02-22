@@ -132,7 +132,9 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     Sort = 0,
                     CooperationTypeId = typeId,
                     Title = request.Title,
-                    Status = 0
+                    Status = 0,
+                    UserId = request.UserId
+
                 };
                 if (user.Type == 0)// || user.Type == 2)
                 {

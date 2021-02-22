@@ -5,6 +5,7 @@ using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Article;
 using Dywq.Web.Dto.News;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -28,6 +29,8 @@ namespace Dywq.Web.Application.Commands.News
 
 
         public int? Status { get; set; } = null;
+
+        public LoginUserDTO LoginUser { get; set; }
 
     }
 
@@ -66,7 +69,10 @@ namespace Dywq.Web.Application.Commands.News
                 sb.Add($"Status = " + request.Status.Value);
             }
 
-
+            if (request.LoginUser != null && request.LoginUser.Type == 2)
+            {
+                sb.Add($"UserId = " + request.LoginUser.Id);
+            }
 
             var where = string.Join(" and ", sb);
 

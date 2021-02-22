@@ -3,6 +3,7 @@ using Dywq.Domain.CompanyAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Commpany;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,11 +19,11 @@ namespace Dywq.Web.Application.Commands
     {
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-
         public string Key { get; set; }
 
-
         public string LinkUrl { get; set; }
+
+        public LoginUserDTO LoginUser { get; set; }
     }
 
     public class GetCompanysCommandHandler : IRequestHandler<GetCompanysCommand, PageResult<CompanyDTO>>
@@ -63,11 +64,19 @@ namespace Dywq.Web.Application.Commands
                 condition.Add($"(Name like '%{request.Key}%')");
             }
 
+
+            if (request.LoginUser.Type == 2) //如果是编辑
+            {
+                condition.Add($"(UserId = {request.LoginUser.Id})");
+            }
+
+
+
             var where = condition.Count > 0 ? $" where {string.Join(" or ", condition)}" : "";
 
             var count = await _companyRepository.SqlCountAsync(@$"
 SELECT count(*) FROM [Company] {where}");
-            if (count < 1) return PageResult<CompanyDTO>.Success(null, 0, request.PageIndex, request.PageSize,"");
+            if (count < 1) return PageResult<CompanyDTO>.Success(null, 0, request.PageIndex, request.PageSize, "");
 
             var start = (request.PageIndex - 1) * request.PageSize;
             var end = start + request.PageSize;

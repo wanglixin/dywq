@@ -66,5 +66,8 @@ namespace Dywq.Web.Dto.Financing
                 };
             }
         }
+
+
+        public string Describe { get; set; }
     }
 }

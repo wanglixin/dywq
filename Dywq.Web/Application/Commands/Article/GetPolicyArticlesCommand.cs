@@ -3,6 +3,7 @@ using Dywq.Domain.ArticleAggregate;
 using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Article;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -31,6 +32,8 @@ namespace Dywq.Web.Application.Commands.Article
         public string Key { get; set; }
 
         public int? Status { get; set; } = null;
+
+        public LoginUserDTO LoginUser { get; set; }
     }
 
 
@@ -81,6 +84,10 @@ namespace Dywq.Web.Application.Commands.Article
                 sb.Add($"Status = " + request.Status.Value);
             }
 
+            if (request.LoginUser != null && request.LoginUser.Type == 2)
+            {
+                sb.Add($"UserId = " + request.LoginUser.Id);
+            }
 
 
             var where = string.Join(" and ", sb);
@@ -114,7 +121,8 @@ namespace Dywq.Web.Application.Commands.Article
                     PolicyTypeId = x.PolicyTypeId,
                     PolicyTypeName = types.FirstOrDefault(t => t.Id == x.PolicyTypeId)?.Name,
                     Source = x.Source,
-                    Status = x.Status
+                    Status = x.Status,
+                    Describe=x.Describe
                 }
             );
 

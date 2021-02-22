@@ -35,6 +35,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> List(GetCompanysCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/company/list/?PageIndex=__id__&PageSize={cmd.PageSize}&key={cmd.Key}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);
@@ -144,6 +145,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.User + "," + Common.Role.Editor)]
         public async Task<IActionResult> CompanyNewsListC(GetCompanyNewsCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.CompanyId = this.CurrentUser.CompanyId;
             cmd.LinkUrl = $"/user/company/companynewslistC/?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);

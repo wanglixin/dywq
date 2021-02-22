@@ -32,10 +32,6 @@ namespace Dywq.Web.Controllers.Api
         {
             cmd.LoginUser = this.GetCurrentUser();
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
-
-
-
-
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return result;
 

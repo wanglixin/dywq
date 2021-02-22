@@ -19,6 +19,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Pic).HasMaxLength(200);
             builder.Property(p => p.Show);
             builder.Property(p => p.Sort);
+            builder.Property(p => p.UserId);
         }
     }
 }

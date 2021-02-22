@@ -46,5 +46,12 @@ namespace Dywq.Domain.ArticleAggregate
         /// 0:默认 待审核 1：审核成功 -1：审核失败
         /// </summary>
         public int Status { get; set; }
+
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// 用来显示列表
+        /// </summary>
+        public string Describe { get; set; }
     }
 }

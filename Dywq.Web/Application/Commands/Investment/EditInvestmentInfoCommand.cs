@@ -113,7 +113,7 @@ namespace Dywq.Web.Application.Commands.Investment
                 return Result.Failure($"typeId={typeId}类型不存在");
             }
 
-           
+
             if (id <= 0) //新增
             {
                 var item = new InvestmentInfo()
@@ -123,7 +123,8 @@ namespace Dywq.Web.Application.Commands.Investment
                     Sort = 0,
                     InvestmentTypeId = typeId,
                     Title = request.Title,
-                    Status = 0
+                    Status = 0,
+                    UserId = request.LoginUser.Id
                 };
                 if (request.LoginUser.Type == 1)
                 {

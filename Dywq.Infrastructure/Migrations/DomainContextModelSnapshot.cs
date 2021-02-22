@@ -60,6 +60,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -83,6 +86,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Describe")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PolicyTypeId")
                         .HasColumnType("int");
 
@@ -105,6 +111,9 @@ namespace Dywq.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -197,6 +206,9 @@ namespace Dywq.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -404,6 +416,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -517,6 +532,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -597,6 +615,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -657,6 +678,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Describe")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Pic")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
@@ -676,6 +700,9 @@ namespace Dywq.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -759,6 +786,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -836,6 +866,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -888,6 +921,9 @@ namespace Dywq.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()

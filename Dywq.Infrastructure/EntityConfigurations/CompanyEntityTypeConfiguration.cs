@@ -25,6 +25,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Show);
             builder.Property(p => p.Status);
             builder.Property(p => p.LoginCount);
+            builder.Property(p => p.UserId);
         }
     }
 
@@ -93,7 +94,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
         {
             base.Configure(builder);
             builder.ToTable("CompanyType");
-            builder.Property(p => p.Name).HasMaxLength(50); 
+            builder.Property(p => p.Name).HasMaxLength(50);
             builder.Property(p => p.Sort);
 
         }
@@ -131,6 +132,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Sort);
             builder.Property(p => p.Show);
             builder.Property(p => p.Status);
+            builder.Property(p => p.UserId);
         }
     }
 

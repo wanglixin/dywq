@@ -30,7 +30,7 @@ namespace Dywq.Web.Application.Commands.News
 
 
 
-       // [Required(ErrorMessage = "请上传图片")]
+        // [Required(ErrorMessage = "请上传图片")]
         /// <summary>
         /// 图片
         /// </summary>
@@ -99,7 +99,9 @@ namespace Dywq.Web.Application.Commands.News
                     Title = request.Title,
                     Source = request.Source,
                     Pic = request.Pic,
-                    Status = 0
+                    Status = 0,
+                    UserId = request.LoginUser.Id
+
                 };
                 if (request.LoginUser.Type == 1)
                 {

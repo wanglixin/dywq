@@ -6,6 +6,7 @@ using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Cooperation;
 using Dywq.Web.Dto.Financing;
 using Dywq.Web.Dto.Purchase;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -38,6 +39,8 @@ namespace Dywq.Web.Application.Commands.Purchase
 
 
         public string Key { get; set; }
+
+        public LoginUserDTO LoginUser { get; set; }
 
 
     }
@@ -102,7 +105,10 @@ namespace Dywq.Web.Application.Commands.Purchase
             {
                 sb.Add($"ProductName like '%{ request.Key}%'");
             }
-
+            if (request.LoginUser != null && request.LoginUser.Type == 2)
+            {
+                sb.Add($"UserId = " + request.LoginUser.Id);
+            }
 
 
 

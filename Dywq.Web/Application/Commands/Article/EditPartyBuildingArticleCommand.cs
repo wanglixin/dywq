@@ -105,7 +105,9 @@ namespace Dywq.Web.Application.Commands.Article
                     Source = request.Source,
                     Subtitle = request.Subtitle,
                     ThemeTitle = request.ThemeTitle,
-                    Status = 0
+                    Status = 0,
+                    UserId = request.LoginUser.Id
+
                 };
 
                 if (request.LoginUser.Type == 1)

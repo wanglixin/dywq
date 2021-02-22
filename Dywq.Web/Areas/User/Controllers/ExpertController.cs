@@ -66,6 +66,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> List(GetExpertsCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/expert/list?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);

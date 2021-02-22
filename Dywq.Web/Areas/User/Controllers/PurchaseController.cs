@@ -45,7 +45,7 @@ namespace Dywq.Web.Areas.User.Controllers
         {
             ViewBag.type = type;
             var user = this.CurrentUser;
-
+            cmd.LoginUser = user;
             cmd.CompanyId = user.CompanyId;
             cmd.Type = type;
             cmd.LinkUrl = $"/user/Purchase/ListC?PageIndex=__id__&PageSize={cmd.PageSize}&type={type}";

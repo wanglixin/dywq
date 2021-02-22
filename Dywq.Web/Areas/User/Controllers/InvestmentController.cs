@@ -43,6 +43,7 @@ namespace Dywq.Web.Areas.User.Controllers
         public async Task<IActionResult> List(GetInvestmentInfosCommand cmd)
         {
             //cmd.Status = -888;
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/investment/list?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);

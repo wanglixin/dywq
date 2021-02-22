@@ -34,6 +34,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Introduction);
             builder.Property(p => p.Show);
             builder.Property(p => p.ExpertTypeId);
+            builder.Property(p => p.UserId);
 
         }
     }

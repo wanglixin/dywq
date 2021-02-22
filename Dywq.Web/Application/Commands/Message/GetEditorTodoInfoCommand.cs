@@ -5,6 +5,7 @@ using Dywq.Domain.News;
 using Dywq.Domain.SiteAggregate;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Commpany;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,7 @@ namespace Dywq.Web.Application.Commands.Message
 {
     public class GetEditorTodoInfoCommand : IRequest<EditorStatisticInfoDto>
     {
+        public LoginUserDTO LoginUser { get; set; }
     }
 
     public class GetEditorTodoInfoCommanHandler : BaseRequestHandler<GetEditorTodoInfoCommand, EditorStatisticInfoDto>
@@ -78,24 +80,25 @@ namespace Dywq.Web.Application.Commands.Message
         {
             var info = new EditorStatisticInfoDto();
 
+            var userid = request.LoginUser.Id;
 
             info = new EditorStatisticInfoDto
             {
-                FinancingCount = await _financingRepository.Set().CountAsync(x => (x.Status == 0 && x.CompanyId == 0)),
-                CompanyInfoCount = await _companyNewsRepository.Set().CountAsync(x => (x.Status == 0)),
-                CooperationInfoCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 0 && x.CompanyId == 0)),
-                PurchaseCount0 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) && x.Type == 0 && x.CompanyId == 0),
-                PurchaseCount1 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) && x.Type == 1 && x.CompanyId == 0),
-                CooperationInfoTotalCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 1 && x.CompanyId == 0)),
-    
+                FinancingCount = await _financingRepository.Set().CountAsync(x => (x.Status == 0 && x.CompanyId == 0 && x.UserId == userid)),
+                CompanyInfoCount = await _companyNewsRepository.Set().CountAsync(x => (x.Status == 0 && x.UserId == userid)),
+                CooperationInfoCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 0 && x.CompanyId == 0 && x.UserId == userid)),
+                PurchaseCount0 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) && x.Type == 0 && x.CompanyId == 0 && x.UserId == userid),
+                PurchaseCount1 = await _purchaseRepository.Set().CountAsync(x => (x.Status == 0) && x.Type == 1 && x.CompanyId == 0 && x.UserId == userid),
+                CooperationInfoTotalCount = await _cooperationInfoRepository.Set().CountAsync(x => (x.Status == 1 && x.CompanyId == 0 && x.UserId == userid)),
+
 
                 AboutusCount = await _aboutUsRepository.Set().CountAsync(x => x.Status == 0),
-                CompanyCount = await _companyRepository.Set().CountAsync(x => x.Status == 0),
-                ExpertCount = await _expertRepository.Set().CountAsync(x => x.Status == 0),
-                InvestmentCount = await _investmentInfoRepository.Set().CountAsync(x => x.Status == 0 && x.CompanyId == 0),
-                NewsCount = await _noticeNewsRepository.Set().CountAsync(x => x.Status == 0),
-                PartyBuildingArticleCount = await _partyBuildingArticleRepository.Set().CountAsync(x => x.Status == 0),
-                PolicyArticleCount = await _policyArticleRepository.Set().CountAsync(x => x.Status == 0)
+                CompanyCount = await _companyRepository.Set().CountAsync(x => x.Status == 0 && x.UserId == userid),
+                ExpertCount = await _expertRepository.Set().CountAsync(x => x.Status == 0 && x.UserId == userid),
+                InvestmentCount = await _investmentInfoRepository.Set().CountAsync(x => x.Status == 0 && x.CompanyId == 0 && x.UserId == userid),
+                NewsCount = await _noticeNewsRepository.Set().CountAsync(x => x.Status == 0 && x.UserId == userid),
+                PartyBuildingArticleCount = await _partyBuildingArticleRepository.Set().CountAsync(x => x.Status == 0 && x.UserId == userid),
+                PolicyArticleCount = await _policyArticleRepository.Set().CountAsync(x => x.Status == 0 && x.UserId == userid)
             };
             return info;
 

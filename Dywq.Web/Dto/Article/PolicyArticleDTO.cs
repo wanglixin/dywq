@@ -71,5 +71,7 @@ namespace Dywq.Web.Dto.Article
                 };
             }
         }
+
+        public string Describe { get; set; }
     }
 }

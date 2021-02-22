@@ -5,6 +5,7 @@ using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Cooperation;
 using Dywq.Web.Dto.Financing;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,7 @@ namespace Dywq.Web.Application.Commands.Financing
         public int CompanyId { get; set; } = 0;
 
         public int Status { get; set; } = -999;
-
+        public LoginUserDTO LoginUser { get; set; }
     }
 
     public class GetFinancingsCommandHandler : BaseRequestHandler<GetFinancingsCommand, PageResult<FinancingDTO>>
@@ -73,6 +74,11 @@ namespace Dywq.Web.Application.Commands.Financing
             {
                 sb.Add($"CompanyId = " + request.CompanyId);
             }
+
+            if (request.LoginUser != null && request.LoginUser.Type == 2)
+            {
+                sb.Add($"UserId = " + request.LoginUser.Id);
+            }
             var where = string.Join(" and ", sb);
 
 
@@ -107,7 +113,8 @@ namespace Dywq.Web.Application.Commands.Financing
                     CompanyName = companys.FirstOrDefault(c => c.Id == x.CompanyId)?.Name,
                     Status = x.Status,
                     Bank = x.Bank,
-                    Pic = x.Pic
+                    Pic = x.Pic,
+                    Describe = x.Describe
                 }
             ); ;
 

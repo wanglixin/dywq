@@ -20,6 +20,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Content);
             builder.Property(p => p.Sort);
             builder.Property(p => p.Show);
+            builder.Property(p => p.UserId);
         }
     }
 
@@ -50,6 +51,8 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Sort);
             builder.Property(p => p.Show);
             builder.Property(p => p.Source).HasMaxLength(100);
+            builder.Property(p => p.UserId);
+            builder.Property(p => p.Describe);
         }
     }
 

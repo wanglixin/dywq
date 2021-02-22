@@ -47,5 +47,8 @@ namespace Dywq.Domain.News
         /// 0:默认 待审核 1：审核成功 -1：审核失败
         /// </summary>
         public int Status { get; set; }
+
+
+        public int UserId { get; set; }
     }
 }

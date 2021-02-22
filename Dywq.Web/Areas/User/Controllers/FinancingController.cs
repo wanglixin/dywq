@@ -63,7 +63,7 @@ namespace Dywq.Web.Areas.User.Controllers
             var user = this.CurrentUser;
 
             cmd.CompanyId = user.CompanyId;
-
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/financing/ListC?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);

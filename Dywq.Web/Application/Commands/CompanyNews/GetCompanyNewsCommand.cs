@@ -5,6 +5,7 @@ using Dywq.Infrastructure.Core;
 using Dywq.Infrastructure.Repositories;
 using Dywq.Web.Dto.Commpany;
 using Dywq.Web.Dto.Cooperation;
+using Dywq.Web.Dto.User;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -33,6 +34,8 @@ namespace Dywq.Web.Application.Commands.CompanyNews
         public int CompanyId { get; set; } = 0;
 
         public int Status { get; set; } = -999;
+
+        public LoginUserDTO LoginUser { get; set; }
 
     }
 
@@ -87,6 +90,13 @@ namespace Dywq.Web.Application.Commands.CompanyNews
             {
                 sb.Add($"CompanyTypeId = " + request.CompanyTypeId);
             }
+
+            if (request.LoginUser != null && request.LoginUser.Type == 2)
+            {
+                sb.Add($"UserId = " + request.LoginUser.Id);
+            }
+
+
             var where = string.Join(" and ", sb);
 
 

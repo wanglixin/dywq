@@ -34,6 +34,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
         public async Task<IActionResult> List(GetNoticeNewsCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"/user/news/list?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return View(result);

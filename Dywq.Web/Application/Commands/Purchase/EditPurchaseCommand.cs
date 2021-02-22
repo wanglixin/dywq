@@ -137,7 +137,8 @@ namespace Dywq.Web.Application.Commands.Purchase
                     Show = true,
                     Sort = 0,
                     Status = 0,
-                    Type = type
+                    Type = type,
+                    UserId = request.UserId
                 };
 
                 if (user.Type == 0)//|| user.Type == 2)
