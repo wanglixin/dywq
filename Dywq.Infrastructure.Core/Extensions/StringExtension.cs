@@ -76,9 +76,11 @@ namespace Dywq.Infrastructure.Core.Extensions
             input = Regex.Replace(input, @"&(pound|#163);", "\xa3", RegexOptions.IgnoreCase);
             input = Regex.Replace(input, @"&(copy|#169);", "\xa9", RegexOptions.IgnoreCase);
             input = Regex.Replace(input, @"&#(\d+);", "", RegexOptions.IgnoreCase);
-            input.Replace("<", "");
-            input.Replace(">", "");
-            input.Replace("\r\n", "");
+            input = input.Replace("<", "");
+            input = input.Replace(">", "");
+            input = input.Replace("\r\n", "");
+            input = input.Replace("&rdquo;", ""); 
+            input = input.Replace("&ldquo;", "");
             return input;
         }
 

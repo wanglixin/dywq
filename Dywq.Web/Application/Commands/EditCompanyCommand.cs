@@ -21,7 +21,7 @@ namespace Dywq.Web.Application.Commands
         [Range(1, int.MaxValue, ErrorMessage = "企业id错误")]
         public int CompanyId { get; set; }
 
-        [Required(ErrorMessage = "请上传logo")]
+       // [Required(ErrorMessage = "请上传logo")]
         public string Logo { get; set; }
 
         [Required(ErrorMessage = "请填写企业名称")]

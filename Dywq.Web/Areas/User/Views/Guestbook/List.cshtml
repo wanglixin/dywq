@@ -1,5 +1,8 @@
 ﻿@using Dywq.Infrastructure.Core.Extensions;
 @model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Guestbook.GuestbookDTO>
+@{
+    var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
+}
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -21,9 +24,9 @@
 <div class="tools">
     <div class="left_btns">
         @*<div class="addbtn">
-        <div class="add_left">+</div>
-              <span class="add_txt"><a href="/user/article/EditPartyBuildingArticle">新增</a></span>
-    </div>*@
+                <div class="add_left">+</div>
+                      <span class="add_txt"><a href="/user/article/EditPartyBuildingArticle">新增</a></span>
+            </div>*@
         @*<button class="btn-push higer_search" onclick="push();">批量推送</button>*@
     </div>
 
@@ -77,11 +80,15 @@
                         @{
                             if (item.GuestbookReply == null)
                             {
-                                <a href="/user/Guestbook/Reply/@(item.Id)">回复</a> @("|")
+                                <a href="/user/Guestbook/Reply/@(item.Id)">回复</a>
                             }
                         }
+                        @if (user.Type == 1)
+                        {
+                             <a href="javascript:del(@(item.Id))">删除</a>
+                        }
+                       
 
-                        <a href="javascript:del(@(item.Id))">删除</a>
                     </td>
                 </tr>
             }

@@ -1,4 +1,7 @@
 ﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.CompanyDTO>
+@{
+    var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
+}
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -75,10 +78,30 @@
                     <td>
                         @(item.StatusStr)
                     </td>
- 
+
                     <td class="editbtn">
-                       
-                        <a href="/user/company/edit?companyId=@(item.CompanyId)">编辑</a> | <a href="javascript:del(@(item.CompanyId),this)">删除</a>
+                        @{
+
+                            if (user.Type == 0 || user.Type == 2)
+                            {
+                                if (item.Status == 0 || item.Status == -1)
+                                {
+                                    <a href="/user/company/edit?companyId=@(item.CompanyId)">编辑</a>
+                                }
+                                else
+                                {
+                                    <a href="/user/company/edit?companyId=@(item.CompanyId)">查看</a>
+                                }
+                            }
+                            else
+                            {
+                                <a href="/user/company/edit?companyId=@(item.CompanyId)">编辑</a> @Html.Raw("|")
+                                <a href="javascript:del(@(item.CompanyId),this)">删除</a>
+                            }
+
+                        }
+
+
                     </td>
                 </tr>
             }

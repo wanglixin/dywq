@@ -47,9 +47,10 @@
         .con {
             overflow: hidden;
         }
-        .con a{
-            text-decoration:none;
-        }
+
+            .con a {
+                text-decoration: none;
+            }
     </style>
 
 }
@@ -76,7 +77,17 @@
                             {
                                 <li>
                                     <a href="/company/expert/@(item.Id)">
-                                        <img src="@(item.Pic)" alt="">
+                                        @{
+                                            if (string.IsNullOrWhiteSpace(item.Pic))
+                                            {
+                                                <img src="/img/logo_mini.png" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="@(item.Pic)" alt="">
+                                            }
+                                        }
+
                                         <div class="name">@(item.Name)</div>
                                         <div class="job">@(item.Title)</div>
                                     </a>

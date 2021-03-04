@@ -516,6 +516,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Describe")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Show")
                         .HasColumnType("bit");
 
@@ -731,6 +734,9 @@ namespace Dywq.Infrastructure.Migrations
                     b.Property<int>("ReplyId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -766,6 +772,9 @@ namespace Dywq.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Describe")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InvestmentTypeId")
                         .HasColumnType("int");
@@ -841,6 +850,9 @@ namespace Dywq.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Describe")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pic")
                         .HasColumnType("nvarchar(200)")

@@ -76,9 +76,12 @@ namespace Dywq.Web.Areas.User.Controllers
         {
             var companyId = this.CurrentUser.CompanyId;
             cmd.CompanyId = companyId;
-            cmd.IsRead = 0;
+            //cmd.IsRead = 0;
             cmd.LinkUrl = "javascript:getdata(__id__)";
             var obj = await _mediator.Send(cmd, HttpContext.RequestAborted);
+
+            
+
             return PartialView(obj);
         }
 

@@ -56,6 +56,7 @@ namespace Dywq.Web.Areas.User.Controllers
         [Authorize(Roles = Common.Role.Admin)]
         public async Task<IActionResult> GetList(GetCompanysCommand cmd)
         {
+            cmd.LoginUser = this.GetCurrentUser();
             cmd.LinkUrl = $"javascript:getlist(__id__)";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return PartialView(result);

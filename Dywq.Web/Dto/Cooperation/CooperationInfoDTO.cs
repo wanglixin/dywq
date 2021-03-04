@@ -66,5 +66,9 @@ namespace Dywq.Web.Dto.Cooperation
                 };
             }
         }
+
+
+        public string Describe { get; set; }
+
     }
 }

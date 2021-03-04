@@ -30,6 +30,9 @@ namespace Dywq.Web.Application.Commands.News
 
         public int? Status { get; set; } = null;
 
+
+        public string Key { get; set; }
+
         public LoginUserDTO LoginUser { get; set; }
 
     }
@@ -74,6 +77,13 @@ namespace Dywq.Web.Application.Commands.News
                 sb.Add($"UserId = " + request.LoginUser.Id);
             }
 
+            if (!string.IsNullOrWhiteSpace(request.Key))
+            {
+                sb.Add($"Title like '%{request.Key}%' ");
+            }
+
+
+
             var where = string.Join(" and ", sb);
 
 
@@ -103,7 +113,8 @@ namespace Dywq.Web.Application.Commands.News
                 Title = x.Title,
                 UpdatedTime = x.UpdatedTime,
                 Source = x.Source,
-                Status = x.Status
+                Status = x.Status,
+                Describe = x.Describe
             }
             );
 

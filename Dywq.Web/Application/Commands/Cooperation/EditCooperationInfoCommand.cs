@@ -13,6 +13,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Dywq.Infrastructure.Core.Extensions;
+
 
 namespace Dywq.Web.Application.Commands.Cooperation
 {
@@ -133,7 +135,8 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     CooperationTypeId = typeId,
                     Title = request.Title,
                     Status = 0,
-                    UserId = request.UserId
+                    UserId = request.UserId,
+                    Describe = request.Content.FilterHtml().Cut(300)
 
                 };
                 if (user.Type == 0)// || user.Type == 2)
@@ -161,6 +164,14 @@ namespace Dywq.Web.Application.Commands.Cooperation
                 {
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
+
+                if (user.Type != 1 && item.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
+
+
                 if (user.Type == 0)//|| user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
@@ -175,29 +186,23 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     }
 
                 }
-                if (user.Type == 0 || user.Type == 2) //用户修改的情况
+
+                item.Content = request.Content;
+                item.Title = request.Title;
+                item.CooperationTypeId = typeId;
+                item.Status = 0;
+                item.Describe = request.Content.FilterHtml().Cut(300);
+
+                if (user.Type == 0) //用户修改的情况
                 {
                     if (item.Status != -1)
                     {
                         return Result.Failure($"当前状态不能修改");
                     }
-                    item.Content = request.Content;
-                    item.Title = request.Title;
-                    item.CooperationTypeId = typeId;
-                    item.Status = 0;
+
                 }
-                //else if (user.Type == 2) //编辑
-                //{
-                //    if (item.Status != -1 && item.Status != 0)
-                //    {
-                //        return Result.Failure($"当前状态不能修改");
-                //    }
-                //    item.Content = request.Content;
-                //    item.Title = request.Title;
-                //    item.CooperationTypeId = typeId;
-                //    item.Status = 0;
-                //}
-                else if (user.Type == 1) //管理员修改
+
+                if (user.Type == 1) //管理员修改
                 {
 
                     if (string.IsNullOrWhiteSpace(request.Status))
@@ -206,17 +211,11 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     }
                     var status = Convert.ToInt32(request.Status);
 
-                    item.Content = request.Content;
                     item.Show = show;
                     item.Sort = sort;
-                    item.Title = request.Title;
-                    item.CooperationTypeId = typeId;
                     item.Status = status;
                 }
-                else
-                {
-                    return Result.Failure($"用户类型错误");
-                }
+
 
                 await _cooperationInfoRepository.UpdateAsync(item);
             }

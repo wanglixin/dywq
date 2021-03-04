@@ -1,5 +1,8 @@
 ﻿@using Dywq.Infrastructure.Core.Extensions;
 @model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.News.NoticeNewsDTO>
+@{
+    var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
+}
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -21,10 +24,10 @@
 <div class="tools">
     <div class="left_btns">
         <div class="addbtn">
-                <div class="add_left">+</div>
-                <span class="add_txt"><a href="/user/news/edit">新增</a></span>
-            </div>
-        @*<button class="btn-push higer_search" onclick="push();">批量推送</button>*@
+            <div class="add_left">+</div>
+            <span class="add_txt"><a href="/user/news/edit">新增</a></span>
+        </div>
+        <a href="/user/company/search?type=1" style="line-height: 2; text-decoration:none;" class="btn-push higer_search">批量推送</a>
     </div>
 
     <div class="right_btn">
@@ -58,44 +61,71 @@
         {
             foreach (var item in Model.Data)
             {
-        <tr>
+                <tr>
 
-            <td>
-                @(item.Id)
-            </td>
-            <td>
-                @(item.Title)
-            </td>
-            <td>
-                @(item.Source)
-            </td>
+                    <td>
+                        @(item.Id)
+                    </td>
+                    <td>
+                        @(item.Title.Cut(10))
+                    </td>
+                    <td>
+                        @(item.Source.Cut(10))
+                    </td>
 
-            <td>
-                @(item.Show ? "是" : "否")
-            </td>
-            <td>
-                @(item.Sort)
-            </td>
-            <td>
-                @(item.CreatedTime)
-            </td>
-            <td>
-                @{
-                    if (item.Status == -1)
-                    {
-                        <font style="color:red;">审核失败</font>
-                    }
-                    else
-                    {
-                        @(item.StatusStr)
-                    }
-                }
-            </td>
-            <td class="editbtn">
-                <a href="/user/news/edit/@(item.Id)">编辑</a> |
-                <a href="javascript:del(@(item.Id))">删除</a>
-            </td>
-        </tr>
+                    <td>
+                        @(item.Show ? "是" : "否")
+                    </td>
+                    <td>
+                        @(item.Sort)
+                    </td>
+                    <td>
+                        @(item.CreatedTime)
+                    </td>
+                    <td>
+                        @{
+                            if (item.Status == -1)
+                            {
+                                <font style="color:red;">审核失败</font>
+                            }
+                            else
+                            {
+                                @(item.StatusStr)
+                            }
+                        }
+                    </td>
+                    <td class="editbtn">
+                      
+
+
+                        @{
+
+                            if (user.Type == 0 || user.Type == 2)
+                            {
+                                if (item.Status == 0 || item.Status == -1)
+                                {
+                                    <a href="/user/news/edit/@(item.Id)">编辑</a>
+                                }
+                                else
+                                {
+                                    <a href="/user/news/edit/@(item.Id)">查看</a>
+                                }
+                            }
+                            else
+                            {
+                                <a href="/user/news/edit/@(item.Id)">编辑</a> @Html.Raw("|")
+                                <a href="javascript:del(@(item.Id))"> 删除 </a>
+
+                            }
+
+
+                        }
+
+
+
+
+                    </td>
+                </tr>
             }
         }
 

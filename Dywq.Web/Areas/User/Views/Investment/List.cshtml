@@ -1,5 +1,8 @@
 ﻿@using Dywq.Infrastructure.Core.Extensions;
 @model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Investment.InvestmentInfoDTO>
+@{
+    var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
+}
 @section head{
     <link href="~/css/index10.css" rel="stylesheet" />
     <link href="~/css/company_add.css" rel="stylesheet" />
@@ -60,46 +63,69 @@
         {
             foreach (var item in Model.Data)
             {
-        <tr>
+                <tr>
 
-            <td>
-                @(item.Id)
-            </td>
+                    <td>
+                        @(item.Id)
+                    </td>
 
-            <td>
-                @(item.InvestmentTypeName)
-            </td>
-            <td>
-                @(item.Title.Cut(20))
-            </td>
+                    <td>
+                        @(item.InvestmentTypeName)
+                    </td>
+                    <td>
+                        @(item.Title.Cut(20))
+                    </td>
 
-            <td>
-                @(item.Show ? "是" : "否")
-            </td>
-            <td>
-                @(item.Sort)
-            </td>
-            <td>
-                @(item.CreatedTime)
-            </td>
-            <td>
-                @{
-                    if (item.Status == -1)
-                    {
-                        <font style="color:red;">审核失败</font>
-                    }
-                    else
-                    {
-                        @(item.StatusStr)
-                    }
-                }
+                    <td>
+                        @(item.Show ? "是" : "否")
+                    </td>
+                    <td>
+                        @(item.Sort)
+                    </td>
+                    <td>
+                        @(item.CreatedTime)
+                    </td>
+                    <td>
+                        @{
+                            if (item.Status == -1)
+                            {
+                                <font style="color:red;">审核失败</font>
+                            }
+                            else
+                            {
+                                @(item.StatusStr)
+                            }
+                        }
 
-            </td>
-            <td class="editbtn">
-                <a href="/user/investment/edit/@(item.Id)">审核</a> |
-                <a href="javascript:del(@(item.Id))">删除</a>
-            </td>
-        </tr>
+                    </td>
+                    <td class="editbtn">
+                     
+
+
+
+                        @{
+
+                            if (user.Type == 0 || user.Type == 2)
+                            {
+                                if (item.Status == 0 || item.Status == -1)
+                                {
+                                    <a href="/user/investment/edit/@(item.Id)">编辑</a>
+                                }
+                                else
+                                {
+                                    <a href="/user/investment/edit/@(item.Id)">查看</a>
+                                }
+                            }
+                            else
+                            {
+                                <a href="/user/investment/edit/@(item.Id)">编辑</a> @Html.Raw("|")
+                                <a href="javascript:del(@(item.Id))">删除</a>
+                            }
+
+                        }
+
+                    </td>
+                </tr>
             }
         }
 

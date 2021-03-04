@@ -92,7 +92,18 @@ namespace Dywq.Web.Application.Commands.Message
             }
             );
 
-            return PageResult<MessageDTO>.Success(data, count, request.PageIndex, request.PageSize, request.LinkUrl);
+            sb.Add($"IsRead = 0");
+            where = string.Join(" and ", sb);
+            var sql = $"select count(*) count from [Message] where {where}";
+
+            Console.WriteLine(sql);
+
+            var total = await _messageRepository.SqlCountAsync(sql);
+
+
+            var r = PageResult<MessageDTO>.Success(data, count, request.PageIndex, request.PageSize, request.LinkUrl);
+            r.Code = total;
+            return r;
 
         }
     }

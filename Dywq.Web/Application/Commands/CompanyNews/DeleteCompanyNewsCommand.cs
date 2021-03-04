@@ -54,20 +54,20 @@ namespace Dywq.Web.Application.Commands.CompanyNews
             {
                 return Result.Failure($"内容不存在");
             }
-            var user = await _userRepository.Set().FirstOrDefaultAsync(x => x.Id == request.UserId);
+            //var user = await _userRepository.Set().FirstOrDefaultAsync(x => x.Id == request.UserId);
 
-            if (user == null)
-            {
-                return Result.Failure($"用户不存在");
-            }
+            //if (user == null)
+            //{
+            //    return Result.Failure($"用户不存在");
+            //}
 
-            if (user.Type == 0) //用户删除
-            {
-                if (article.Status != -1)
-                {
-                    return Result.Failure($"不能删除请联系管理员");
-                }
-            }
+            //if (user.Type == 0) //用户删除
+            //{
+            //    if (article.Status != -1)
+            //    {
+            //        return Result.Failure($"不能删除请联系管理员");
+            //    }
+            //}
             await _companyNewsRepository.RemoveAsync(article);
             return Result.Success(); ;
         }

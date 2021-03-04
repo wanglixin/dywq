@@ -137,7 +137,8 @@ namespace Dywq.Web.Application.Commands.Investment
                     InvestmentTypeName = types.FirstOrDefault(t => t.Id == x.InvestmentTypeId)?.Name,
                     CompanyId = x.CompanyId,
                     CompanyName = companys.FirstOrDefault(c => c.Id == x.CompanyId)?.Name,
-                    Status = x.Status
+                    Status = x.Status,
+                    Describe = x.Describe
 
                 }
             ); ;

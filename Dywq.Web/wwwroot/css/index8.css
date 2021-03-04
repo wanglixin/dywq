@@ -6,8 +6,11 @@
 .home{color: rgba(153, 153, 153, 1);font-size: 14px;margin-right: 8px;}
 .activething{color: rgba(51, 51, 51, 1);font-size: 14px;margin-left: 8px;}
 .main_con h3{color: 26px;margin-bottom: 30px;color: rgba(51, 51, 51, 1);text-align: center;}
-.comp_img{width: 100%;height: 450px;background: #ccc;}
-.comp_img img{width: 100%;height: 100%;}
+.comp_img {
+    text-align: center;
+   
+}
+.comp_img img {height:100%; max-height:400px;}
 
 
 .con_ul{margin-top: 60px;}
@@ -88,6 +91,10 @@ footer .footer_top{padding: 38px 70px;display: flex;}
     .buy_sec{width: 100%;padding-bottom: 40px;}
     #ad3{display: none;}
     #banner h4{font-size: 30px;}
+    .comp_img {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 
@@ -139,4 +146,12 @@ footer .footer_top{padding: 38px 70px;display: flex;}
    .li_top h4{font-size: 20px;}
    .li_top h5{font-size: 18px;}
    .ti:after{height: 30px;}
+    .comp_img {
+        text-align: center;
+        width: 100%;
+    }
+        .comp_img img{
+            width:100%;
+        }
+
 }

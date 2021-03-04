@@ -1,6 +1,6 @@
 ﻿@using Dywq.Infrastructure.Core.Extensions;
 @model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Purchase.PurchaseDTO>
-@{ 
+@{
     var type = ViewBag.type as int?;
     var user = (Dywq.Web.Dto.User.LoginUserDTO)ViewBag.CurrentUser;
 }
@@ -62,56 +62,60 @@
         {
             foreach (var item in Model.Data)
             {
-        <tr>
+                <tr>
 
-            <td>
-                @(item.Id)
-            </td>
-            <td>
-                @(item.ProductName)
-            </td>
-            <td>
-                @(item.CompanyName)
-            </td>
-            <td>
-                @(item.Contacts)
-            </td>
-
-
-
-            <td>
-                @(item.Mobile)
-            </td>
-            
-            <td>
-                @{
-                    if (item.Status == -1)
-                    {
-                        <font style="color:red;">审核失败</font>
-                    }
-                    else
-                    {
-                        @(item.StatusStr)
-                    }
-                }
-
-            </td>
+                    <td>
+                        @(item.Id)
+                    </td>
+                    <td>
+                        @(item.ProductName)
+                    </td>
+                    <td>
+                        @(item.CompanyName)
+                    </td>
+                    <td>
+                        @(item.Contacts)
+                    </td>
 
 
-            <td>
-                @(item.CreatedTime)
-            </td>
-            <td class="editbtn">
-                @*@{
-                    if (user.Type == 2 && (item.Status == 0 || item.Status == -1))
-                    {
-                        <a href="javascript:submitCheck(@(item.Id));">提交审核</a> @Html.Raw("|")
-                    }
-                }*@
-                <a href="/user/purchase/editC/@(item.Id)?type=@(type)">编辑</a> |
-                <a href="javascript:del(@(item.Id))">删除</a>
-            </td>
-        </tr>
+
+                    <td>
+                        @(item.Mobile)
+                    </td>
+
+                    <td>
+                        @{
+                            if (item.Status == -1)
+                            {
+                                <font style="color:red;">审核失败</font>
+                            }
+                            else
+                            {
+                                @(item.StatusStr)
+                            }
+                        }
+
+                    </td>
+
+
+                    <td>
+                        @(item.CreatedTime)
+                    </td>
+                    <td class="editbtn">
+
+                        @{
+                            if (item.Status == 0 || item.Status == -1)
+                            {
+                                <a href="/user/purchase/editC/@(item.Id)?type=@(type)">编辑</a>
+                            }
+                            else
+                            {
+                                <a href="/user/purchase/editC/@(item.Id)?type=@(type)">查看</a>
+                            }
+                        }
+
+                    </td>
+                </tr>
             }
         }
 
@@ -170,14 +174,14 @@
         }
 
 
-          var submitCheck = function (id) {
+        var submitCheck = function (id) {
             if (!confirm("确定提交审核？"))
                 return;
-               $.ajax({
+            $.ajax({
                 url: '/api/purchase/SubmitCheck',
                 type: 'POST',
                 dataType: "json",
-                data: JSON.stringify({ Id: id}),
+                data: JSON.stringify({ Id: id }),
                 headers: { 'Content-Type': 'application/json' },
                 success: function (r) {
                     console.log(r);

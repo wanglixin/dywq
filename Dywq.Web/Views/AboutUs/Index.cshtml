@@ -20,6 +20,10 @@
         .none{
             display:none;
         }
+        .main_con img{
+            width:initial;
+            height:initial;
+        }
     </style>
 
 }
@@ -55,7 +59,7 @@
             {
                
                 <div class="main_con @(!none?"":"none")">
-                    <img src="@(item.Pic)" alt="">
+                    
                     <p>
                        @Html.Raw(item.Content)
                     </p>

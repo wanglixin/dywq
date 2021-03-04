@@ -135,7 +135,7 @@ namespace Dywq.Web.Controllers
 
 
 
-        public async Task<IActionResult> Financing(int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Financing(int pageIndex = 1, int pageSize = 9)
         {
             var pageData = await _mediator.Send(new GetFinancingsCommand()
             {

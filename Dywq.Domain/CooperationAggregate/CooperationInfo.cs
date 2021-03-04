@@ -51,6 +51,8 @@ namespace Dywq.Domain.CooperationAggregate
 
         public int UserId { get; set; }
 
+        public string Describe { get; set; }
+
 
 
     }

@@ -163,8 +163,18 @@
 @section js{
     <script type="text/javascript">
         var conf = {
-            companyIds: []
+            companyIds: [],
+            type:@(string.IsNullOrWhiteSpace(Context.Request.Query["type"])?"0":Context.Request.Query["type"].ToString())
         };
+
+        var getUrl = function () {
+            switch (conf.type) {
+                case 0: return "/user/Article/policyList";
+                case 1: return "/user/news/newslist";
+                default: return  "/user/news/newslist";
+            }
+        }
+        conf.url = getUrl(conf.type);
         $(function () {
             $(".btn-search").on("click", function () {
                 search(1);
@@ -325,7 +335,8 @@
                 return;
             }
             $(".popbox").fadeIn();
-            getPolicyList(1);
+            //getPolicyList(1);
+            getList(1);
         }
 
         function singlePush(id) {
@@ -338,11 +349,12 @@
 
             console.log(conf);
             $(".popbox").fadeIn();
-            getPolicyList(1);
+           // getPolicyList(1);
+             getList(1);
         }
 
 
-        function getPolicyList(page) {
+         function getList(page) {
             var type = $("#TypeId").val();
             var key = $("#Key").val();
             var where = [];
@@ -352,10 +364,11 @@
             var query = where.join("&");
             query = query.length > 0 ? query + "&" : "";
 
-            $.get("/user/Article/PolicyList?" + query + "pageSize=5&pageIndex=" + page, function (r) {
+             $.get(conf.url+"?" + query + "pageSize=5&pageIndex=" + page, function (r) {
                 $(".popbox .list").html(r);
             })
         }
+
 
         function doPush(id) {
             console.log(conf.companyIds, id);
@@ -364,7 +377,7 @@
                 url: "/api/message/push",
                 type: 'POST',
                 dataType: "json",
-                data: JSON.stringify({ AssociationId: id, Type: 0, CompanyIds: conf.companyIds }),
+                data: JSON.stringify({ AssociationId: id, Type: conf.type, CompanyIds: conf.companyIds }),
                 headers: { 'Content-Type': 'application/json' },
                 success: function (r) {
                     console.log(r);

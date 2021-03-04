@@ -72,10 +72,10 @@
                     </td>
 
                     <td>
-                        @(item.MainBusiness.Cut(15))
+                        @(item.MainBusiness.Cut(10))
                     </td>
                     <td>
-                        @(item.Contact.Cut(15))
+                        @(item.Contact.Cut(10))
                     </td>
 
                     <td>
@@ -97,7 +97,25 @@
                     </td>
 
                     <td class="editbtn">
-                        <a href="/user/company/editCompanyNewsC?id=@(item.Id)">查看</a>
+                    
+
+                        @{
+
+
+                            if (item.Status == 0 || item.Status == -1)
+                            {
+                                <a href="/user/company/editCompanyNewsC?id=@(item.Id)">编辑</a>
+                            }
+                            else
+                            {
+                                <a href="/user/company/editCompanyNewsC?id=@(item.Id)">查看</a>
+                            }
+                        }
+
+
+
+                        
+
 
                     </td>
 

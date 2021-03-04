@@ -1,0 +1,936 @@
+﻿<!DOCTYPE html>
+<html lang="vi" data-react-helmet="lang">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="shortcut icon" href="https://www.dd7.com/favicons/dd7.ico">
+    <meta name="theme-color" content="#f5f5f5">
+    <meta name="referrer" content="origin">
+    <meta name="apple-mobile-web-app-capable" content="false">
+    <meta name="mobile-web-app-capable" content="false">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="google" content="notranslate">
+    <title>DD7</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0
+        }
+
+        .app-failure, .app-loading {
+            position: fixed;
+            background-color: #e4e5e5;
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            color: #666;
+            font-family: -apple-system-font,Helvetica Neue,PingFang SC,STHeitiSC-Light,Arial,sans-serif
+        }
+
+            .app-failure h1 {
+                width: 100%;
+                color: #444;
+                font-size: 28px;
+                font-weight: 500;
+                text-align: center;
+                text-shadow: 0 1px 0 rgba(255,255,255,.8)
+            }
+
+            .app-failure .cont {
+                padding: 0 20px
+            }
+
+                .app-failure .cont span {
+                    font-size: 14px
+                }
+
+            .app-failure li {
+                margin: 10px 0
+            }
+
+            .app-failure .btn-refresh {
+                display: block;
+                text-decoration: none;
+                margin-top: 10px;
+                line-height: 42px;
+                width: 120px;
+                text-align: center;
+                color: #666;
+                border: 1px solid #888;
+                border-radius: 5px;
+                font-size: 16px;
+                font-weight: 800;
+                background-color: rgba(255,255,255,.5);
+                box-shadow: 0 3px 6px rgba(0,0,0,.3)
+            }
+
+        @keyframes lds-spin {
+            0% {
+                opacity: 1;
+                -webkit-transform: scale(1.4,1.4);
+                transform: scale(1.4,1.4)
+            }
+
+            100% {
+                opacity: 0;
+                -webkit-transform: scale(1,1);
+                transform: scale(1,1)
+            }
+        }
+
+        @-webkit-keyframes lds-spin {
+            0% {
+                opacity: 1;
+                -webkit-transform: scale(1.4,1.4);
+                transform: scale(1.4,1.4)
+            }
+
+            100% {
+                opacity: 0;
+                -webkit-transform: scale(1,1);
+                transform: scale(1,1)
+            }
+        }
+
+        .lds-spin {
+            position: relative;
+            margin: auto
+        }
+
+            .lds-spin div > div {
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background: #616770;
+                -webkit-animation: lds-spin .6s linear infinite;
+                animation: lds-spin .6s linear infinite
+            }
+
+            .lds-spin div:nth-child(1) > div {
+                left: 152px;
+                top: 88px;
+                -webkit-animation-delay: -1.05s;
+                animation-delay: -1.05s
+            }
+
+            .lds-spin > div:nth-child(1) {
+                -webkit-transform: rotate(0);
+                transform: rotate(0);
+                -webkit-transform-origin: 164px 100px;
+                transform-origin: 164px 100px
+            }
+
+            .lds-spin div:nth-child(2) > div {
+                left: 133.25483398400002px;
+                top: 133.25483398400002px;
+                -webkit-animation-delay: -.9s;
+                animation-delay: -.9s
+            }
+
+            .lds-spin > div:nth-child(2) {
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+                -webkit-transform-origin: 145.25483398400002px 145.25483398400002px;
+                transform-origin: 145.25483398400002px 145.25483398400002px
+            }
+
+            .lds-spin div:nth-child(3) > div {
+                left: 88px;
+                top: 152px;
+                -webkit-animation-delay: -.75s;
+                animation-delay: -.75s
+            }
+
+            .lds-spin > div:nth-child(3) {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+                -webkit-transform-origin: 100px 164px;
+                transform-origin: 100px 164px
+            }
+
+            .lds-spin div:nth-child(4) > div {
+                left: 42.745166016px;
+                top: 133.25483398400002px;
+                -webkit-animation-delay: -.6s;
+                animation-delay: -.6s
+            }
+
+            .lds-spin > div:nth-child(4) {
+                -webkit-transform: rotate(135deg);
+                transform: rotate(135deg);
+                -webkit-transform-origin: 54.745166016px 145.25483398400002px;
+                transform-origin: 54.745166016px 145.25483398400002px
+            }
+
+            .lds-spin div:nth-child(5) > div {
+                left: 24px;
+                top: 88px;
+                -webkit-animation-delay: -.45s;
+                animation-delay: -.45s
+            }
+
+            .lds-spin > div:nth-child(5) {
+                -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+                -webkit-transform-origin: 36px 100px;
+                transform-origin: 36px 100px
+            }
+
+            .lds-spin div:nth-child(6) > div {
+                left: 42.745166016px;
+                top: 42.745166016px;
+                -webkit-animation-delay: -.3s;
+                animation-delay: -.3s
+            }
+
+            .lds-spin > div:nth-child(6) {
+                -webkit-transform: rotate(225deg);
+                transform: rotate(225deg);
+                -webkit-transform-origin: 54.745166016px 54.745166016px;
+                transform-origin: 54.745166016px 54.745166016px
+            }
+
+            .lds-spin div:nth-child(7) > div {
+                left: 88px;
+                top: 24px;
+                -webkit-animation-delay: -.15s;
+                animation-delay: -.15s
+            }
+
+            .lds-spin > div:nth-child(7) {
+                -webkit-transform: rotate(270deg);
+                transform: rotate(270deg);
+                -webkit-transform-origin: 100px 36px;
+                transform-origin: 100px 36px
+            }
+
+            .lds-spin div:nth-child(8) > div {
+                left: 133.25483398400002px;
+                top: 42.745166016px;
+                -webkit-animation-delay: 0s;
+                animation-delay: 0s
+            }
+
+            .lds-spin > div:nth-child(8) {
+                -webkit-transform: rotate(315deg);
+                transform: rotate(315deg);
+                -webkit-transform-origin: 145.25483398400002px 54.745166016px;
+                transform-origin: 145.25483398400002px 54.745166016px
+            }
+
+            .lds-spin div:nth-child(9) > div {
+                left: 152px;
+                top: 88px;
+                -webkit-animation-delay: .15s;
+                animation-delay: .15s
+            }
+
+            .lds-spin > div:nth-child(9) {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+                -webkit-transform-origin: 164px 100px;
+                transform-origin: 164px 100px
+            }
+
+        .lds-spin {
+            width: 100px !important;
+            height: 100px !important;
+            -webkit-transform: translate(-50px,-50px) scale(.5) translate(50px,50px);
+            transform: translate(-50px,-50px) scale(.5) translate(50px,50px)
+        }
+    </style>
+    <link href="./DD7_files/vendors.473efbb9.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./DD7_files/26.02325a22.css">
+
+    <link rel="stylesheet" type="text/css" href="./DD7_files/m-AppContainer.fbac8aeb.css">
+    <link rel="stylesheet" type="text/css" href="./DD7_files/app.d6077203.css">
+
+    <link rel="stylesheet" type="text/css" href="./DD7_files/others.a9106988.css">
+    <link rel="stylesheet" type="text/css" href="./DD7_files/m-home.d9e5124b.css">
+
+    <meta name="description" content="" data-react-helmet="true">
+    <meta name="keywords" content="" data-react-helmet="true">
+    <style type="text/css">
+        .__react_component_tooltip {
+            border-radius: 3px;
+            display: inline-block;
+            font-size: 13px;
+            left: -999em;
+            opacity: 0;
+            padding: 8px 21px;
+            position: fixed;
+            pointer-events: none;
+            transition: opacity 0.3s ease-out;
+            top: -999em;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+            .__react_component_tooltip.allow_hover, .__react_component_tooltip.allow_click {
+                pointer-events: auto;
+            }
+
+            .__react_component_tooltip:before, .__react_component_tooltip:after {
+                content: "";
+                width: 0;
+                height: 0;
+                position: absolute;
+            }
+
+            .__react_component_tooltip.show {
+                opacity: 0.9;
+                margin-top: 0px;
+                margin-left: 0px;
+                visibility: visible;
+            }
+
+            .__react_component_tooltip.type-dark {
+                color: #fff;
+                background-color: #222;
+            }
+
+                .__react_component_tooltip.type-dark.place-top:after {
+                    border-top-color: #222;
+                    border-top-style: solid;
+                    border-top-width: 6px;
+                }
+
+                .__react_component_tooltip.type-dark.place-bottom:after {
+                    border-bottom-color: #222;
+                    border-bottom-style: solid;
+                    border-bottom-width: 6px;
+                }
+
+                .__react_component_tooltip.type-dark.place-left:after {
+                    border-left-color: #222;
+                    border-left-style: solid;
+                    border-left-width: 6px;
+                }
+
+                .__react_component_tooltip.type-dark.place-right:after {
+                    border-right-color: #222;
+                    border-right-style: solid;
+                    border-right-width: 6px;
+                }
+
+                .__react_component_tooltip.type-dark.border {
+                    border: 1px solid #fff;
+                }
+
+                    .__react_component_tooltip.type-dark.border.place-top:before {
+                        border-top: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-dark.border.place-bottom:before {
+                        border-bottom: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-dark.border.place-left:before {
+                        border-left: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-dark.border.place-right:before {
+                        border-right: 8px solid #fff;
+                    }
+
+            .__react_component_tooltip.type-success {
+                color: #fff;
+                background-color: #8DC572;
+            }
+
+                .__react_component_tooltip.type-success.place-top:after {
+                    border-top-color: #8DC572;
+                    border-top-style: solid;
+                    border-top-width: 6px;
+                }
+
+                .__react_component_tooltip.type-success.place-bottom:after {
+                    border-bottom-color: #8DC572;
+                    border-bottom-style: solid;
+                    border-bottom-width: 6px;
+                }
+
+                .__react_component_tooltip.type-success.place-left:after {
+                    border-left-color: #8DC572;
+                    border-left-style: solid;
+                    border-left-width: 6px;
+                }
+
+                .__react_component_tooltip.type-success.place-right:after {
+                    border-right-color: #8DC572;
+                    border-right-style: solid;
+                    border-right-width: 6px;
+                }
+
+                .__react_component_tooltip.type-success.border {
+                    border: 1px solid #fff;
+                }
+
+                    .__react_component_tooltip.type-success.border.place-top:before {
+                        border-top: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-success.border.place-bottom:before {
+                        border-bottom: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-success.border.place-left:before {
+                        border-left: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-success.border.place-right:before {
+                        border-right: 8px solid #fff;
+                    }
+
+            .__react_component_tooltip.type-warning {
+                color: #fff;
+                background-color: #F0AD4E;
+            }
+
+                .__react_component_tooltip.type-warning.place-top:after {
+                    border-top-color: #F0AD4E;
+                    border-top-style: solid;
+                    border-top-width: 6px;
+                }
+
+                .__react_component_tooltip.type-warning.place-bottom:after {
+                    border-bottom-color: #F0AD4E;
+                    border-bottom-style: solid;
+                    border-bottom-width: 6px;
+                }
+
+                .__react_component_tooltip.type-warning.place-left:after {
+                    border-left-color: #F0AD4E;
+                    border-left-style: solid;
+                    border-left-width: 6px;
+                }
+
+                .__react_component_tooltip.type-warning.place-right:after {
+                    border-right-color: #F0AD4E;
+                    border-right-style: solid;
+                    border-right-width: 6px;
+                }
+
+                .__react_component_tooltip.type-warning.border {
+                    border: 1px solid #fff;
+                }
+
+                    .__react_component_tooltip.type-warning.border.place-top:before {
+                        border-top: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-warning.border.place-bottom:before {
+                        border-bottom: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-warning.border.place-left:before {
+                        border-left: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-warning.border.place-right:before {
+                        border-right: 8px solid #fff;
+                    }
+
+            .__react_component_tooltip.type-error {
+                color: #fff;
+                background-color: #BE6464;
+            }
+
+                .__react_component_tooltip.type-error.place-top:after {
+                    border-top-color: #BE6464;
+                    border-top-style: solid;
+                    border-top-width: 6px;
+                }
+
+                .__react_component_tooltip.type-error.place-bottom:after {
+                    border-bottom-color: #BE6464;
+                    border-bottom-style: solid;
+                    border-bottom-width: 6px;
+                }
+
+                .__react_component_tooltip.type-error.place-left:after {
+                    border-left-color: #BE6464;
+                    border-left-style: solid;
+                    border-left-width: 6px;
+                }
+
+                .__react_component_tooltip.type-error.place-right:after {
+                    border-right-color: #BE6464;
+                    border-right-style: solid;
+                    border-right-width: 6px;
+                }
+
+                .__react_component_tooltip.type-error.border {
+                    border: 1px solid #fff;
+                }
+
+                    .__react_component_tooltip.type-error.border.place-top:before {
+                        border-top: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-error.border.place-bottom:before {
+                        border-bottom: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-error.border.place-left:before {
+                        border-left: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-error.border.place-right:before {
+                        border-right: 8px solid #fff;
+                    }
+
+            .__react_component_tooltip.type-info {
+                color: #fff;
+                background-color: #337AB7;
+            }
+
+                .__react_component_tooltip.type-info.place-top:after {
+                    border-top-color: #337AB7;
+                    border-top-style: solid;
+                    border-top-width: 6px;
+                }
+
+                .__react_component_tooltip.type-info.place-bottom:after {
+                    border-bottom-color: #337AB7;
+                    border-bottom-style: solid;
+                    border-bottom-width: 6px;
+                }
+
+                .__react_component_tooltip.type-info.place-left:after {
+                    border-left-color: #337AB7;
+                    border-left-style: solid;
+                    border-left-width: 6px;
+                }
+
+                .__react_component_tooltip.type-info.place-right:after {
+                    border-right-color: #337AB7;
+                    border-right-style: solid;
+                    border-right-width: 6px;
+                }
+
+                .__react_component_tooltip.type-info.border {
+                    border: 1px solid #fff;
+                }
+
+                    .__react_component_tooltip.type-info.border.place-top:before {
+                        border-top: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-info.border.place-bottom:before {
+                        border-bottom: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-info.border.place-left:before {
+                        border-left: 8px solid #fff;
+                    }
+
+                    .__react_component_tooltip.type-info.border.place-right:before {
+                        border-right: 8px solid #fff;
+                    }
+
+            .__react_component_tooltip.type-light {
+                color: #222;
+                background-color: #fff;
+            }
+
+                .__react_component_tooltip.type-light.place-top:after {
+                    border-top-color: #fff;
+                    border-top-style: solid;
+                    border-top-width: 6px;
+                }
+
+                .__react_component_tooltip.type-light.place-bottom:after {
+                    border-bottom-color: #fff;
+                    border-bottom-style: solid;
+                    border-bottom-width: 6px;
+                }
+
+                .__react_component_tooltip.type-light.place-left:after {
+                    border-left-color: #fff;
+                    border-left-style: solid;
+                    border-left-width: 6px;
+                }
+
+                .__react_component_tooltip.type-light.place-right:after {
+                    border-right-color: #fff;
+                    border-right-style: solid;
+                    border-right-width: 6px;
+                }
+
+                .__react_component_tooltip.type-light.border {
+                    border: 1px solid #222;
+                }
+
+                    .__react_component_tooltip.type-light.border.place-top:before {
+                        border-top: 8px solid #222;
+                    }
+
+                    .__react_component_tooltip.type-light.border.place-bottom:before {
+                        border-bottom: 8px solid #222;
+                    }
+
+                    .__react_component_tooltip.type-light.border.place-left:before {
+                        border-left: 8px solid #222;
+                    }
+
+                    .__react_component_tooltip.type-light.border.place-right:before {
+                        border-right: 8px solid #222;
+                    }
+
+            .__react_component_tooltip.place-top {
+                margin-top: -10px;
+            }
+
+                .__react_component_tooltip.place-top:before {
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    bottom: -8px;
+                    left: 50%;
+                    margin-left: -10px;
+                }
+
+                .__react_component_tooltip.place-top:after {
+                    border-left: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    bottom: -6px;
+                    left: 50%;
+                    margin-left: -8px;
+                }
+
+            .__react_component_tooltip.place-bottom {
+                margin-top: 10px;
+            }
+
+                .__react_component_tooltip.place-bottom:before {
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    top: -8px;
+                    left: 50%;
+                    margin-left: -10px;
+                }
+
+                .__react_component_tooltip.place-bottom:after {
+                    border-left: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    top: -6px;
+                    left: 50%;
+                    margin-left: -8px;
+                }
+
+            .__react_component_tooltip.place-left {
+                margin-left: -10px;
+            }
+
+                .__react_component_tooltip.place-left:before {
+                    border-top: 6px solid transparent;
+                    border-bottom: 6px solid transparent;
+                    right: -8px;
+                    top: 50%;
+                    margin-top: -5px;
+                }
+
+                .__react_component_tooltip.place-left:after {
+                    border-top: 5px solid transparent;
+                    border-bottom: 5px solid transparent;
+                    right: -6px;
+                    top: 50%;
+                    margin-top: -4px;
+                }
+
+            .__react_component_tooltip.place-right {
+                margin-left: 10px;
+            }
+
+                .__react_component_tooltip.place-right:before {
+                    border-top: 6px solid transparent;
+                    border-bottom: 6px solid transparent;
+                    left: -8px;
+                    top: 50%;
+                    margin-top: -5px;
+                }
+
+                .__react_component_tooltip.place-right:after {
+                    border-top: 5px solid transparent;
+                    border-bottom: 5px solid transparent;
+                    left: -6px;
+                    top: 50%;
+                    margin-top: -4px;
+                }
+
+            .__react_component_tooltip .multi-line {
+                display: block;
+                padding: 2px 0px;
+                text-align: center;
+            }
+
+        .app.signup .hover-container > .container form .input-group input[type=text].invalid, .app.signup .hover-container > .container form .input-group input[type=password].invalid, .app.signup .hover-container > .container form .input-group input[type=tel].invalid {
+            border: 1px solid red;
+        }
+    </style>
+
+    <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+    <script src="DD7_files/core.js"></script>
+    <script src="DD7_files/hmac.js"></script>
+    <script src="DD7_files/sha1.js"></script>
+    <script src="DD7_files/enc-utf16.js"></script>
+
+</head>
+<body>
+    <div id="root">
+        <div class="app agent signup">
+            <div class="mobile-float-ads-modal">
+            </div>
+            <div class="app-body">
+                <section class="hover-container signup">
+                    <div class="container">
+                        <div class="header-actions">
+                            <img class="close" alt="close" src="./DD7_files/ic-cancel.svg">
+                        </div>
+                        <form class="nrc-form nrc-form-block ">
+                            <div class="steps-wrapper">
+                                <h2>Thông Tin Đăng ký</h2>
+                            </div>
+                            <div class="nrc-form-item input-group prefix">
+                                <div class="nrc-form-label ">
+                                    <label for="playerid" class="form-require">Tên đăng nhập</label>
+                                </div>
+                                <div class="nrc-form-input nrc-u-1-1 ">
+                                    <input type="text" autocapitalize="none" placeholder="" id="playerid" class="invalid" maxlength="13" value=""><small class="info-msg">Tên đăng nhập bao gồm từ 5-13 ký tự/số</small>
+                                </div>
+                            </div>
+                            <div class="nrc-form-item input-group">
+                                <div class="nrc-form-label ">
+                                    <label for="password" class="form-require">Mật khẩu</label>
+                                </div>
+                                <div class="nrc-form-input nrc-u-1-1 ">
+                                    <input placeholder="" type="password" autocomplete="new-password" id="password" class="invalid" maxlength="20" value="">
+                                    <small class="info-msg">Mật khẩu phải bao gồm từ 8~20 ký tự / số, chứa ít nhất 1 chữ hoa.</small>
+                                </div>
+                            </div>
+                            <div class="nrc-form-item input-group">
+                                <div class="nrc-form-label ">
+                                    <label for="confirmpassword" class="form-require">Xác nhận lại mật khẩu</label>
+                                </div>
+                                <div class="nrc-form-input nrc-u-1-1 ">
+                                    <input type="password" id="confirmpassword" class="invalid" maxlength="20" value="">
+                                    <small class="info-msg">Vui lòng nhập lại mật khẩu.</small>
+                                </div>
+                            </div>
+                            <div class="nrc-form-item input-group">
+                                <div class="nrc-form-label ">
+                                    <label for="mobile" class="form-require">Số điện thoại</label>
+                                </div>
+                                <div class="nrc-form-input nrc-u-1-1">
+                                    <div class="react-tel-input" data-test-id="src_reacttelephoneinput_test_id_4">
+                                        <div class="flag-dropdown" data-test-id="src_reacttelephoneinput_test_id_6">
+                                            <button class="selected-flag" title="Vietnam (Việt Nam): + 84" data-test-id="src_reacttelephoneinput_test_id_7" type="button">
+                                                <div class="flag vn" data-test-id="src_reacttelephoneinput_test_id_8" style="background-image: url(&quot;/static/media/flags.723494a4.png&quot;);">
+                                                    <div class="arrow" data-test-id="src_reacttelephoneinput_test_id_9">
+
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <input type="tel" class="form-control invalid" autocomplete="tel" placeholder="+86 12-34567" data-test-id="src_reacttelephoneinput_test_id_5" value="+84" id="mobile">
+                                    </div>
+                                    <small class="info-msg"></small>
+                                    <input type="hidden" class="nrc-invisible">
+                                </div>
+                            </div>
+                            <div class="nrc-form-item input-group">
+                                <div class="nrc-form-label ">
+                                    <label for="im1" class="">Zalo</label>
+                                </div>
+                                <div class="nrc-form-input nrc-u-1-1 ">
+                                    <input type="text" id="im1" class="" maxlength="50" value="">
+                                    <small class="info-msg">
+
+                                    </small>
+                                </div>
+                            </div><br><br><div class="tips">
+                                <input type="checkbox" id="agree"><label for="agree"></label>Tôi 18 tuổi trở lên. Tôi đã đọc, chấp nhận và đồng ý Toàn bộ chính sách, điều khoản và điều kiện, luật lệ,
+                                <span class="policy-btn">“Chính sách thành viên”</span>
+                            </div>
+                            <div class="nrc-form-input"><small class="invalid-msg">Bấm chọn, nếu đã đồng ý với chính sách thành viên</small></div>
+                            <div class="nrc-form-item input-group">
+                                <div class="nrc-form-label ">
+                                    <label for="captcha" class="form-require">Mã kiểm tra</label>
+                                </div>
+                                <div class="nrc-form-input secure">
+                                    <input type="text" id="captcha_text" inputmode="numeric" pattern="[0-9]*" placeholder="Mã kiểm tra" name="">
+                                    <div>
+                                        <img id="captcha" alt="captcha" src="">
+                                    </div><i class="mps-update"></i>
+                                </div>
+                                <div class="nrc-form-input">
+                                    <small class="info-msg">
+                                    </small>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="top25">
+                            <!-- nrc-button-disabled-->
+                            <button id="submit_btn" title="" class="nrc-button" type="button">Đăng ký ngay</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var EC_Portal_API_URL = "https://api.dd7.xyz/dd7-ecp";
+        var uagt, _regfingerprint, _captchauuid, id;
+        $(function () {
+            initFingerprintJS(function (visitorId) {
+                _regfingerprint = visitorId;
+            });
+            uagt = getUrlParam("uagt");
+            id = getUrlParam("id");
+            //alert(uagt);
+            $("#submit_btn").on("click", function () {
+
+
+
+                if (!$("#agree").is(':checked')) {
+                    alert("Please check agree");
+                    return;
+                }
+
+
+                var _password = $("#password").val();
+                var _confirmpassword = $("#confirmpassword").val();
+                if (_password != _confirmpassword) {
+                    alert("The two passwords are inconsistent");
+                    return;
+                }
+
+
+
+                //alert(regfingerprint);
+                var para = new FormData();
+                para.append("agentid", "");
+                para.append("ulagentaccount", uagt);
+                para.append("playerid", $("#playerid").val());
+                para.append("currency", "VND2");
+                para.append("firstname", "");
+                para.append("im1", $("#im1").val());
+                para.append("portalid", "EC_MOBILE");
+                para.append("captcha", $("#captcha_text").val());
+
+                para.append("captchauuid", _captchauuid);
+                para.append("regfingerprint", _regfingerprint);
+                para.append("language", 4);
+                para.append("mobile", $("#mobile").val().replace("+84", "84 "));
+
+
+
+                //para.ulagentaccount = uagt;
+                //para.playerid = $("#playerid").val();
+                //para.currency = "VND2";
+                //para.firstname = "";
+                //para.im1 = $("#im1").val();
+                //para.portalid = "EC_MOBILE";
+                //para.captcha = $("#captcha_text").val();
+                //para.captchauuid = _captchauuid;
+                //para.regfingerprint = _regfingerprint;
+                //para.language = 4;
+
+
+
+                para.append("pin", CryptoJS.HmacSHA1(_password, CryptoJS.enc.Utf8.parse(playerid)).toString());
+                para.append("password", CryptoJS.HmacSHA1(_password, CryptoJS.enc.Utf8.parse(playerid)).toString());
+                console.log(para, _password);
+
+
+
+                _post("/api/v1/register", para, function (res) {
+                    alert("success");
+
+                    //用户注册成功后的操作：
+                    $("body").append('<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' + id + '&ev=Purchase&noscript=1">');
+
+                    setTimeout(function () {
+                        window.location.href = "http://www.baidu.com";
+                    }, 2 * 1000); //2秒倒计时结束后，跳转
+
+
+
+                });
+
+            });
+
+
+            $("#captcha").on("click", function () {
+                _get("/api/v1/captchas/random", function (result) {
+                    $("#captcha").attr("src", result.image);
+                    _captchauuid = result.uuid;
+                });
+            });
+            $("#captcha").trigger("click");
+
+            console.log(CryptoJS.HmacSHA1("Zxcvb1234", CryptoJS.enc.Utf8.parse("player1")).toString(), "po");
+
+        });
+
+        var _get = function (url, callback) {
+            $.getJSON(EC_Portal_API_URL+url, function (result) {
+                console.log(result);
+                callback(result);
+            });
+        }
+
+        var _post = function (url, fromData, callback) {
+            $.ajax({
+                type: 'post',
+                url: EC_Portal_API_URL + url,
+                cache: false,
+                contentType: "multipart/form-data",
+                contentType: false,
+                processData: false,
+                data: fromData, //数据
+                success: function (jqXHR, textStatus, jqXHR) {
+                    console.log(jqXHR.responseJSON);
+                    callback(jqXHR.responseJSON);
+                }
+                , error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseJSON);
+                    alert(jqXHR.responseJSON.msg);
+                }
+            });
+
+
+        }
+
+
+        //获取url中的参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+
+        function initFingerprintJS(callback) {
+
+            FingerprintJS.load().then(fp => {
+                // The FingerprintJS agent is ready.
+                // Get a visitor identifier when you'd like to.
+                fp.get().then(result => {
+                    // This is the visitor identifier:
+                    const visitorId = result.visitorId;
+                    callback(visitorId);
+                    console.log(visitorId);
+                });
+            });
+        }
+
+    </script>
+
+</body>
+</html>

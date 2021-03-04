@@ -1,0 +1,148 @@
+﻿@using Dywq.Infrastructure.Core.Extensions;
+@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.News.NoticeNewsDTO>
+
+@section head{
+    <link href="~/css/index10.css" rel="stylesheet" />
+    <link href="~/css/company_add.css" rel="stylesheet" />
+    <link href="~/css/pager.css" rel="stylesheet" />
+    <style>
+        .add_txt a {
+            color: white;
+        }
+
+        .popbox .list {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+}
+
+
+<h2>
+    选择推送内容
+</h2>
+<div class="tools">
+    <div class="left_btns">
+        @*<div class="addbtn">
+                <div class="add_left">+</div>
+                <span class="add_txt"><a href="/user/article/EditPolicyArticle">新增</a></span>
+            </div>*@
+        @*<button class="btn-push higer_search" onclick="push();">批量推送</button>*@
+    </div>
+
+    <div class="right_btn">
+
+     
+        <div class="work_input">
+
+            <div class="input-group search_con">
+
+                <input type="text" class="form-control" value="@(Context.Request.Query["key"])" id="Key" placeholder="请输入关键词">
+            </div>
+            <input class="btn btn-primary " onclick="getList(1)" value="搜索" />
+
+        </div>
+
+    </div>
+</div>
+<!-- table -->
+<table id="table_con">
+    <tr class="head">
+
+        <th>Id</th>
+        <th>主题</th>
+        <th>内容</th>
+        <th>排序</th>
+        <th>发布时间</th>
+        <th>操作</th>
+
+    </tr>
+    @{
+        if (Model.Data != null)
+        {
+            foreach (var item in Model.Data)
+            {
+                <tr>
+
+                    <td>
+                        @(item.Id)
+                    </td>
+  
+                    <td>
+                        @(item.Title.Cut(10))
+                    </td>
+                    <td>
+                        @(item.Describe.Cut(20))
+                    </td>
+                    
+                    <td>
+                        @(item.Sort)
+                    </td>
+                    <td>
+                        @(item.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss"))
+                    </td>
+                    <td class="editbtn">
+                        <a href="javascript:doPush(@(item.Id))">推送</a>
+                    </td>
+                </tr>
+            }
+        }
+
+    }
+
+
+</table>
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>
+
+
+<!-- pop -->
+<div class="popbox">
+    <div class="list">
+
+    </div>
+
+    <!-- 底部推送 -->
+    <div class="push_btns">
+        <button class="push_btn_per btn push_btn_cancel">取消</button>
+        @*<button class="push_btn_per btn push_btn_confirm">推送</button>*@
+    </div>
+
+</div>
+
+
+@section js{
+    <script type="text/javascript">
+        var config = {
+            UserId: 0,
+            CompanyId: 0
+        };
+
+        var del = function (id, obj) {
+
+            if (!confirm("确定删除"))
+                return;
+            $.ajax({
+                url: '/api/article/deletePolicyArticle',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ Id: id }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("删除成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+
+        }
+
+
+    </script>
+
+}

@@ -100,7 +100,7 @@ namespace Dywq.Web.Application.Commands
 
 
             var sql = @$" select count(*) from (
-   select c.id,count(c.id) c from Company as c left join CompanyFieldData as d on d.CompanyId=c.id  {where} group by c.id 
+   select c.Id,count(c.Id) c from Company as c left join CompanyFieldData as d on d.CompanyId=c.Id  {where} group by c.Id 
    ) as t {where2}";
             var count = await _companyRepository.SqlCountAsync(sql);
 
@@ -111,8 +111,8 @@ namespace Dywq.Web.Application.Commands
             var end = start + request.PageSize;
 
             sql = @$"  select * from (
-	   select id CompanyId,Name,ROW_NUMBER() over(order by Id desc) Rowid from (
-   select c.id,min(c.Name) Name,count(c.id) c from Company as c left join CompanyFieldData as d on d.CompanyId=c.id {where}   group by c.id 
+	   select Id CompanyId,Name,ROW_NUMBER() over(order by Id desc) Rowid from (
+   select c.Id,min(c.Name) Name,count(c.Id) c from Company as c left join CompanyFieldData as d on d.CompanyId=c.Id {where}   group by c.Id 
    ) as t {where2} ) as tt where tt.Rowid>{start} and tt.Rowid<={end}";
 
             var data = await _companyRepository.SqlQueryAsync<CompanyDTO>(sql);

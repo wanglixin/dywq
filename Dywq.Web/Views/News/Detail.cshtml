@@ -18,7 +18,13 @@
         <div style="text-align:center; ">@(Model.CreatedTime.ToString("yyyy-MM-dd"))</div>
         <hr />
         <div style="line-height:2;font-size:16px;">
-            <div style="text-align:center;" class="comp_img"> <img  src="@(Model.Pic)"/></div>
+            @{
+                if (!string.IsNullOrWhiteSpace(Model.Pic))
+                {
+                    <div style="text-align:center;" class="comp_img"> <img src="@(Model.Pic)" /></div>
+                }
+            }
+
             <p> @(Html.Raw(Model.Content))</p>
 
         </div>

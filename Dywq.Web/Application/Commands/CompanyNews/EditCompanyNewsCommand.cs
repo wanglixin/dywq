@@ -42,7 +42,7 @@ namespace Dywq.Web.Application.Commands.CompanyNews
         public string Title { get; set; }
 
 
-        [Required(ErrorMessage = "请上传图片")]
+        // [Required(ErrorMessage = "请上传图片")]
         /// <summary>
         /// 内容
         /// </summary>
@@ -193,46 +193,44 @@ namespace Dywq.Web.Application.Commands.CompanyNews
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
 
-                if (user.Type == 0 || user.Type == 2) //用户修改的情况
+                if (user.Type != 1 && item.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
+                item.CompanyTypeId = typeId;
+                item.Contact = request.Contact;
+                item.CooperationContent = request.CooperationContent;
+                item.Introduce = request.Introduce;
+                item.IntroduceImage = request.IntroduceImage;
+                item.MainBusiness = request.MainBusiness;
+                //item.Show = show;
+                //item.Sort = sort;
+                item.Status = 0;
+                item.Title = request.Title;
+
+
+                if (user.Type == 0) //用户修改的情况
                 {
                     if (item.Status != -1)
                     {
                         return Result.Failure($"当前状态不能修改");
                     }
-                    item.CompanyTypeId = typeId;
-                    item.Contact = request.Contact;
-                    item.CooperationContent = request.CooperationContent;
-                    item.Introduce = request.Introduce;
-                    item.IntroduceImage = request.IntroduceImage;
-                    item.MainBusiness = request.MainBusiness;
-                    //item.Show = show;
-                    //item.Sort = sort;
-                    item.Status = 0;
-                    item.Title = request.Title;
+
                 }
-                else if (user.Type == 1) //管理员修改
+
+                if (user.Type == 1) //管理员修改
                 {
                     if (string.IsNullOrWhiteSpace(request.Status))
                     {
                         return Result.Failure($"请选择审核状态");
                     }
 
-
-                    item.CompanyTypeId = typeId;
-                    item.Contact = request.Contact;
-                    item.CooperationContent = request.CooperationContent;
-                    item.Introduce = request.Introduce;
-                    item.IntroduceImage = request.IntroduceImage;
-                    item.MainBusiness = request.MainBusiness;
                     item.Show = show;
                     item.Sort = sort;
                     item.Status = status;
-                    item.Title = request.Title;
                 }
-                else
-                {
-                    return Result.Failure($"用户类型错误");
-                }
+
 
                 await _companyNewsRepository.UpdateAsync(item);
             }

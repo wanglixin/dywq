@@ -77,7 +77,7 @@
                         var html = "";
                         for (var i = 0; i < r.data.length; i++) {
                             var item = r.data[i];
-                            html += "<li><div class='left_sec'><div class='ling'></div><p><a href='/Company/Investment/Detail/" + item.id + "'>" + item.title + "</a></p></div><div class='date'>" + formatDate(item.createdTime) + "</div></li>";
+                            html += "<li><div class='left_sec'><div class='ling'></div><p><a href='/Company/Investment/Detail/" + item.id + "'>" + item.title + "</a></p></div><div class='date'>" + formatDate2(item.createdTime) + "</div></li>";
                         }
                         target.find("ul").html(html);
                     } else {

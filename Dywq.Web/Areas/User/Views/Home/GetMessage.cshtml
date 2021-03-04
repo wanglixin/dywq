@@ -1,28 +1,28 @@
 ﻿@model Dywq.Infrastructure.Core.PageResult<Dywq.Web.Dto.Commpany.MessageDTO>
-    <div class="title"><h3>待办事项（@(Model.Total)）</h3></div>
-    <ul>
-        @if (Model.Data != null)
-        {
+<div class="title"><h3>待办事项（@(Model.Code)）</h3></div>
+<ul>
+    @if (Model.Data != null)
+    {
 
-            foreach (var item in Model.Data)
-            {
-                <li>
-                    <a target="_blank" href="@(item.Link)">
-                        <span class="cont">【@(item.TypeStr)】@(item.Content)</span>
-                        <span class="time">@(item.CreatedTime)</span>
-                    </a>
-                </li>
-            }
-        }
-        else
+        foreach (var item in Model.Data)
         {
             <li>
-                <span class="cont">无消息</span>
+                <a target="_blank" href="@(item.Link)">
+                    <span class="cont">【@(item.TypeStr)】@(item.Content) @Html.Raw(item.IsRead == 0 ? "<lable style=\"color:red;\">未读</lable>" : "")</span>
+                    <span class="time">@(item.CreatedTime)</span>
+                </a>
             </li>
         }
+    }
+    else
+    {
+        <li>
+            <span class="cont">无消息</span>
+        </li>
+    }
 
-    </ul>
+</ul>
 
-    <section class="paginabox">
-        @Html.Raw(Model.Pager)
-    </section>
+<section class="paginabox">
+    @Html.Raw(Model.Pager)
+</section>

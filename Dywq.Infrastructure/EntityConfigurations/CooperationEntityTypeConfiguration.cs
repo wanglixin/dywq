@@ -33,6 +33,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Show);
             builder.Property(p => p.CompanyId);
             builder.Property(p => p.UserId);
+            builder.Property(p => p.Describe);
         }
 
     }
@@ -65,7 +66,9 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Show);
             builder.Property(p => p.CompanyId);
             builder.Property(p => p.UserId);
+            builder.Property(p => p.Describe);
         }
+    
     }
 
 }

@@ -6,6 +6,7 @@ using Dywq.Web.Application.Commands.Article;
 using Dywq.Web.Application.Commands.Guestbook;
 using Dywq.Web.Application.Commands.Message;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -35,7 +36,7 @@ namespace Dywq.Web.Controllers
         }
 
 
-
+        
         public async Task<IActionResult> Policy(GetPolicyArticlesCommand cmd)
         {
             var types = await _mediator.Send(new GetPolicyTypesCommand() { }, HttpContext.RequestAborted);
@@ -57,6 +58,7 @@ namespace Dywq.Web.Controllers
             return View(result);
         }
 
+        [Authorize]
         public async Task<IActionResult> PolicyDetail(int id, string _source = "")
         {
             var result = await _mediator.Send(new GetPolicyArticlesCommand() { Id = id, Status = 1 }, HttpContext.RequestAborted);
@@ -74,6 +76,7 @@ namespace Dywq.Web.Controllers
 
         public async Task<IActionResult> GetGuestbook(GetGuestbooksCommand cmd)
         {
+            cmd.Status = 1;
             cmd.LinkUrl = $"/article/getGuestbook?PageIndex=__id__&PageSize={cmd.PageSize}";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return PartialView(result);

@@ -12,6 +12,7 @@ using DotNetCore.CAP;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Dywq.Domain.UserAggregate;
+using Dywq.Web.Dto.User;
 
 namespace Dywq.Web.Application.Commands.Guestbook
 {
@@ -47,6 +48,10 @@ namespace Dywq.Web.Application.Commands.Guestbook
         /// 回复的留言id，默认为0
         /// </summary>
         public string ReplyId { get; set; }
+
+
+        public LoginUserDTO LoginUser { get; set; }
+
     }
 
 
@@ -98,6 +103,9 @@ namespace Dywq.Web.Application.Commands.Guestbook
                 {
                     return Result.Failure($"已经回复过");
                 }
+
+                _guestbook.Status = 1;
+                await _guestbookRepository.UpdateAsync(_guestbook);
             }
             else //新增留言
             {
@@ -120,8 +128,14 @@ namespace Dywq.Web.Application.Commands.Guestbook
                 Content = request.Content,
                 ReplyId = replyId,
                 Type = Convert.ToInt32(request.Type),
-                UserId = Convert.ToInt32(request.UserId)
+                UserId = Convert.ToInt32(request.UserId),
+                Status = 0
             };
+
+            if (request.LoginUser.Type == 1 || request.LoginUser.Type == 2)
+            {
+                guestBook.Status = 1;
+            }
 
             await _guestbookRepository.AddAsync(guestBook);
 

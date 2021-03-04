@@ -27,7 +27,7 @@ namespace Dywq.Web.Application.Commands.Expert
         /// </summary>
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "请上传头像")]
+        //[Required(ErrorMessage = "请上传头像")]
         /// <summary>
         /// 头像图片
         /// </summary>
@@ -128,6 +128,13 @@ namespace Dywq.Web.Application.Commands.Expert
                 {
                     return Result.Failure($"id={request.Id}内容不存在");
                 }
+
+                if (!request.LoginUser.IsAdmin && item.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
+
 
                 item.ExpertTypeId = expertTypeId;
                 item.Introduction = request.Introduction;

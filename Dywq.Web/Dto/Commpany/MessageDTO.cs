@@ -43,6 +43,7 @@ namespace Dywq.Web.Dto.Commpany
                 return this.Type switch
                 {
                     0 => "惠企政策",
+                    1 => "通知公告",
                     _ => "",
                 };
             }
@@ -56,6 +57,7 @@ namespace Dywq.Web.Dto.Commpany
                 return this.Type switch
                 {
                     0 => $"/article/policyDetail/{AssociationId}?_source=user",
+                    1 => $"/news/detail/{AssociationId}?_source=user",
                     _ => "",
                 };
             }

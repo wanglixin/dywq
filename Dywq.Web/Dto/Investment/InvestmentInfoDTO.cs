@@ -66,5 +66,9 @@ namespace Dywq.Web.Dto.Investment
                 };
             }
         }
+
+
+        public string Describe { get; set; }
+
     }
 }

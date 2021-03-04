@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Dywq.Infrastructure.Core.Extensions;
 namespace Dywq.Web.Application.Commands.Investment
 {
     /// <summary>
@@ -124,7 +124,8 @@ namespace Dywq.Web.Application.Commands.Investment
                     InvestmentTypeId = typeId,
                     Title = request.Title,
                     Status = 0,
-                    UserId = request.LoginUser.Id
+                    UserId = request.LoginUser.Id,
+                    Describe = request.Content.FilterHtml().Cut(300)
                 };
                 if (request.LoginUser.Type == 1)
                 {
@@ -141,10 +142,16 @@ namespace Dywq.Web.Application.Commands.Investment
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
 
+                if (!request.LoginUser.IsAdmin && item.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
                 item.Content = request.Content;
                 item.Title = request.Title;
                 item.InvestmentTypeId = typeId;
                 item.Status = 0;
+                item.Describe = request.Content.FilterHtml().Cut(300);
 
 
                 if (request.LoginUser.Type == 1) //管理员修改
@@ -155,10 +162,10 @@ namespace Dywq.Web.Application.Commands.Investment
                     }
                     var status = Convert.ToInt32(request.Status);
 
-
                     item.Show = show;
                     item.Sort = sort;
                     item.Status = status;
+                   
                 }
 
                 await _InvestmentInfoRepository.UpdateAsync(item);

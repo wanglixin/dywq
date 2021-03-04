@@ -1,38 +1,59 @@
 ﻿.login_con .tip, .login_con .apply_txt {
     color: white;
- 
 }
 
 .login_con {
-    display: initial;
+    /* display: initial;
     align-items:initial;
-    text-align:right;
+    text-align:right;*/
 }
 
     .login_con .tip {
-        color: white;
+        /* color: white;
         margin-right: initial;
         float: right;
-        line-height: 2;
+        line-height: 2;*/
+        font-size: 12px;
+        color: #fff;
+        margin-right: 50px;
+        letter-spacing: 2px;
     }
 
 .login_txt a {
     color: white;
-    padding-left:10px;
-    text-decoration:none;
-}
-
-.apply_txt, .apply_txt:hover{
+    padding-left: 10px;
     text-decoration: none;
 }
 
-.login_con .login_sec {
-    float: right;
-   
+.apply_txt, .apply_txt:hover {
+    text-decoration: none;
 }
+
 
 .login_con .apply {
-    float: right;
+    /* float: right;*/
 }
 
+@media screen and (max-width: 768px) {
+    .m-tab {
+        width:15%;
+    }
 
+    .login_con .login_sec {
+        float: right;
+    }
+
+    .login_con .login_sec {
+        width: 90px;
+        height: 23px;
+        background: rgba(34, 97, 188, 1);
+        color: #fff;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        margin-left: 100px;
+    }
+
+}

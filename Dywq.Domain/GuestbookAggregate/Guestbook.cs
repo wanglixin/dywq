@@ -31,6 +31,11 @@ namespace Dywq.Domain.GuestbookAggregate
         /// </summary>
         public int ReplyId { get; set; }
 
+        /// <summary>
+        /// 状态：0 默认待审核 1：已审核 -1：审核不通过
+        /// </summary>
+        public int Status { get; set; }
+
 
 
     }

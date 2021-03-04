@@ -136,6 +136,12 @@ var formatDate = function (date) {
     return y + '-' + m + '-' + d;
 }
 
+var formatDate2 = function (date) {
+    var index = date.indexOf('T');
+    return date.substr(0,index);
+}
+
+
 
 /**
  * 返回上一页并刷新

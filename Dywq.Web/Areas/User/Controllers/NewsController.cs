@@ -40,5 +40,17 @@ namespace Dywq.Web.Areas.User.Controllers
             return View(result);
         }
 
+
+        [Authorize(Roles = Common.Role.Admin + "," + Common.Role.Editor)]
+        public async Task<IActionResult> NewsList(GetNoticeNewsCommand cmd)
+        {
+            cmd.Show = true;
+            cmd.LinkUrl = $"javascript:getList(__id__)";
+            var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
+            return PartialView(result);
+        }
+
+
+
     }
 }

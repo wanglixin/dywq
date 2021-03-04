@@ -51,6 +51,8 @@ namespace Dywq.Web.Dto.News
         /// </summary>
         public int Status { get; set; }
 
+        public string Describe { get; set; }
+
 
         public string StatusStr
         {

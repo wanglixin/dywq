@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Dywq.Infrastructure.Core.Extensions;
 
 namespace Dywq.Web.Application.Commands.News
 {
@@ -100,7 +101,9 @@ namespace Dywq.Web.Application.Commands.News
                     Source = request.Source,
                     Pic = request.Pic,
                     Status = 0,
-                    UserId = request.LoginUser.Id
+                    UserId = request.LoginUser.Id,
+                    Describe = request.Content.FilterHtml().Cut(300)
+
 
                 };
                 if (request.LoginUser.Type == 1)
@@ -118,12 +121,19 @@ namespace Dywq.Web.Application.Commands.News
                     return Result.Failure($"id={request.Id}内容不存在");
                 }
 
+                if (!request.LoginUser.IsAdmin && item.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
+
                 item.Content = request.Content;
                 item.Show = show;
                 item.Sort = sort;
                 item.Title = request.Title;
                 item.Pic = request.Pic;
                 item.Source = request.Source;
+                item.Describe = request.Content.FilterHtml().Cut(300);
 
                 if (request.LoginUser.Type == 1)
                 {

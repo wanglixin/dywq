@@ -11,9 +11,16 @@
         </div>
         <div class="main_con">
             <h3>@(Model.Title)</h3>
-            <div class="comp_img">
-                <img src="@(Model.IntroduceImage)" alt="">
-            </div>
+
+            @{
+                if (!string.IsNullOrWhiteSpace(Model.IntroduceImage))
+                {
+                    <div class="comp_img">
+                        <img src="@(Model.IntroduceImage)" alt="">
+                    </div>
+                }
+            }
+
         </div>
 
         <!-- ul -->
@@ -24,7 +31,7 @@
                         <img src="img/search.png" alt="">
                     </div>
                     <h4>企业概况</h4>
-                    <h5>Enterprise profile</h5>
+                   
                 </div>
                 <p>@(Model.Introduce)</p>
             </li>
@@ -34,7 +41,7 @@
                         <img src="img/search.png" alt="">
                     </div>
                     <h4>主营业务</h4>
-                    <h5>Enterprise profile</h5>
+                  
                 </div>
                 <p>@(Model.MainBusiness)</p>
             </li>
@@ -44,7 +51,7 @@
                         <img src="img/search.png" alt="">
                     </div>
                     <h4>拟对外合作内容</h4>
-                    <h5>Enterprise profile</h5>
+                   
                 </div>
                 <p>@(Model.CooperationContent)</p>
             </li>
@@ -54,7 +61,7 @@
                         <img src="img/search.png" alt="">
                     </div>
                     <h4>联系方式</h4>
-                    <h5>Enterprise profile</h5>
+                   
                 </div>
                 <p>@(Model.Contact)</p>
             </li>

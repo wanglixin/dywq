@@ -54,7 +54,7 @@ namespace Dywq.Web.Controllers
 
             //惠企政策 展示惠企政策的“民企类”信息 根据实际情况写 typeid
 
-            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6, TypeId = "8", Status = 1 }, HttpContext.RequestAborted);
+            var policyArticles = await _mediator.Send(new GetPolicyArticlesCommand() { Show = true, PageSize = 6, Status = 1 }, HttpContext.RequestAborted);
             ViewBag.policyArticles = policyArticles.Data;
 
             //企业对接
@@ -112,10 +112,20 @@ namespace Dywq.Web.Controllers
 
 
 
+        public async Task<IActionResult> Login()
+        {
+            return View();
+        }
+
+
+
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("/");
         }
+
+
+
     }
 }

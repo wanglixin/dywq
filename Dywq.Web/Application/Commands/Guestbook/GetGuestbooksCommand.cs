@@ -21,6 +21,9 @@ namespace Dywq.Web.Application.Commands.Guestbook
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public string LinkUrl { get; set; }
+
+
+        public int? Status { get; set; } = null;
     }
 
     public class GetGuestbooksCommandHandler : BaseRequestHandler<GetGuestbooksCommand, PageResult<GuestbookDTO>>
@@ -53,6 +56,12 @@ namespace Dywq.Web.Application.Commands.Guestbook
             {
                 sb.Add($"Id = {request.Id}");
             }
+
+            if (request.Status.HasValue)
+            {
+                sb.Add($"Status = {request.Status}");
+            }
+
             var where = string.Join(" and ", sb);
 
             var pageData = await _guestbookRepository.GetPageDataAsync<Domain.GuestbookAggregate.Guestbook>(

@@ -42,13 +42,12 @@
         <th>Id</th>
         <th>创建时间</th>
         <th>企业</th>
-        <th>标题</th>
         <th>主营业务</th>
         <th>联系方式</th>
 
         <th>是否显示</th>
         <th>排序</th>
-        <th>更新时间</th>
+
         <th>状态</th>
         <th>操作</th>
 
@@ -66,16 +65,13 @@
                 @(item.CreatedTime)
             </td>
             <td>
-                @(item.CompanyName)
+                @(item.Title.Cut(10))
             </td>
             <td>
-                @(item.Title.Cut(15))
+                @(item.MainBusiness.Cut(10))
             </td>
             <td>
-                @(item.MainBusiness.Cut(15))
-            </td>
-            <td>
-                @(item.Contact.Cut(15))
+                @(item.Contact.Cut(10))
             </td>
 
             <td>
@@ -85,9 +81,7 @@
             <td>
                 @(item.Sort)
             </td>
-            <td>
-                @(item.UpdatedTime)
-            </td>
+   
             <td>
                 @{
                     if (item.Status == -1)
@@ -102,8 +96,8 @@
             </td>
 
             <td class="editbtn">
-                <a href="/user/company/editCompanyNews?id=@(item.Id)">审核</a>
-
+                <a href="/user/company/editCompanyNews?id=@(item.Id)">审核</a>  |
+                <a href="javascript:del(@(item.Id))">删除</a>
 
             </td>
 
@@ -324,6 +318,31 @@
             })
 
         }
+
+
+            var del = function (id, obj) {
+
+            if (!confirm("确定删除"))
+                return;
+            $.ajax({
+                url: '/api/company/DeleteCompanyNews',
+                type: 'POST',
+                dataType: "json",
+                data: JSON.stringify({ Id: id }),
+                headers: { 'Content-Type': 'application/json' },
+                success: function (r) {
+                    console.log(r);
+                    if (r.code == 0) {
+                        alert("删除成功");
+                        window.location.reload();
+                    } else {
+                        alert(r.message);
+                    }
+                }
+            })
+
+        }
+
     </script>
 
 }

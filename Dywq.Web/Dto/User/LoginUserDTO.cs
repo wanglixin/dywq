@@ -47,6 +47,14 @@ namespace Dywq.Web.Dto.User
         }
 
 
+        public bool IsAdmin
+        {
+            get
+            {
+                return this.Type == 1;
+            }
+        }
+
 
     }
 }

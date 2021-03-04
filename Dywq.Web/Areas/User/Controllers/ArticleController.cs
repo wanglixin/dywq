@@ -78,7 +78,7 @@ namespace Dywq.Web.Areas.User.Controllers
 
             cmd.Show = true;
 
-            cmd.LinkUrl = $"javascript:getPolicyList(__id__)";
+            cmd.LinkUrl = $"javascript:getList(__id__)";
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);
             return PartialView(result);
         }

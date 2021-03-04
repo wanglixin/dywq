@@ -18,7 +18,7 @@ namespace Dywq.Web.Application.Commands
 {
     public class AddCompanyCommand : IRequest<Result>
     {
-        [Required(ErrorMessage = "请上传logo")]
+        // [Required(ErrorMessage = "请上传logo")]
         public string Logo { get; set; }
 
         [Required(ErrorMessage = "请填写企业名称")]

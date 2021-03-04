@@ -51,6 +51,8 @@ namespace Dywq.Domain.InvestmentAggregate
 
         public int UserId { get; set; }
 
+        public string Describe { get; set; }
+
 
 
     }

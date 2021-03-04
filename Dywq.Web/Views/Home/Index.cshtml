@@ -91,7 +91,7 @@
                 @if (user == null)
                 {
                     <div class="login_box">
-                        <img src="img/loginbg.png" alt="" class="loginbg">
+                        <img src="/img/loginbg.png" alt="" class="loginbg">
                         <div id="login_text">会员登录</div>
                         <form id="login_form">
                             <div class="input_sec">
@@ -232,7 +232,7 @@
                 <div class="active_con_right">
                     <section class="choose_tip">
                         <div class="choose_tip_li actived_tip">活动通知</div>
-                        <div class="choose_tip_li">政策速递</div>
+                        @*<div class="choose_tip_li">政策速递</div>*@
                     </section>
                     <div class="active_con_rights_sec">
                         <section>
@@ -315,7 +315,7 @@
 <!-- ad1 -->
 @*<section class="ad">
         <div class="container">
-            <img src="img/ad1.png" alt="" class="adimg">
+            <img src="/img/ad1.png" alt="" class="adimg">
         </div>
     </section>*@
 
@@ -326,8 +326,8 @@
         <div class="accepts">
             <div class="accept_list1">
                 <div class="common_accept_title">
-                    <img src="img/downarrow.png" alt="" class="downarrow">
-                    <img src="img/p1.png" alt="" class="title_img">
+                    <img src="/img/downarrow.png" alt="" class="downarrow">
+                    <img src="/img/p1.png" alt="" class="title_img">
                     <div class="more_btn_accept">
                         <a href="/article/policy">查看更多  ></a>
                     </div>
@@ -363,8 +363,8 @@
             </div>
             <div class="accept_list1 center_accept">
                 <div class="common_accept_title">
-                    <img src="img/downarrow.png" alt="" class="downarrow">
-                    <img src="img/p2.png" alt="" class="title_img">
+                    <img src="/img/downarrow.png" alt="" class="downarrow">
+                    <img src="/img/p2.png" alt="" class="title_img">
                     <div class="more_btn_accept">
                         <a href="/Company/Financing">查看更多  ></a>
                     </div>
@@ -401,8 +401,8 @@
             </div>
             <div class="accept_list1">
                 <div class="common_accept_title">
-                    <img src="img/downarrow.png" alt="" class="downarrow">
-                    <img src="img/p3.png" alt="" class="title_img">
+                    <img src="/img/downarrow.png" alt="" class="downarrow">
+                    <img src="/img/p3.png" alt="" class="title_img">
                     <div class="more_btn_accept">
                         <a href="/company/cooperation">查看更多 </a>
                     </div>
@@ -443,9 +443,9 @@
 <!-- ad2 -->
 @*<section class="ad2">
         <div class="container">
-            <div class="imgs">
-                <img src="img/ad1.png" alt="" class="adimg2">
-                <img src="img/ad1.png" alt="" class="adimg2">
+            <div class="/imgs">
+                <img src="/img/ad1.png" alt="" class="adimg2">
+                <img src="/img/ad1.png" alt="" class="adimg2">
             </div>
         </div>
     </section>*@
@@ -456,12 +456,12 @@
     <section class="buy">
         <div class="buy_sec">
             <div class="buy_title">
-                <img src="img/buy_img.png" alt="" class="buy_img">
+                <img src="/img/buy_img.png" alt="" class="buy_img">
                 <div class="title_left">
                     企业采购信息
                 </div>
                 <div class="title_right">
-                    <img src="img/search.png" alt="" class="search_img">
+                    <img src="/img/search.png" alt="" class="search_img">
                     <input type="text" placeholder="搜索内容…" class="search_input search_purchase_0">
                     <input type="button" onclick="getPurchase(this)" data-type="0" value="搜索" class="search_btn">
                 </div>
@@ -509,12 +509,12 @@
 
         <div class="buy_sec">
             <div class="buy_title">
-                <img src="img/buy_img.png" alt="" class="buy_img">
+                <img src="/img/buy_img.png" alt="" class="buy_img">
                 <div class="title_left">
                     企业生产信息
                 </div>
                 <div class="title_right">
-                    <img src="img/search.png" alt="" class="search_img">
+                    <img src="/img/search.png" alt="" class="search_img">
                     <input type="text" placeholder="搜索内容…" class="search_input search_purchase_1">
                     <input type="button" onclick="getPurchase(this)" data-type="1" value="搜索" class="search_btn">
 
@@ -523,7 +523,7 @@
             <div class="buy_con">
                 <div class="buy_table">
                     <ul class="table_title">
-                        <li>采购商品</li>
+                        <li>生产商品</li>
                         <li>公司</li>
                         <li>联系人</li>
                         <li>联系电话</li>
@@ -573,6 +573,7 @@
 </div>
 
 @section js{
+
     <script type="text/javascript">
         $(function () {
             var mySwiper = new Swiper('.swiper-container', {
@@ -682,6 +683,9 @@
 
         }
 
+
+        // var vConsole = new VConsole();
+        //console.log('Hello world');
     </script>
 
 }

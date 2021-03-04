@@ -65,7 +65,7 @@ namespace Dywq.Web.Application.Commands
             }
 
 
-            if (request.LoginUser.Type == 2) //如果是编辑
+            if (request.LoginUser != null && request.LoginUser.Type == 2) //如果是编辑
             {
                 condition.Add($"(UserId = {request.LoginUser.Id})");
             }

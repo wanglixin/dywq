@@ -141,7 +141,8 @@ namespace Dywq.Web.Application.Commands.Cooperation
                     CooperationTypeName = types.FirstOrDefault(t => t.Id == x.CooperationTypeId)?.Name,
                     CompanyId = x.CompanyId,
                     CompanyName = companys.FirstOrDefault(c => c.Id == x.CompanyId)?.Name,
-                    Status = x.Status
+                    Status = x.Status,
+                    Describe = x.Describe
 
                 }
             ); ;

@@ -52,7 +52,7 @@
 
                 <input type="text" class="form-control" value="@(Context.Request.Query["key"])" id="Key" placeholder="请输入关键词">
             </div>
-            <input class="btn btn-primary " onclick="getPolicyList(1)" value="搜索" />
+            <input class="btn btn-primary " onclick="getList(1)" value="搜索" />
 
         </div>
 
@@ -66,7 +66,7 @@
         <th>政策类型</th>
         <th>政策主题</th>
         <th>政策内容</th>
-        <th>是否显示</th>
+       
         <th>排序</th>
         <th>发布时间</th>
         <th>操作</th>
@@ -89,16 +89,14 @@
                         @(item.ThemeTitle.Cut(10))
                     </td>
                     <td>
-                        @(item.Content.Cut(20))
+                        @(item.Describe.Cut(20))
                     </td>
-                    <td>
-                        @(item.Show ? "是" : "否")
-                    </td>
+                  
                     <td>
                         @(item.Sort)
                     </td>
                     <td>
-                        @(item.CreatedTime)
+                        @(item.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss"))
                     </td>
                     <td class="editbtn">
                         <a href="javascript:doPush(@(item.Id))">推送</a>

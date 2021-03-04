@@ -31,7 +31,7 @@ namespace Dywq.Web.Application.Commands.Site
 
 
 
-        [Required(ErrorMessage = "请上传图片")]
+       // [Required(ErrorMessage = "请上传图片")]
         /// <summary>
         /// 图片
         /// </summary>
@@ -109,6 +109,13 @@ namespace Dywq.Web.Application.Commands.Site
                 {
                     return Result.Failure($"id={request.Id}内容不存在");
                 }
+
+
+                if (!request.LoginUser.IsAdmin && item.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
 
                 item.Content = request.Content;
                 item.Show = show;

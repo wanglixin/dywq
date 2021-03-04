@@ -41,7 +41,7 @@
         <th>行业</th>
         <th>企业性质</th>
         <th>党建情况</th>
-        <th>发布时间</th>
+        @*<th>发布时间</th>*@
         <th>操作</th>
     </tr>
     @{
@@ -64,9 +64,9 @@
                     <td>
                         @(item.IsPartyBranch)
                     </td>
-                    <td>
+                    @*<td>
                         @(item.CreatedTime)
-                    </td>
+                    </td>*@
                     <td class="editbtn">
                         <a target="_blank" href="/user/company/edit?companyId=@(item.CompanyId)">详情</a> | <a href="javascript:singlePush(@(item.CompanyId))">推送</a>
 

@@ -17,6 +17,7 @@ namespace Dywq.Infrastructure.EntityConfigurations
             builder.Property(p => p.Content).HasMaxLength(1000);
             builder.Property(p => p.Type);
             builder.Property(p => p.ReplyId);
+            builder.Property(p => p.Status);
         }
     }
 }

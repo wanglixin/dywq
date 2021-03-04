@@ -38,7 +38,7 @@ namespace Dywq.Web.Application.Commands.Financing
         /// </summary>
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "银行不能为空")]
+        //[Required(ErrorMessage = "银行不能为空")]
         /// <summary>
         /// 银行
         /// </summary>
@@ -155,6 +155,17 @@ namespace Dywq.Web.Application.Commands.Financing
                 {
                     return Result.Failure($"id={request.Id}错误,内容不存在");
                 }
+               
+
+
+
+                if (user.Type != 1 && item.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
+
+
                 if (user.Type == 0)//|| user.Type == 2)
                 {
                     var company_user = await _companyUserRepository.Set().FirstOrDefaultAsync(x => x.UserId == request.UserId);
@@ -169,54 +180,34 @@ namespace Dywq.Web.Application.Commands.Financing
                     }
 
                 }
-                if (user.Type == 0 || user.Type == 2) //用户修改的情况
+
+                item.Content = request.Content;
+                item.Title = request.Title;
+                item.Pic = request.Pic;
+                item.Bank = request.Bank;
+                item.Status = 0;
+                item.Describe = request.Content.FilterHtml().Cut(300);
+
+                if (user.Type == 0) //用户修改的情况
                 {
                     if (item.Status != -1)
                     {
                         return Result.Failure($"当前状态不能修改");
                     }
-
-                    item.Content = request.Content;
-                    item.Title = request.Title;
-                    item.Pic = request.Pic;
-                    item.Bank = request.Bank;
-                    item.Status = 0;
-                    item.Describe = request.Content.FilterHtml().Cut(300);
                 }
-                //else if (user.Type == 2) //编辑
-                //{
-                //    if (item.Status != -1 && item.Status != 0)
-                //    {
-                //        return Result.Failure($"当前状态不能修改");
-                //    }
-                //    item.Content = request.Content;
-                //    item.Title = request.Title;
-                //    item.Pic = request.Pic;
-                //    item.Bank = request.Bank;
-                //    item.Status = 0;
-                //}
-                else if (user.Type == 1) //管理员修改
+
+                if (user.Type == 1) //管理员修改
                 {
                     if (string.IsNullOrWhiteSpace(request.Status))
                     {
                         return Result.Failure($"请选择审核状态");
                     }
                     var status = Convert.ToInt32(request.Status);
-
-                    item.Content = request.Content;
+                    item.Status = status;
                     item.Show = show;
                     item.Sort = sort;
-                    item.Title = request.Title;
-                    item.Pic = request.Pic;
-                    item.Bank = request.Bank;
-                    item.Status = status;
-                    item.Describe = request.Content.FilterHtml().Cut(300);
                 }
 
-                else
-                {
-                    return Result.Failure($"用户类型错误");
-                }
 
                 await _financingRepository.UpdateAsync(item);
             }

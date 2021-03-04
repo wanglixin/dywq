@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大亚湾区实体经济信息服务平台！</title>
+    <title>大亚湾区实体经济信息服务平台</title>
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/swiper-4.3.5.min.css" rel="stylesheet" type="text/css" />
     <link href="/css/index.css" rel="stylesheet">
@@ -29,57 +29,66 @@
             <div class="col-md-3 col-sm-10 col-xs-12"></div>
             <div class="col-md-3 col-sm-10 col-xs-12"></div>
             <div class="col-md-6 col-sm-10 col-xs-12 login_con">
-                <div class="tip">
-                    您好，@Html.Raw(user != null ? "<a class='header_company' href='/user/'>" + user.ShowName + "</a>" + "," : "")欢迎来到大亚湾区实体经济信息服务平台！
-                    @*<div class="col-xs-4 col-md-1">
-            <div class="tab">☲</div>
-        </div>*@
-                    @{
-                        if (user != null)
-                        {
-                            <div class="login_sec">
-                                <img src="/img/user2.png" alt="" class="userimg">
-                                <div class="login_txt"><a href="/home/logout">退出</a></div>
-                            </div>
-
-
-                        }
-                        else
-                        {
-
-                            <div class="apply">
-                                <img src="img/apply2.png" alt="" class="applyimg">
-                                <div class="apply_txt">申请入驻</div>
-                            </div>
-
-                        }
-                    }
-
-
-
+                <div class="tip">您好，@Html.Raw(user != null ? "<a class='header_company' href='/user/'>" + user.ShowName + "</a>" + "," : "")欢迎来到大亚湾区实体经济信息服务平台</div>
+                <div class="col-xs-4 col-md-1 m-tab">
+                    <div class="tab">☲</div>
                 </div>
+                @{
+                    if (user != null)
+                    {
+                    <div class="login_sec logout">
+                        <img src="/img/user2.png" alt="" class="userimg">
+                        <div class="login_txt"><a href="/home/logout">退出</a></div>
+                    </div>
+                    }
+                    else
+                    {
+
+            <div class="login_sec">
+                <img src="/img/user2.png" alt="" class="userimg">
+                <div class="login_txt"><a href="/home/login">登录</a></div>
+              
             </div>
+
+
+                    <div class="apply">
+                        <img src="/img/apply2.png" alt="" class="applyimg">
+                        <div class="apply_txt">申请入驻</div>
+                    </div>
+
+                    }
+                }
+
+
+
+            </div>
+        </div>
     </header>
 
+    <div class="shade">
+        <ul>
+            <li class="active"><a _href="/home/index" href="/">首页</a></li>
+            <!--li><a _href="/article/partyBuilding;" href="/article/partyBuilding">企业党建</a></li-->
+            <li><a _href="/company/investment;" href="/company/investment">招建安环</a></li>
+            <li><a _href="/article/policy;" href="/article/policy">惠企政策</a></li>
+            <li><a _href="/company/financing;" href="/company/financing">银行信贷</a></li>
+            <li><a _href="/company/cooperation;" href="/company/cooperation">企业对接</a></li>
+            <li><a _href="/company/expert;" href="/company/expert">专家库</a>
+            <li class="about">
+                <a _href="/aboutus;" href="/aboutus">
+                    <span>关于我们</span>
+                    @*<img class="arrowimg" src="/img/arrow.png" alt="">*@
+                </a>
+                @*<section class="about_sec">
+                        <div class="about_sec_per"><a href="./index7.html">关于我们1</a></div>
+                        <div class="about_sec_per"><a href="./index7.html">关于我们2</a></div>
+                        <div class="about_sec_per"><a href="./index7.html">关于我们3</a></div>
+                    </section>*@
+            </li>
+        </ul>
+    </div>
 
-    @*<div class="shade">
-            <ul>
-                <li><a href="./index.html">首页</a></li>
-                <li><a href="./index2.html">企业党建</a></li>
-                <li><a href="./index3.html">惠企政策</a></li>
-                <li><a href="./index4.html">银行信贷</a></li>
-                <li><a href="./index5.html">企业对接</a></li>
-                <li><a href="./index6.html">专家智库</a></li>
-                <li class="about">
-                    <a href="javascript:;"><span>关于我们</span><img class="arrowimg" src="/img/arrow.png" alt=""></a>
-                    <section class="about_sec">
-                        <div class="about_sec_per"><a href="/index7.html">关于我们1</a></div>
-                        <div class="about_sec_per"><a href="/index7.html">关于我们2</a></div>
-                        <div class="about_sec_per"><a href="/index7.html">关于我们3</a></div>
-                    </section>
-                </li>
-            </ul>
-        </div>*@
+
 
     <!-- logo -->
     <div id="logo">
@@ -108,10 +117,10 @@
                             @*<img class="arrowimg" src="/img/arrow.png" alt="">*@
                         </a>
                         @*<section class="about_sec">
-                <div class="about_sec_per"><a href="./index7.html">关于我们1</a></div>
-                <div class="about_sec_per"><a href="./index7.html">关于我们2</a></div>
-                <div class="about_sec_per"><a href="./index7.html">关于我们3</a></div>
-            </section>*@
+                                <div class="about_sec_per"><a href="./index7.html">关于我们1</a></div>
+                                <div class="about_sec_per"><a href="./index7.html">关于我们2</a></div>
+                                <div class="about_sec_per"><a href="./index7.html">关于我们3</a></div>
+                            </section>*@
                     </li>
                 </ul>
             </div>
@@ -156,8 +165,10 @@
                 </div>
                 <div>
                     <ul class="right_text">
-                       
-                        <li>版权所有：大亚湾区企业联合会 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术支持：惠州市一鸣信息技术有限公司 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" style="color:white;" href="https://beian.miit.gov.cn/">粤ICP备2021014881号-1</a></li>
+
+                        <li>版权所有：大亚湾区企业联合会 </li>
+                        <li>技术支持：惠州市一鸣信息技术有限公司</li>
+                        <li><a target="_blank" style="color:white;" href="https://beian.miit.gov.cn/">粤ICP备2021014881号-1</a></li>
                     </ul>
                 </div>
             </div>
@@ -167,30 +178,30 @@
 
     <script>
 
-        //let num = 0;
-        //let num2 = 0;
-        //$(".tab").click(function () {
-        //    if (num % 2 == 0) {
-        //        $(".shade").css("height", "352px")
-        //    } else {
-        //        $(".shade").css("height", "0")
-        //    }
-        //    ++num;
-        //})
-        //$(".list li.about").click(function () {
-        //    $(".about_sec").slideToggle();
-        //})
+        let num = 0;
+        let num2 = 0;
+        $(".tab").click(function () {
+            if (num % 2 == 0) {
+                $(".shade").css("height", "352px")
+            } else {
+                $(".shade").css("height", "0")
+            }
+            ++num;
+        })
+        $(".list li.about").click(function () {
+            $(".about_sec").slideToggle();
+        })
 
-        //$(".shade li.about").click(function () {
-        //    if (num2 % 2 == 0) {
-        //        $(".shade").css("height", "500px")
-        //    } else {
-        //        $(".shade").css("height", "352px")
-        //    }
-        //    ++num2;
-        //    $(".about_sec").slideToggle();
+        $(".shade li.about").click(function () {
+            if (num2 % 2 == 0) {
+                $(".shade").css("height", "500px")
+            } else {
+                $(".shade").css("height", "352px")
+            }
+            ++num2;
+            $(".about_sec").slideToggle();
 
-        //})
+        })
 
         // nav
         //$(".company").hide().eq(0).show();
@@ -236,8 +247,9 @@
 
     @RenderSection("js", false)
 
-<div style="display:none;">
-<script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279403012&web_id=1279403012"></script></div>
+    <div style="display:none;">
+        <script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279403012&web_id=1279403012"></script>
+    </div>
 
 </body>
 

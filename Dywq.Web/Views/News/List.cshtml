@@ -35,11 +35,12 @@
             {
                 <div class="sec">
                     <div class="sec_left">
-                        <img src="@(item.Pic)" alt="">
+                     
+                        <img src="@(string.IsNullOrWhiteSpace(item.Pic)?"/img/logo_mini.png":item.Pic)" alt="">
                     </div>
                     <div class="sec_right">
                         <h4 class="title_sec"><a href="/News/Detail/@(item.Id)">@(item.Title.Cut(40))</a></h4>
-                        <p class="con_sec">@(item.Content.Cut(300))</p>
+                        <p class="con_sec">@(item.Describe.Cut(300))</p>
                         <div class="time_sec">@(item.CreatedTime)</div>
                     </div>
 

@@ -29,7 +29,9 @@ namespace Dywq.Web.Controllers.Api
         [HttpPost]
         public async Task<Result> AddGuestbook([FromBody]AddGuestbookCommand cmd)
         {
-            cmd.UserId = this.GetCurrentUser().Id;
+           
+            cmd.LoginUser = this.GetCurrentUser();
+            cmd.UserId = cmd.LoginUser.Id;
             _logger.LogInformation($"接收到请求{HttpContext.Request.Host}{HttpContext.Request.Path},参数 {JsonConvert.SerializeObject(cmd)}");
 
             var result = await _mediator.Send(cmd, HttpContext.RequestAborted);

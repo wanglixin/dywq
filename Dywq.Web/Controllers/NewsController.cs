@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dywq.Web.Application.Commands.Message;
 using Dywq.Web.Application.Commands.News;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,16 +26,25 @@ namespace Dywq.Web.Controllers
             return View(result);
         }
 
-        public async Task<IActionResult> Detail(int Id)
+        public async Task<IActionResult> Detail(int id, string _source = "")
         {
             var pageData = await _mediator.Send(new GetNoticeNewsCommand()
             {
-                Id = Id,
+                Id = id,
                 PageIndex = 1,
                 PageSize = 1,
                 Show = true,
                 Status = 1
             }, HttpContext.RequestAborted);
+
+            if ("user" == _source && this.CurrentUser != null)
+            {
+                //更新阅读状态 已读
+
+                await _mediator.Send(new EditMessageCommand() { AssociationId = id, Type = 1, CompanyId = this.CurrentUser.CompanyId }, HttpContext.RequestAborted);
+            }
+
+
             return View(pageData?.Data?.FirstOrDefault());
         }
     }

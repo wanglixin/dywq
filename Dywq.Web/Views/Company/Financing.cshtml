@@ -36,11 +36,7 @@
                 float: left;
             }
 
-                .sec li:nth-child(3n+2) {
-                    margin-left: 30px;
-                    margin-right: 30px;
-                }
-
+               
 
                 .sec li a {
                     text-decoration: none;
@@ -51,6 +47,12 @@
                 .sec li p {
                     text-align: left;
                 }
+
+        .cnt {
+            height: 300px;
+        }
+
+        
     </style>
 
 }
@@ -71,17 +73,9 @@
                 {
                     <li>
                         <a href="/Company/Financing/Detail/@(item.Id)">
-                            @{
-                                if (string.IsNullOrWhiteSpace(item.Pic))
-                                {
-                                    <div style="width: 68px;
-    height: 68px;margin-bottom: -2px;"></div>
-                                }
-                            }
-                            <img src="@(item.Pic)" alt="" class="backimg">
-                            <h4>@(item.Bank)</h4>
+
                             <div class="sec_content">@(item.Title)</div>
-                            <p>@(item.Describe.Cut(300))</p>
+                            <p class="cnt">@(item.Describe.Cut(200))</p>
                             <h6>发布日期：@(item.CreatedTime.ToString("yyyy-MM-dd"))</h6>
                         </a>
                     </li>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dywq.Web.Dto.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +41,17 @@ namespace Dywq.Web.Dto.Commpany
 
             }
 
+        }
+
+
+        public bool IsEdit(LoginUserDTO loginUser)
+        {
+            return ((Status == 0 || Status == -1) && (loginUser.Type == 0 || loginUser.Type == 2)) || loginUser.Type == 1;
+        }
+
+        public bool IsAdmin(LoginUserDTO loginUser)
+        {
+            return loginUser.Type == 1;
         }
     }
 }

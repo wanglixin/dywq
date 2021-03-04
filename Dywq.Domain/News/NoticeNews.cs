@@ -50,5 +50,7 @@ namespace Dywq.Domain.News
 
 
         public int UserId { get; set; }
+
+        public string Describe { get; set; }
     }
 }

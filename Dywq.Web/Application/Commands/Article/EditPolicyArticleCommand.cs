@@ -100,6 +100,8 @@ namespace Dywq.Web.Application.Commands.Article
             }
 
 
+
+
             if (id <= 0) //新增
             {
                 var article = new PolicyArticle()
@@ -128,6 +130,12 @@ namespace Dywq.Web.Application.Commands.Article
                 {
                     return Result.Failure($"id={request.Id}错误文章不存在");
                 }
+
+                if (!request.LoginUser.IsAdmin && article.Status == 1)
+                {
+                    return Result.Failure($"当前状态不能修改！");
+                }
+
 
                 article.Content = request.Content;
                 article.Show = show;

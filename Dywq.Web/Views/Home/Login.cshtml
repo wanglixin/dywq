@@ -1,0 +1,53 @@
+﻿@section head{ 
+<style type="text/css">
+    .login_box{
+        border:none;
+    }
+</style>
+}
+<div class="login_box">
+    <img src="/img/loginbg.png" alt="" class="loginbg">
+    <div id="login_text">会员登录</div>
+    <form id="login_form">
+        <div class="input_sec">
+            <input type="text" name="UserName" placeholder="请输入您的账号">
+        </div>
+        <div class="input_sec">
+            <input type="password" name="Password" placeholder="请输入您的密码">
+        </div>
+        <input type="button" value="登录" class="submitbtn" />
+    </form>
+    <div class="tip_con">
+        <span class="nocount">没有账号？</span>
+        <a style="display:none;" href="#" class="apply_ru">申请入驻</a>
+        <a href="tencent://message/?uin=1642487217&Site=&Menu=yes" title="联系客服" class="apply_ru"><img style="width:20px;" src="~/img/QQ.png" />联系客服</a>
+    </div>
+
+</div>
+
+@section js{
+
+    <script type="text/javascript">
+        $(function () {
+          
+
+            $(".submitbtn").req("#login_form", "/api/user/login", function (res) {
+                if (res.code != 0) {
+                    alert(res.message);
+                    return;
+                }
+                 var return_url = '@(Context.Request.Query["ReturnUrl"])';
+                if (return_url.length > 0) {
+                    window.location.href = return_url;
+                } else {
+                    window.location.href = "/";
+                }
+            });
+
+       
+
+        });
+
+    </script>
+
+}
